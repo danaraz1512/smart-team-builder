@@ -162,7 +162,7 @@ export default function ScheduleGrid({
   onboardingShiftId: string;
   approved: boolean;
   editedIds?: string[];
-  onEditShift?: (shift: Shift) => void;
+  onEditShift?: ((shift: Shift) => void) | undefined;
 }) {
   return (
     <Card className="overflow-hidden">
