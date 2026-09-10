@@ -336,7 +336,10 @@ function Index() {
                       ...metrics,
                       approved
                         ? { label: "1 decision approved by the manager", tone: "green" as const }
-                        : { label: "1 decision recommended for review", tone: "amber" as const },
+                        : {
+                            label: "1 decision needs your review",
+                            tone: "amber" as const,
+                          },
                     ].map((m) => (
                       <Badge key={m.label} tone={m.tone} className="!px-2.5 !py-1 !text-[12px]">
                         {m.label}
