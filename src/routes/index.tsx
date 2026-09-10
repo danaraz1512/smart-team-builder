@@ -75,6 +75,7 @@ function Index() {
   const [phase, setPhase] = useState<Phase>("initial");
   const [step, setStep] = useState(0);
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [locationFilter, setLocationFilter] = useState<LocationId | "all">("all");
   const [decisionsOpen, setDecisionsOpen] = useState(false);
   const [showAlternative, setShowAlternative] = useState(false);
   const [choice, setChoice] = useState<OnboardingChoice>("recommended");
