@@ -25,7 +25,9 @@ import EmployeeRail from "@/components/EmployeeRail";
 import ScheduleGrid, { type Highlight } from "@/components/ScheduleGrid";
 import DecisionPanel from "@/components/DecisionPanel";
 import EditModal from "@/components/EditModal";
+import ShiftEditor from "@/components/ShiftEditor";
 import MobileSim from "@/components/MobileSim";
+import type { EmpId, Shift } from "@/data/demo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -78,6 +80,8 @@ function Index() {
   const [editOpen, setEditOpen] = useState(false);
   const [acknowledged, setAcknowledged] = useState(false);
   const [highlight, setHighlight] = useState<Highlight>(null);
+  const [overrides, setOverrides] = useState<Record<string, EmpId[]>>({});
+  const [editingShift, setEditingShift] = useState<Shift | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const timers = useRef<number[]>([]);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -120,6 +124,8 @@ function Index() {
     setAcknowledged(false);
     setHighlight(null);
     setToast(null);
+    setOverrides({});
+    setEditingShift(null);
   };
 
   const publish = () => {
@@ -129,8 +135,11 @@ function Index() {
   };
 
   const scheduled = phase === "draft" || phase === "published";
-  const shifts = shiftsFor(choice);
+  const shifts = shiftsFor(choice).map((s) =>
+    overrides[s.id] ? { ...s, assigned: overrides[s.id]! } : s,
+  );
   const onboardingShiftId = ONBOARDING[choice].shiftId;
+  const editedIds = Object.keys(overrides);
 
   const viewTeam = () => {
     setHighlight({ shiftId: "m-thu", employees: ["dana", "eli", "tom"] });
@@ -326,6 +335,8 @@ function Index() {
                   highlight={highlight}
                   onboardingShiftId={onboardingShiftId}
                   approved={approved}
+                  editedIds={editedIds}
+                  onEditShift={scheduled ? (s) => setEditingShift(s) : undefined}
                 />
               </div>
 
@@ -386,6 +397,17 @@ function Index() {
             setEditOpen(false);
             if (c === "alternative") setShowAlternative(true);
             showToast("Manual assignment saved.");
+          }}
+        />
+      )}
+      {editingShift && (
+        <ShiftEditor
+          shift={editingShift}
+          onClose={() => setEditingShift(null)}
+          onSave={(assigned) => {
+            setOverrides((prev) => ({ ...prev, [editingShift.id]: assigned }));
+            setEditingShift(null);
+            showToast("Manual change saved to this shift.");
           }}
         />
       )}
