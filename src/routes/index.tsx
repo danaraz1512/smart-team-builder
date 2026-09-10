@@ -335,6 +335,8 @@ function Index() {
                   highlight={highlight}
                   onboardingShiftId={onboardingShiftId}
                   approved={approved}
+                  editedIds={editedIds}
+                  onEditShift={scheduled ? (s) => setEditingShift(s) : undefined}
                 />
               </div>
 
