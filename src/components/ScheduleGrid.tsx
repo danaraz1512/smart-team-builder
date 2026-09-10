@@ -29,7 +29,7 @@ function ShiftCard({
   onboardingShiftId: string;
   approved: boolean;
   edited: boolean;
-  onEdit?: () => void;
+  onEdit?: (() => void) | undefined;
 }) {
   const isOnboarding = shift.assigned.includes("noa") && shift.id === onboardingShiftId;
   const needsReview = scheduled && isOnboarding && !approved;

@@ -12,7 +12,7 @@ function issuesFor(shift: Shift, assigned: EmpId[]) {
     const e = byId(id);
     if (e.pto?.includes(shift.day)) out.push(`${e.short} has approved time off that day.`);
     else if (!e.availability.includes(shift.day))
-      out.push(`${e.short} is not available on ${DAYS[shift.day].label}.`);
+      out.push(`${e.short} is not available on ${DAYS[shift.day]?.label ?? "that day"}.`);
   });
   const hasNew = assigned.some((id) => byId(id).isNew);
   const hasExperienced = assigned.some((id) => !byId(id).isNew);
@@ -46,7 +46,7 @@ export default function ShiftEditor({
           <div>
             <h2 className="text-[18px] font-semibold">Edit shift manually</h2>
             <p className="mt-1 text-[12.5px] text-muted-foreground">
-              {DAYS[shift.day].label}, {DAYS[shift.day].date} · {shift.time} · {locName}
+              {DAYS[shift.day]?.label}, {DAYS[shift.day]?.date} · {shift.time} · {locName}
             </p>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {shift.peak ? <Badge tone="purple">Peak</Badge> : <Badge tone="gray">Off-Peak</Badge>}

@@ -136,7 +136,7 @@ function Index() {
 
   const scheduled = phase === "draft" || phase === "published";
   const shifts = shiftsFor(choice).map((s) =>
-    overrides[s.id] ? { ...s, assigned: overrides[s.id] } : s,
+    overrides[s.id] ? { ...s, assigned: overrides[s.id]! } : s,
   );
   const onboardingShiftId = ONBOARDING[choice].shiftId;
   const editedIds = Object.keys(overrides);
