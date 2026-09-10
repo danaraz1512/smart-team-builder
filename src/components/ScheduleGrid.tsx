@@ -86,7 +86,7 @@ function ShiftCard({
         ))}
         {shift.onboardingSuitable && (
           <Badge tone="green" className="!text-[10px]">
-            Onboarding OK
+            Onboarding Suitable
           </Badge>
         )}
         {scheduled && edited && (
