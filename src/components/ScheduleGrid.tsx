@@ -1,5 +1,5 @@
 import { AlertTriangle, Check, Pencil, Sparkles, Users } from "lucide-react";
-import { DAYS, LOCATIONS, byId, type EmpId, type Shift } from "@/data/demo";
+import { DAYS, LOCATIONS, byId, type EmpId, type LocationId, type Shift } from "@/data/demo";
 import { cn } from "@/lib/utils";
 import { Avatar, Badge, Card } from "./ui-kit";
 
