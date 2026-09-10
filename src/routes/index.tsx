@@ -25,7 +25,6 @@ import EmployeeRail from "@/components/EmployeeRail";
 import ScheduleGrid, { type Highlight } from "@/components/ScheduleGrid";
 import DecisionPanel from "@/components/DecisionPanel";
 import EditModal from "@/components/EditModal";
-import ManualShiftModal, { type ManualShiftChange } from "@/components/ManualShiftModal";
 import MobileSim from "@/components/MobileSim";
 
 export const Route = createFileRoute("/")({
@@ -43,8 +42,6 @@ export const Route = createFileRoute("/")({
         content:
           "Build the right team for every shift — an explainable weekly schedule draft with the manager always in control.",
       },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
@@ -79,8 +76,6 @@ function Index() {
   const [choice, setChoice] = useState<OnboardingChoice>("recommended");
   const [approved, setApproved] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  const [manualShiftId, setManualShiftId] = useState<string | null | undefined>(undefined);
-  const [manualChanges, setManualChanges] = useState<Record<string, ManualShiftChange>>({});
   const [acknowledged, setAcknowledged] = useState(false);
   const [highlight, setHighlight] = useState<Highlight>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -122,8 +117,6 @@ function Index() {
     setChoice("recommended");
     setApproved(false);
     setEditOpen(false);
-    setManualShiftId(undefined);
-    setManualChanges({});
     setAcknowledged(false);
     setHighlight(null);
     setToast(null);
@@ -136,10 +129,7 @@ function Index() {
   };
 
   const scheduled = phase === "draft" || phase === "published";
-  const shifts = shiftsFor(choice).map((shift) => {
-    const change = manualChanges[shift.id];
-    return change ? { ...shift, time: change.time, assigned: change.assigned } : shift;
-  });
+  const shifts = shiftsFor(choice);
   const onboardingShiftId = ONBOARDING[choice].shiftId;
 
   const viewTeam = () => {
@@ -336,7 +326,6 @@ function Index() {
                   highlight={highlight}
                   onboardingShiftId={onboardingShiftId}
                   approved={approved}
-                  onEditShift={(shiftId) => setManualShiftId(shiftId)}
                 />
               </div>
 
@@ -397,21 +386,6 @@ function Index() {
             setEditOpen(false);
             if (c === "alternative") setShowAlternative(true);
             showToast("Manual assignment saved.");
-          }}
-        />
-      )}
-      {manualShiftId !== undefined && (
-        <ManualShiftModal
-          shifts={shifts}
-          initialShiftId={manualShiftId}
-          onClose={() => setManualShiftId(undefined)}
-          onSave={(change) => {
-            timers.current.forEach(clearTimeout);
-            timers.current = [];
-            setManualChanges((current) => ({ ...current, [change.shiftId]: change }));
-            setPhase("draft");
-            setManualShiftId(undefined);
-            showToast("Manual shift change saved.");
           }}
         />
       )}
