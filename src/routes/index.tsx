@@ -145,7 +145,7 @@ function Index() {
 
       <div className="flex flex-col gap-5 p-5 xl:flex-row">
         {/* LEFT: web admin */}
-        <main className="min-w-0 flex-1 xl:basis-[68%]">
+        <main className="relative min-w-0 flex-1 xl:basis-[68%]">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="text-[12.5px] text-muted-foreground">Operations / Job Scheduler</p>
@@ -186,8 +186,8 @@ function Index() {
             </div>
           </div>
 
-          <div className="mt-4 flex flex-col gap-4 2xl:flex-row">
-            <div className="min-w-0 flex-1 space-y-4">
+          <div className="mt-4">
+            <div className="min-w-0 space-y-4">
               {/* State 1 overview */}
               {phase === "initial" && (
                 <Card className="p-4">
@@ -323,10 +323,10 @@ function Index() {
               <EmployeeRail shifts={shifts} scheduled={scheduled} />
             </div>
 
-            {/* State 4 decision panel — inside the dashboard column */}
+            {/* State 4 decision panel — overlays the dashboard column only */}
             {decisionsOpen && scheduled && (
-              <div className="w-full shrink-0 2xl:w-[400px]">
-                <div className="2xl:sticky 2xl:top-20">
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-30 flex w-full max-w-[410px] justify-end p-1">
+                <div className="pointer-events-auto sticky top-20 max-h-[calc(100vh-6rem)] w-full overflow-hidden rounded-[18px] shadow-[0_12px_40px_rgba(32,42,54,0.16)]">
                   <DecisionPanel
                     onClose={() => setDecisionsOpen(false)}
                     onViewTeam={viewTeam}

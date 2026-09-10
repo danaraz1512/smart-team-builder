@@ -71,7 +71,11 @@ function ShiftCard({
               >
                 <Avatar id={id} size={20} />
                 <span className="truncate text-[11.5px] font-medium">{e.short}</span>
-                {e.isNew && <span className="ml-auto text-[10px] font-bold text-ct-green">NEW</span>}
+                {e.isNew && (
+                  <span className="ml-auto shrink-0 text-[9px] font-bold tracking-wide text-ct-green">
+                    NEW
+                  </span>
+                )}
               </div>
             );
           })}
