@@ -1,7 +1,7 @@
-import { AlertTriangle, Check, Sparkles, Users } from "lucide-react";
+import { AlertTriangle, Check, Pencil, Sparkles, Users } from "lucide-react";
 import { DAYS, LOCATIONS, byId, type EmpId, type Shift } from "@/data/demo";
 import { cn } from "@/lib/utils";
-import { Avatar, Badge, Card } from "./ui-kit";
+import { Avatar, Badge, Button, Card } from "./ui-kit";
 
 export type Highlight = { shiftId: string; employees: EmpId[] } | null;
 
@@ -11,12 +11,14 @@ function ShiftCard({
   highlight,
   onboardingShiftId,
   approved,
+  onEdit,
 }: {
   shift: Shift;
   scheduled: boolean;
   highlight: Highlight;
   onboardingShiftId: string;
   approved: boolean;
+  onEdit: (shiftId: string) => void;
 }) {
   const isOnboarding = shift.assigned.includes("noa") && shift.id === onboardingShiftId;
   const needsReview = scheduled && isOnboarding && !approved;
@@ -24,6 +26,20 @@ function ShiftCard({
 
   return (
     <div
+      role={scheduled ? "button" : undefined}
+      tabIndex={scheduled ? 0 : undefined}
+      aria-label={scheduled ? `Edit shift ${shift.time}` : undefined}
+      onClick={scheduled ? () => onEdit(shift.id) : undefined}
+      onKeyDown={
+        scheduled
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onEdit(shift.id);
+              }
+            }
+          : undefined
+      }
       className={cn(
         "flex h-full flex-col gap-1.5 rounded-[12px] border p-2 transition-all",
         !scheduled && "border-dashed border-border bg-ct-surface",
@@ -32,6 +48,7 @@ function ShiftCard({
         scheduled && isOnboarding && !needsReview && "border-ct-green/40 bg-ct-green-soft",
         needsReview && "border-ct-amber/50 bg-ct-amber-soft",
         isHighlighted && "ring-2 ring-ct-blue",
+        scheduled && "cursor-pointer focus:outline-none focus:ring-2 focus:ring-ct-blue",
       )}
     >
       <div className="flex items-center justify-between gap-1">
@@ -60,7 +77,7 @@ function ShiftCard({
         <div className="mt-0.5 space-y-1">
           {shift.assigned.map((id) => {
             const e = byId(id);
-            const ring = isHighlighted && highlight!.employees.includes(id);
+            const ring = Boolean(isHighlighted && highlight?.employees.includes(id));
             return (
               <div
                 key={id}
@@ -95,6 +112,11 @@ function ShiftCard({
           {shift.needs === 1 ? "employee" : "employees"}
         </div>
       )}
+      {scheduled && (
+        <span className="mt-auto flex items-center gap-1 pt-1 text-[10px] font-semibold text-ct-link">
+          <Pencil className="h-3 w-3" /> Edit shift
+        </span>
+      )}
     </div>
   );
 }
@@ -106,6 +128,7 @@ export default function ScheduleGrid({
   highlight,
   onboardingShiftId,
   approved,
+  onEditShift,
 }: {
   shifts: Shift[];
   scheduled: boolean;
@@ -113,19 +136,32 @@ export default function ScheduleGrid({
   highlight: Highlight;
   onboardingShiftId: string;
   approved: boolean;
+  onEditShift: (shiftId: string | null) => void;
 }) {
   return (
     <Card className="overflow-hidden">
-      <div className="flex items-center justify-between border-b border-border px-4 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3">
         <h3 className="text-[16px] font-semibold">Weekly schedule</h3>
-        <div className="flex items-center gap-2 text-[12px] text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-2 text-[12px] text-muted-foreground">
           {analyzing && (
             <span className="flex items-center gap-1 font-semibold text-ct-purple">
               <Sparkles className="h-3.5 w-3.5 animate-pulse" /> Smart Scheduler working…
             </span>
           )}
           <span>14 shifts · 2 locations</span>
+          <Button variant="secondary" size="sm" onClick={() => onEditShift(null)}>
+            <Pencil className="h-3.5 w-3.5" /> Edit manually
+          </Button>
         </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-border bg-card px-4 py-2 text-[11.5px] text-muted-foreground">
+        <span className="font-semibold text-foreground">Color key</span>
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm border border-ct-blue/30 bg-ct-blue-soft" /> Standard shift</span>
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm border border-ct-purple/30 bg-ct-purple-soft" /> Peak demand</span>
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm border border-ct-amber/40 bg-ct-amber-soft" /> Needs review</span>
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm border border-ct-green/40 bg-ct-green-soft" /> Approved onboarding</span>
+        <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded-sm border border-border bg-ct-surface" /> Not scheduled</span>
       </div>
 
       <div className={cn("min-w-0 overflow-x-auto", analyzing && "opacity-60")}>
@@ -172,6 +208,7 @@ export default function ScheduleGrid({
                             highlight={highlight}
                             onboardingShiftId={onboardingShiftId}
                             approved={approved}
+                             onEdit={onEditShift}
                           />
                         ) : (
                           <div className="h-full min-h-[52px] rounded-[10px] bg-ct-surface/60" />
