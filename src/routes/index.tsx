@@ -119,6 +119,7 @@ function Index() {
     setPhase("initial");
     setStep(0);
     setRulesOpen(false);
+    setLocationFilter("all");
     setDecisionsOpen(false);
     setShowAlternative(false);
     setChoice("recommended");
