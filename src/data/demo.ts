@@ -151,7 +151,7 @@ export const SHIFTS: Shift[] = [
     hours: 6,
     peak: false,
     needs: 2,
-    reqs: ["Opener required"],
+    reqs: ["Opener Required"],
     assigned: ["yossi", "eli"],
   },
   {
@@ -163,7 +163,7 @@ export const SHIFTS: Shift[] = [
     hours: 5,
     peak: false,
     needs: 2,
-    reqs: ["Closer required"],
+    reqs: ["Closer Required"],
     onboardingSuitable: true,
     assigned: ["eli", "noa"],
   },
@@ -176,7 +176,7 @@ export const SHIFTS: Shift[] = [
     hours: 6,
     peak: false,
     needs: 2,
-    reqs: ["Opener required"],
+    reqs: ["Opener Required"],
     assigned: ["yossi", "tom"],
   },
   {
@@ -188,7 +188,7 @@ export const SHIFTS: Shift[] = [
     hours: 5,
     peak: true,
     needs: 3,
-    reqs: ["Shift Lead required", "Closer required"],
+    reqs: ["Shift Lead Required", "Closer Required"],
     assigned: ["dana", "eli", "tom"],
   },
   {
@@ -200,7 +200,7 @@ export const SHIFTS: Shift[] = [
     hours: 6,
     peak: false,
     needs: 1,
-    reqs: ["Opener required"],
+    reqs: ["Opener Required"],
     assigned: ["yossi"],
   },
   {
@@ -212,7 +212,7 @@ export const SHIFTS: Shift[] = [
     hours: 5,
     peak: false,
     needs: 2,
-    reqs: ["Closer required"],
+    reqs: ["Closer Required"],
     assigned: ["dana", "yossi"],
   },
   {
@@ -237,7 +237,7 @@ export const SHIFTS: Shift[] = [
     hours: 5,
     peak: false,
     needs: 2,
-    reqs: ["Opener required"],
+    reqs: ["Opener Required"],
     assigned: ["dana", "maya"],
   },
   {
@@ -297,7 +297,7 @@ export const SHIFTS: Shift[] = [
     hours: 6,
     peak: true,
     needs: 3,
-    reqs: ["Opener required", "Shift Lead required"],
+    reqs: ["Opener Required", "Shift Lead Required"],
     assigned: ["dana", "maya", "eli"],
   },
 ];
