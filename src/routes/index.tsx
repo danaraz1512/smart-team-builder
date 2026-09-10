@@ -160,13 +160,28 @@ function Index() {
               <h1 className="mt-1 text-[30px] font-semibold leading-tight">
                 Bean &amp; Bloom Schedule
               </h1>
+              <p className="mt-1 text-[12.5px] text-muted-foreground">
+                2 locations · 24 hourly employees · 6 shown in this demo
+              </p>
               <div className="mt-2 flex flex-wrap items-center gap-2 text-[13px]">
                 <span className="rounded-[8px] border border-border bg-card px-2.5 py-1 font-medium">
                   Sep 13–Sep 19, 2026
                 </span>
-                <span className="rounded-[8px] border border-border bg-card px-2.5 py-1 font-medium">
-                  All Locations
-                </span>
+                <select
+                  aria-label="Location filter"
+                  value={locationFilter}
+                  onChange={(e) =>
+                    setLocationFilter(e.target.value as LocationId | "all")
+                  }
+                  className="rounded-[8px] border border-border bg-card px-2.5 py-1 font-medium outline-none focus:border-ct-blue"
+                >
+                  <option value="all">All Locations</option>
+                  {LOCATIONS.map((l) => (
+                    <option key={l.id} value={l.id}>
+                      {l.name}
+                    </option>
+                  ))}
+                </select>
                 {phase === "published" ? (
                   <Badge tone="green">Published</Badge>
                 ) : (
