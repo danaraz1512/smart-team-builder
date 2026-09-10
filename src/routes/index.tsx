@@ -356,6 +356,7 @@ function Index() {
                   approved={approved}
                   editedIds={editedIds}
                   onEditShift={scheduled ? (s) => setEditingShift(s) : undefined}
+                  locationFilter={locationFilter}
                 />
               </div>
 
