@@ -80,6 +80,8 @@ function Index() {
   const [editOpen, setEditOpen] = useState(false);
   const [acknowledged, setAcknowledged] = useState(false);
   const [highlight, setHighlight] = useState<Highlight>(null);
+  const [overrides, setOverrides] = useState<Record<string, EmpId[]>>({});
+  const [editingShift, setEditingShift] = useState<Shift | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const timers = useRef<number[]>([]);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -122,6 +124,8 @@ function Index() {
     setAcknowledged(false);
     setHighlight(null);
     setToast(null);
+    setOverrides({});
+    setEditingShift(null);
   };
 
   const publish = () => {
@@ -131,8 +135,11 @@ function Index() {
   };
 
   const scheduled = phase === "draft" || phase === "published";
-  const shifts = shiftsFor(choice);
+  const shifts = shiftsFor(choice).map((s) =>
+    overrides[s.id] ? { ...s, assigned: overrides[s.id] } : s,
+  );
   const onboardingShiftId = ONBOARDING[choice].shiftId;
+  const editedIds = Object.keys(overrides);
 
   const viewTeam = () => {
     setHighlight({ shiftId: "m-thu", employees: ["dana", "eli", "tom"] });
