@@ -400,6 +400,17 @@ function Index() {
           }}
         />
       )}
+      {editingShift && (
+        <ShiftEditor
+          shift={editingShift}
+          onClose={() => setEditingShift(null)}
+          onSave={(assigned) => {
+            setOverrides((prev) => ({ ...prev, [editingShift.id]: assigned }));
+            setEditingShift(null);
+            showToast("Manual change saved to this shift.");
+          }}
+        />
+      )}
 
       {toast && (
         <div className="fixed bottom-5 left-1/2 z-[60] -translate-x-1/2 rounded-[12px] border border-border bg-card px-4 py-3 shadow-[0_10px_30px_rgba(32,42,54,0.18)]">
