@@ -154,6 +154,7 @@ export default function ScheduleGrid({
   approved,
   editedIds = [],
   onEditShift,
+  locationFilter = "all",
 }: {
   shifts: Shift[];
   scheduled: boolean;
@@ -163,7 +164,14 @@ export default function ScheduleGrid({
   approved: boolean;
   editedIds?: string[];
   onEditShift?: ((shift: Shift) => void) | undefined;
+  locationFilter?: LocationId | "all";
 }) {
+  const locations = LOCATIONS.filter(
+    (l) => locationFilter === "all" || l.id === locationFilter,
+  );
+  const visible = shifts.filter(
+    (s) => locationFilter === "all" || s.location === locationFilter,
+  );
   return (
     <Card className="overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
