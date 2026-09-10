@@ -65,7 +65,6 @@ const metrics = [
   { label: "2 peak shifts properly staffed", tone: "purple" as const },
   { label: "1 onboarding shift created", tone: "green" as const },
   { label: "0 hard conflicts", tone: "green" as const },
-  { label: "1 decision recommended for review", tone: "amber" as const },
 ];
 
 function Index() {
@@ -296,7 +295,6 @@ function Index() {
                       <Button
                         variant="secondary"
                         onClick={() => setDecisionsOpen(true)}
-                        disabled={phase === "published"}
                       >
                         Review Key Decisions <ChevronRight className="h-4 w-4" />
                       </Button>
@@ -306,7 +304,12 @@ function Index() {
                     </div>
                   </div>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {metrics.map((m) => (
+                    {[
+                      ...metrics,
+                      approved
+                        ? { label: "1 decision approved by the manager", tone: "green" as const }
+                        : { label: "1 decision recommended for review", tone: "amber" as const },
+                    ].map((m) => (
                       <Badge key={m.label} tone={m.tone} className="!px-2.5 !py-1 !text-[12px]">
                         {m.label}
                       </Badge>
