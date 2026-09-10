@@ -187,7 +187,10 @@ export default function ScheduleGrid({
               <Pencil className="h-3.5 w-3.5" /> Click any shift to change it manually
             </span>
           )}
-          <span>14 shifts · 2 locations</span>
+          <span>
+            {visible.length} shifts · {locations.length}{" "}
+            {locations.length === 1 ? "location" : "locations"}
+          </span>
         </div>
       </div>
 
