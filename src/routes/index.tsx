@@ -25,7 +25,9 @@ import EmployeeRail from "@/components/EmployeeRail";
 import ScheduleGrid, { type Highlight } from "@/components/ScheduleGrid";
 import DecisionPanel from "@/components/DecisionPanel";
 import EditModal from "@/components/EditModal";
+import ShiftEditor from "@/components/ShiftEditor";
 import MobileSim from "@/components/MobileSim";
+import type { EmpId, Shift } from "@/data/demo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
