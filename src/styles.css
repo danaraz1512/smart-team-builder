@@ -19,6 +19,22 @@
  */
 
 @theme inline {
+  --font-sans: "Inter", ui-sans-serif, Arial, sans-serif;
+  --color-ct-blue: #2f95f8;
+  --color-ct-link: #168ff5;
+  --color-ct-blue-soft: #eaf5ff;
+  --color-ct-peri: #6879ea;
+  --color-ct-peri-soft: #eef0fd;
+  --color-ct-surface: #f6f7f8;
+  --color-ct-green: #37b77d;
+  --color-ct-green-soft: #eaf8f1;
+  --color-ct-amber: #f3a43b;
+  --color-ct-amber-soft: #fdf3e6;
+  --color-ct-amber-ink: #b3701a;
+  --color-ct-red: #f34949;
+  --color-ct-red-soft: #feeded;
+  --color-ct-purple: #c253d9;
+  --color-ct-purple-soft: #f9ecfc;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -26,6 +42,7 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -63,25 +80,26 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --background: #f6f7f8;
+  --foreground: #202a36;
+  --card: #ffffff;
+  --card-foreground: #202a36;
+  --popover: #ffffff;
+  --popover-foreground: #202a36;
+  --primary: #2f95f8;
+  --primary-foreground: #ffffff;
+  --secondary: #f6f7f8;
+  --secondary-foreground: #202a36;
+  --muted: #f6f7f8;
+  --muted-foreground: #77818d;
+  --accent: #eaf5ff;
+  --accent-foreground: #168ff5;
+  --destructive: #f34949;
+  --destructive-foreground: #ffffff;
+  --border: #e1e5e9;
+  --input: #e1e5e9;
+  --ring: #2f95f8;
+
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +158,17 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
