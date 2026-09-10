@@ -43,6 +43,8 @@ export const Route = createFileRoute("/")({
         content:
           "Build the right team for every shift — an explainable weekly schedule draft with the manager always in control.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
