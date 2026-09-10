@@ -1,5 +1,5 @@
 import { AlertTriangle, Check, Pencil, Sparkles, Users } from "lucide-react";
-import { DAYS, LOCATIONS, byId, type EmpId, type Shift } from "@/data/demo";
+import { DAYS, LOCATIONS, byId, type EmpId, type LocationId, type Shift } from "@/data/demo";
 import { cn } from "@/lib/utils";
 import { Avatar, Badge, Card } from "./ui-kit";
 
@@ -86,7 +86,7 @@ function ShiftCard({
         ))}
         {shift.onboardingSuitable && (
           <Badge tone="green" className="!text-[10px]">
-            Onboarding OK
+            Onboarding Suitable
           </Badge>
         )}
         {scheduled && edited && (
@@ -154,6 +154,7 @@ export default function ScheduleGrid({
   approved,
   editedIds = [],
   onEditShift,
+  locationFilter = "all",
 }: {
   shifts: Shift[];
   scheduled: boolean;
@@ -163,7 +164,14 @@ export default function ScheduleGrid({
   approved: boolean;
   editedIds?: string[];
   onEditShift?: ((shift: Shift) => void) | undefined;
+  locationFilter?: LocationId | "all";
 }) {
+  const locations = LOCATIONS.filter(
+    (l) => locationFilter === "all" || l.id === locationFilter,
+  );
+  const visible = shifts.filter(
+    (s) => locationFilter === "all" || s.location === locationFilter,
+  );
   return (
     <Card className="overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
@@ -179,7 +187,10 @@ export default function ScheduleGrid({
               <Pencil className="h-3.5 w-3.5" /> Click any shift to change it manually
             </span>
           )}
-          <span>14 shifts · 2 locations</span>
+          <span>
+            {visible.length} shifts · {locations.length}{" "}
+            {locations.length === 1 ? "location" : "locations"}
+          </span>
         </div>
       </div>
 
@@ -213,7 +224,7 @@ export default function ScheduleGrid({
             ))}
           </div>
 
-          {LOCATIONS.map((loc) => (
+          {locations.map((loc) => (
             <div key={loc.id}>
               <div className="border-b border-border bg-card px-3 py-1.5 text-[12.5px] font-semibold text-ct-blue">
                 {loc.name}
