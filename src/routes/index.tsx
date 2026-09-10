@@ -190,8 +190,8 @@ function Index() {
             <div
               className={
                 decisionsOpen && scheduled
-                  ? "min-w-0 space-y-4 transition-all lg:pr-[420px]"
-                  : "min-w-0 space-y-4 transition-all"
+                  ? "min-w-0 space-y-4 lg:pr-[420px]"
+                  : "min-w-0 space-y-4"
               }
             >
               {/* State 1 overview */}
