@@ -224,7 +224,7 @@ export default function ScheduleGrid({
             ))}
           </div>
 
-          {LOCATIONS.map((loc) => (
+          {locations.map((loc) => (
             <div key={loc.id}>
               <div className="border-b border-border bg-card px-3 py-1.5 text-[12.5px] font-semibold text-ct-blue">
                 {loc.name}
