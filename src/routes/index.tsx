@@ -14,8 +14,10 @@ import {
 } from "lucide-react";
 import {
   ANALYSIS_STEPS,
+  LOCATIONS,
   ONBOARDING,
   shiftsFor,
+  type LocationId,
   type OnboardingChoice,
 } from "@/data/demo";
 import { Badge, Button, Card, Sparkle } from "@/components/ui-kit";
