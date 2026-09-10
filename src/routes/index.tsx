@@ -331,7 +331,7 @@ function Index() {
 
             {/* State 4 decision panel — overlays the dashboard column only */}
             {decisionsOpen && scheduled && (
-              <div className="pointer-events-none absolute inset-y-0 right-0 z-30 flex w-full max-w-[410px] justify-end p-1">
+              <div className="pointer-events-none absolute bottom-0 right-0 top-[128px] z-30 flex w-full max-w-[410px] justify-end p-1">
                 <div className="pointer-events-auto sticky top-20 flex max-h-[calc(100vh-6rem)] w-full overflow-hidden rounded-[18px] shadow-[0_12px_40px_rgba(32,42,54,0.16)]">
                   <DecisionPanel
                     onClose={() => setDecisionsOpen(false)}
