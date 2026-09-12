@@ -110,29 +110,41 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
 
           {/* Assigned Team */}
           <div className="bg-[#F6F7F8] rounded-lg p-2.5 space-y-1.5 border border-[#E1E5E9]">
-            <div className="text-[11px] font-semibold text-[#77818D] uppercase tracking-wider">
-              Assigned Team (3 of 3 needed)
+            <div className="text-[11px] font-semibold text-[#77818D] uppercase tracking-wider flex items-center justify-between">
+              <span>Assigned Team (3 of 3 needed)</span>
+              <span className="text-emerald-700 font-bold normal-case">צפי מחזור: ~₪5,200</span>
             </div>
             <div className="flex items-center gap-2 text-[12px] text-[#202A36]">
               <span className="w-5 h-5 rounded-full bg-[#6879EA] text-white text-[10px] flex items-center justify-center font-bold">
                 DL
               </span>
               <span className="font-semibold">Dana Levi</span>
-              <span className="text-[#77818D]">— Shift Lead (Peak Certified)</span>
+              <span className="text-[#77818D]">— עוגן שיא (72 כוסות/שעה · ₪165 טיפ)</span>
             </div>
             <div className="flex items-center gap-2 text-[12px] text-[#202A36]">
               <span className="w-5 h-5 rounded-full bg-[#37B77D] text-white text-[10px] flex items-center justify-center font-bold">
                 EB
               </span>
               <span className="font-semibold">Eli Bar</span>
-              <span className="text-[#77818D]">— Experienced Barista & Closer</span>
+              <span className="text-[#77818D]">— בריסטה מנוסה וסגירה (55 כוסות/שעה)</span>
             </div>
             <div className="flex items-center gap-2 text-[12px] text-[#202A36]">
               <span className="w-5 h-5 rounded-full bg-[#9333EA] text-white text-[10px] flex items-center justify-center font-bold">
                 TR
               </span>
               <span className="font-semibold">Tom Reed</span>
-              <span className="text-[#77818D]">— Cashier (POS Specialist)</span>
+              <span className="text-[#77818D]">— קופאי מומחה (קצב סליקה גבוה)</span>
+            </div>
+          </div>
+
+          {/* Business & Revenue Signals Box */}
+          <div className="p-2.5 rounded-lg bg-amber-50/70 border border-amber-200/80 space-y-1 text-[11.5px] text-amber-950">
+            <div className="font-bold flex items-center gap-1.5 text-amber-900">
+              <Award className="w-3.5 h-3.5 text-amber-600" />
+              <span>התאמה לתוצאות עסקיות ומניעת אנדר-פרפורמינג:</span>
+            </div>
+            <div className="text-[11px] text-amber-900/90 leading-relaxed">
+              שיבוץ צוות A-Tier בעומס שיא שומר על קצב הוצאת כוסות מהיר (מעל 65/שעה), מונע נטישת לקוחות בתור ומבטיח ממוצע טיפים מקסימלי.
             </div>
           </div>
 
@@ -140,24 +152,20 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
           <div className="space-y-1.5 text-[12px] text-[#202A36]">
             <div className="flex items-start gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-              <span>Dana provides required shift-lead coverage.</span>
+              <span>דנה מספקת ניהול משמרת ותפוקת קפה שיא תחת לחץ.</span>
             </div>
             <div className="flex items-start gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-              <span>Eli is qualified to close the location.</span>
+              <span>אלי מוסמך לסגירת קופה ונעילת העגלה בסיום המשמרת.</span>
             </div>
             <div className="flex items-start gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-              <span>All assigned employees are available.</span>
+              <span>כל חברי הצוות פנויים ואישרו זמינות ללא אילוצים.</span>
             </div>
-            <div className="flex items-start gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-              <span>The team has sufficient peak-shift experience.</span>
-            </div>
-            <div className="flex items-start gap-1.5 text-[#77818D]">
+            <div className="flex items-start gap-1.5 text-slate-600">
               <ShieldCheck className="w-3.5 h-3.5 text-[#2F95F8] shrink-0 mt-0.5" />
               <span>
-                Noa was not assigned because this is a peak shift and no onboarding mentor is available.
+                <strong>מניעת עומס שגוי:</strong> נועה (מתלמדת) לא שובצה לשיא חמישי כדי למנוע קריסת שירות ולשמור על הכשרה בטוחה.
               </span>
             </div>
           </div>
@@ -219,27 +227,46 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
                 </div>
               </div>
 
+              {/* Stepped Progression Roadmap Box */}
+              <div className="p-2.5 rounded-lg bg-emerald-50/70 border border-emerald-200/80 space-y-1.5 text-[11.5px] text-emerald-950">
+                <div className="font-bold flex items-center justify-between text-emerald-900">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>תוכנית חפיפה מדורגת (Upskilling):</span>
+                  </span>
+                  <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded border border-emerald-300">
+                    שעות שקטות
+                  </span>
+                </div>
+                <div className="space-y-1 text-[11px] text-slate-700">
+                  <div className="flex items-start gap-1.5">
+                    <span className="font-bold text-emerald-700 shrink-0">משמרת 1 (ראשון):</span>
+                    <span>שטיפת כלים, פתיחה, הגשת קפה (ללא לחץ קופה).</span>
+                  </div>
+                  <div className="flex items-start gap-1.5">
+                    <span className="font-bold text-blue-700 shrink-0">משמרת 2 (רביעי):</span>
+                    <span>תרגול מזיגת חלב לאטה והקלדת הזמנות בקופה.</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Explanation Bullets */}
               <div className="space-y-1.5 text-[12px] text-[#202A36]">
                 <div className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span>Noa and Yossi are both available.</span>
+                  <span><strong>שעות שקטות בעגלה:</strong> ראשון צהריים (~90 כוסות) מאפשר הדרכה סבלנית בלי לעכב לקוחות.</span>
                 </div>
                 <div className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span>The shift is off-peak (Sunday mid-day).</span>
+                  <span><strong>התאמת חונך:</strong> יוסי כהן בעל ציון חניכה 4.9 ומומחיות אספרסו מלווה אותה צמוד.</span>
                 </div>
                 <div className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span>The location has enough coverage for guided learning.</span>
+                  <span>נועה ויוסי זמינים שניהם ללא חפיפה לאילוצים אחרים.</span>
                 </div>
                 <div className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span>Yossi is mentor-eligible and familiar with the Main Café.</span>
-                </div>
-                <div className="flex items-start gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span>Noa’s weekly-hour limit remains protected (4 of 20h).</span>
+                  <span>הגנת מגבלת שעות: נועה משובצת ל-4 מתוך 20 שעות שבועיות בלבד לשבוע ראשון.</span>
                 </div>
               </div>
 

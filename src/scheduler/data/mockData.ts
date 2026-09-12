@@ -14,6 +14,11 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     availability: ['Sunday', 'Tuesday', 'Thursday', 'Friday', 'Saturday'],
     ptoDays: [],
     avatarBg: '#6879EA',
+    tier: 'A_STAR',
+    cupsPerHour: 72,
+    avgTipsPerShift: 165,
+    salesScore: 98,
+    specialtyTag: 'מהירה בעומס שיא',
   },
   {
     id: 'emp-yossi',
@@ -29,6 +34,12 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     ptoDays: [],
     avatarBg: '#2F95F8',
     mentorEligible: true,
+    tier: 'A_STAR',
+    cupsPerHour: 65,
+    avgTipsPerShift: 145,
+    salesScore: 94,
+    mentorRating: 4.9,
+    specialtyTag: 'חונך מומלץ ואספרסו',
   },
   {
     id: 'emp-eli',
@@ -43,6 +54,11 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     availability: ['Monday', 'Tuesday', 'Thursday', 'Friday'],
     ptoDays: [],
     avatarBg: '#37B77D',
+    tier: 'CORE',
+    cupsPerHour: 55,
+    avgTipsPerShift: 120,
+    salesScore: 88,
+    specialtyTag: 'סגירות ולאטה ארט',
   },
   {
     id: 'emp-maya',
@@ -57,6 +73,11 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     availability: ['Sunday', 'Wednesday', 'Thursday', 'Friday'],
     ptoDays: ['Tuesday'],
     avatarBg: '#F3A43B',
+    tier: 'CORE',
+    cupsPerHour: 58,
+    avgTipsPerShift: 130,
+    salesScore: 90,
+    specialtyTag: 'שירות מהיר ומשפחות',
   },
   {
     id: 'emp-tom',
@@ -71,6 +92,11 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     availability: ['Monday', 'Wednesday', 'Thursday', 'Saturday'],
     ptoDays: ['Sunday'],
     avatarBg: '#9333EA',
+    tier: 'CORE',
+    cupsPerHour: 45,
+    avgTipsPerShift: 110,
+    salesScore: 86,
+    specialtyTag: 'קופה ומכירות אפסייל',
   },
   {
     id: 'emp-noa',
@@ -87,6 +113,11 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     isNew: true,
     newBadge: 'NEW · WEEK 1',
     avatarBg: '#6879EA',
+    tier: 'TRAINEE',
+    cupsPerHour: 22,
+    avgTipsPerShift: 65,
+    salesScore: 72,
+    specialtyTag: 'מתלמדת שבוע 1 · חפיפה',
   },
 ];
 
@@ -426,3 +457,74 @@ export function getGeneratedAssignments(
 
   return assignments;
 }
+
+export const DEFAULT_ONBOARDING_PLAN: import('../types').OnboardingPlanConfig = {
+  employeeId: 'emp-noa',
+  employeeName: 'נועה שחר',
+  role: 'בריסטה מתלמדת · שבוע 1',
+  steps: [
+    {
+      stepNumber: 1,
+      title: 'משמרת ראשונה: יום ראשון (10:00–14:00)',
+      timingRecommendation: 'עגלת קפה בגינה · שעות שקטות (ליווי צמוד עם יוסי)',
+      isOffPeakRequired: true,
+      mentorId: 'emp-yossi',
+      tasks: [
+        'שטיפת כלים: שטיפה וסטריליזציה של ידיות החליטה וקנקני חלב',
+        'הגשת קפה: מסירת משקאות חמים ומאפים ללקוחות בחיוך',
+        'פתיחת עמדה: היכרות עם סידור המקררים והמצרכים',
+      ],
+      restrictions: [
+        'ללא עבודה על קופה במשמרת ראשונה',
+        'ללא שיבוץ בשעות עומס שיא',
+      ],
+    },
+    {
+      stepNumber: 2,
+      title: 'משמרת שנייה: יום רביעי (14:00–18:00)',
+      timingRecommendation: 'עגלת קפה בגינה · שעות צהריים רגועות',
+      isOffPeakRequired: true,
+      mentorId: 'emp-yossi',
+      tasks: [
+        'הקצפת חלב: תרגול מזיגה ולאטה ארט בסיסי בליווי החונך',
+        'היכרות עם קופה: הקלדת הזמנות בסיסיות במערכת ה-POS',
+        'חידוש מלאי כוסות ומכסים במהלך המשמרת',
+      ],
+      restrictions: [
+        'ליווי צמוד של חונך בעת הקלדה בקופה',
+      ],
+    },
+    {
+      stepNumber: 3,
+      title: 'משמרת שלישית: שבוע הבא (השתלבות עצמאית מלאה)',
+      timingRecommendation: 'עבודה רציפה ועצמאית לפי צרכי הסידור',
+      isOffPeakRequired: false,
+      mentorId: 'emp-yossi',
+      tasks: [
+        'ניהול קו חליטה והוצאת מנות עצמאית',
+        'תפעול מלא של עמדת הקפה והקופה',
+      ],
+      restrictions: [],
+    },
+  ],
+  acknowledgementItems: [
+    {
+      id: 'ack-1',
+      text: 'קראתי והבנתי את נהלי ההיגיינה והבטיחות של העגלה',
+      subtext: 'שטיפת ידיים, כפפות ומניעת זיהום צולב',
+      required: true,
+    },
+    {
+      id: 'ack-2',
+      text: 'הבנתי את תפקידיי במשמרת הראשונה: שטיפת כלים והגשת קפה',
+      subtext: 'ללא לחץ קופה וללא התעסקות בעומס שיא',
+      required: true,
+    },
+    {
+      id: 'ack-3',
+      text: 'תיאמתי הגעה 10 דקות מוקדם למשמרת מול החונך יוסי',
+      subtext: 'התייצבות ב-09:50 בעגלת הקפה בגינה',
+      required: true,
+    },
+  ],
+};

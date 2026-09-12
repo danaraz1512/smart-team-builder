@@ -10,13 +10,16 @@ import {
   Employee,
   Shift,
   ViewMode,
+  OnboardingPlanConfig,
 } from './types';
 import {
   INITIAL_EMPLOYEES,
   INITIAL_SHIFTS,
   getGeneratedAssignments,
+  DEFAULT_ONBOARDING_PLAN,
 } from './data/mockData';
 import { WebSchedulerHeader } from './components/WebSchedulerHeader';
+import { ConsolidatedSmartBanner } from './components/ConsolidatedSmartBanner';
 import { SchedulingOverviewBanner } from './components/SchedulingOverviewBanner';
 import { AnalysisProgress } from './components/AnalysisProgress';
 import { GeneratedDraftSummaryBanner } from './components/GeneratedDraftSummaryBanner';
@@ -27,6 +30,7 @@ import { MobileSimulator } from './components/MobileSimulator';
 import { RulesModal } from './components/RulesModal';
 import { ManualEditModal } from './components/ManualEditModal';
 import { MessageBuddyModal } from './components/MessageBuddyModal';
+import { OnboardingPlanModal } from './components/OnboardingPlanModal';
 import { CheckCircle2, X } from 'lucide-react';
 
 export default function App() {
@@ -39,6 +43,8 @@ export default function App() {
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isManualEditModalOpen, setIsManualEditModalOpen] = useState(false);
   const [isMessageBuddyModalOpen, setIsMessageBuddyModalOpen] = useState(false);
+  const [isOnboardingPlanModalOpen, setIsOnboardingPlanModalOpen] = useState(false);
+  const [onboardingPlan, setOnboardingPlan] = useState<OnboardingPlanConfig>(DEFAULT_ONBOARDING_PLAN);
   const [isAssignmentApproved, setIsAssignmentApproved] = useState(false);
   const [highlightThursdayShift, setHighlightThursdayShift] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string>('All Locations');
@@ -152,21 +158,27 @@ export default function App() {
     triggerToast('Manual schedule adjustment saved successfully.');
   };
 
+  // Handle onboarding plan save
+  const handleSaveOnboardingPlan = (updatedPlan: OnboardingPlanConfig) => {
+    setOnboardingPlan(updatedPlan);
+    triggerToast('תוכנית החפיפה, המשימות והצ\'קליסט נשמרו בהצלחה ועודכנו באפליקציית העובד!');
+  };
+
   // Current buddy for modals
   const activeBuddy = useMemo(() => {
     if (onboardingChoice === 'alternative') {
       return (
-        INITIAL_EMPLOYEES.find((e) => e.id === 'emp-dana') || INITIAL_EMPLOYEES[0]!
+        INITIAL_EMPLOYEES.find((e) => e.id === 'emp-dana') || INITIAL_EMPLOYEES[0]
       );
     }
     if (customConfig) {
       return (
         INITIAL_EMPLOYEES.find((e) => e.id === customConfig.buddyId) ||
-        INITIAL_EMPLOYEES[1]!
+        INITIAL_EMPLOYEES[1]
       );
     }
     return (
-      INITIAL_EMPLOYEES.find((e) => e.id === 'emp-yossi') || INITIAL_EMPLOYEES[1]!
+      INITIAL_EMPLOYEES.find((e) => e.id === 'emp-yossi') || INITIAL_EMPLOYEES[1]
     );
   }, [onboardingChoice, customConfig]);
 
@@ -227,36 +239,52 @@ export default function App() {
           <div className="flex-1 flex relative overflow-hidden">
             {/* Scrollable Center Content */}
             <div className="flex-1 overflow-y-auto p-4 sm:p-5 bg-[#F6F7F8]">
-              {/* STATE 1: Scheduling Overview (shown when initial) */}
-              {schedulerState === 'initial' && (
-                <SchedulingOverviewBanner
-                  onOpenRules={() => setIsRulesModalOpen(true)}
-                  viewMode={viewMode}
-                />
-              )}
-
               {/* STATE 2: AI Analysis (shown when analyzing) */}
               {schedulerState === 'analyzing' && (
                 <AnalysisProgress onComplete={handleAnalysisComplete} />
               )}
 
-              {/* STATE 3 & 4: Generated Draft Summary Banner */}
-              {(schedulerState === 'draft_generated' ||
-                schedulerState === 'reviewing_decisions') && (
-                <GeneratedDraftSummaryBanner
+              {/* CONSOLIDATED SMART BANNER (Reduces Cognitive Load) */}
+              {schedulerState !== 'analyzing' && (
+                <ConsolidatedSmartBanner
+                  schedulerState={schedulerState}
+                  viewMode={viewMode}
+                  isApproved={isAssignmentApproved}
+                  isDecisionsOpen={isDecisionsDrawerOpen}
                   onReviewDecisions={handleToggleDecisions}
                   onPublishSchedule={handlePublishSchedule}
                   onOpenManualEdit={() => setIsManualEditModalOpen(true)}
-                  isDecisionsOpen={isDecisionsDrawerOpen}
-                  isApproved={isAssignmentApproved}
+                  onOpenRules={() => setIsRulesModalOpen(true)}
+                  onGenerateSchedule={handleGenerateSmartSchedule}
+                  onOpenOnboardingPlan={() => setIsOnboardingPlanModalOpen(true)}
+                />
+              )}
+
+              {/* Detailed metrics banner shown only in detailed mode if manager explicitly requested */}
+              {viewMode === 'detailed' && schedulerState === 'initial' && (
+                <SchedulingOverviewBanner
+                  onOpenRules={() => setIsRulesModalOpen(true)}
                   viewMode={viewMode}
                 />
               )}
+              {viewMode === 'detailed' &&
+                (schedulerState === 'draft_generated' ||
+                  schedulerState === 'reviewing_decisions') && (
+                  <GeneratedDraftSummaryBanner
+                    onReviewDecisions={handleToggleDecisions}
+                    onPublishSchedule={handlePublishSchedule}
+                    onOpenManualEdit={() => setIsManualEditModalOpen(true)}
+                    isDecisionsOpen={isDecisionsDrawerOpen}
+                    isApproved={isAssignmentApproved}
+                    viewMode={viewMode}
+                  />
+                )}
 
               {/* Roster Strip */}
               <EmployeeRosterBar
                 employees={INITIAL_EMPLOYEES}
                 viewMode={viewMode}
+                onOpenOnboardingPlan={() => setIsOnboardingPlanModalOpen(true)}
               />
 
               {/* Weekly Schedule Grid */}
@@ -289,6 +317,7 @@ export default function App() {
               onOpenManualEdit={() => setIsManualEditModalOpen(true)}
               isApproved={isAssignmentApproved}
               onApproveAssignment={handleApproveAssignment}
+              onOpenOnboardingPlan={() => setIsOnboardingPlanModalOpen(true)}
             />
           </div>
         </div>
@@ -310,6 +339,8 @@ export default function App() {
             employees={INITIAL_EMPLOYEES}
             onOpenMessageModal={() => setIsMessageBuddyModalOpen(true)}
             customBuddyId={customConfig?.buddyId}
+            onboardingPlan={onboardingPlan}
+            onOpenOnboardingPlanModal={() => setIsOnboardingPlanModalOpen(true)}
           />
         </div>
       </div>
@@ -318,6 +349,14 @@ export default function App() {
       <RulesModal
         isOpen={isRulesModalOpen}
         onClose={() => setIsRulesModalOpen(false)}
+        onOpenOnboardingPlan={() => setIsOnboardingPlanModalOpen(true)}
+      />
+
+      <OnboardingPlanModal
+        isOpen={isOnboardingPlanModalOpen}
+        onClose={() => setIsOnboardingPlanModalOpen(false)}
+        planConfig={onboardingPlan}
+        onSavePlan={handleSaveOnboardingPlan}
       />
 
       <ManualEditModal
