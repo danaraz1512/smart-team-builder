@@ -17,5 +17,5 @@
 - [x] Mobile Availability tab (morning/evening/mid→close/full day)
 
 ## New
-- [~] Mobile viewport: show employee app first (narrow view switch)
-- [ ] Align manager UI with the real Connecteam Schedule design (toolbar, day header counters, weekly summary row)
+- [x] Mobile viewport: show employee app first (narrow view switch)
+- [x] Align manager UI closer to the real Connecteam Schedule design (day counters, Today pill, weekly summary row)
