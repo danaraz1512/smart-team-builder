@@ -1,4 +1,13 @@
-import { AlertTriangle, Check, Info, Pencil, Sparkles, Users } from "lucide-react";
+import {
+  AlertTriangle,
+  Check,
+  Clock,
+  Info,
+  Layers,
+  Pencil,
+  Sparkles,
+  Users,
+} from "lucide-react";
 import { DAYS, LOCATIONS, byId, type EmpId, type LocationId, type Shift } from "@/data/demo";
 import { mayaNote } from "@/lib/scheduling-logic";
 import { cn } from "@/lib/utils";
@@ -214,6 +223,13 @@ export default function ScheduleGrid({
   const visible = shifts.filter(
     (s) => locationFilter === "all" || s.location === locationFilter,
   );
+  const totalHours = visible.reduce((sum, s) => sum + s.hours * s.assigned.length, 0);
+  const totalPeople = new Set(visible.flatMap((s) => s.assigned)).size;
+  const openSpots = visible.reduce(
+    (sum, s) => sum + Math.max(0, s.needs - s.assigned.length),
+    0,
+  );
+
   return (
     <Card className="overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
@@ -338,6 +354,26 @@ export default function ScheduleGrid({
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Weekly summary — mirrors the real Connecteam schedule footer */}
+      <div className="flex flex-wrap items-center gap-2 border-t border-border bg-ct-surface/60 px-4 py-3">
+        <span className="text-[12.5px] font-semibold">Weekly summary</span>
+        {[
+          { icon: Clock, label: "Hours", value: scheduled ? `${totalHours}` : "–" },
+          { icon: Layers, label: "Shifts", value: `${visible.length}` },
+          { icon: Users, label: "Employees", value: scheduled ? `${totalPeople}` : "–" },
+          { icon: Users, label: "Open spots", value: scheduled ? `${openSpots}` : "–" },
+        ].map((m) => (
+          <span
+            key={m.label}
+            className="flex flex-1 items-center gap-2 rounded-[10px] border border-border bg-card px-3 py-2 text-[12.5px]"
+          >
+            <m.icon className="h-3.5 w-3.5 text-muted-foreground" />
+            <span className="text-muted-foreground">{m.label}</span>
+            <span className="ml-auto font-semibold">{m.value}</span>
+          </span>
+        ))}
       </div>
     </Card>
   );
