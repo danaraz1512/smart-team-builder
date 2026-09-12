@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import {
   DAYS,
+  HOLIDAY_WEEK,
   LOCATIONS,
   POSITIONS,
   byId,
@@ -461,6 +462,14 @@ export default function EmployeeProfileDrawer({
               <p className="text-[12.5px] text-muted-foreground">
                 Employees manage availability from the mobile app.
               </p>
+              <div className="rounded-[12px] border border-ct-amber/40 bg-ct-amber-soft/60 p-3 text-[12.5px]">
+                <p className="font-semibold">
+                  {HOLIDAY_WEEK.name} week — wider availability requested
+                </p>
+                <p className="mt-0.5 text-muted-foreground">
+                  {HOLIDAY_WEEK.demandNote} {HOLIDAY_WEEK.earlyCloseNote}
+                </p>
+              </div>
               <div className="grid grid-cols-7 gap-2">
                 {DAYS.map((d, i) => {
                   const avail = employee.availability.includes(i);

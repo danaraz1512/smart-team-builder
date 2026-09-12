@@ -9,17 +9,31 @@ import {
   MessageSquare,
   User,
   Calendar,
+  CalendarClock,
+  Gift,
+  PartyPopper,
+  ArrowLeftRight,
   X,
 } from "lucide-react";
-import { ONBOARDING, byId, type OnboardingChoice } from "@/data/demo";
+import {
+  COVER_REQUEST,
+  DAYS,
+  HOLIDAY_WEEK,
+  ONBOARDING,
+  SHIFT_PART_LABELS,
+  byId,
+  type OnboardingChoice,
+  type ShiftPart,
+} from "@/data/demo";
 import { cn } from "@/lib/utils";
 import { Avatar, Badge, Button } from "./ui-kit";
 
-type Tab = "home" | "schedule" | "chat" | "profile";
+type Tab = "home" | "schedule" | "avail" | "chat" | "profile";
 
 const tabs: { id: Tab; label: string; icon: typeof Home }[] = [
   { id: "home", label: "Home", icon: Home },
   { id: "schedule", label: "Schedule", icon: Calendar },
+  { id: "avail", label: "Availability", icon: CalendarClock },
   { id: "chat", label: "Chat", icon: MessageCircle },
   { id: "profile", label: "Profile", icon: User },
 ];
@@ -42,21 +56,47 @@ function Step({ done, label }: { done: boolean; label: string }) {
   );
 }
 
+const DEFAULT_PARTS: ShiftPart[] = [
+  "morning",
+  "none",
+  "morning",
+  "none",
+  "morning",
+  "none",
+  "morning",
+];
+
 export default function MobileSim({
   published,
   choice,
   acknowledged,
   onAcknowledge,
+  availabilityRequested,
+  availabilitySubmitted,
+  onSubmitAvailability,
+  coverRequested,
+  coverOffered,
+  onOfferCover,
 }: {
   published: boolean;
   choice: OnboardingChoice;
   acknowledged: boolean;
   onAcknowledge: () => void;
+  availabilityRequested: boolean;
+  availabilitySubmitted: boolean;
+  onSubmitAvailability: (days: number) => void;
+  coverRequested: boolean;
+  coverOffered: boolean;
+  onOfferCover: () => void;
 }) {
   const [tab, setTab] = useState<Tab>("home");
   const [push, setPush] = useState(false);
+  const [pushText, setPushText] = useState(
+    "New schedule published — your first shift is ready.",
+  );
   const [msgOpen, setMsgOpen] = useState(false);
   const [checks, setChecks] = useState<boolean[]>([true, false, false, false]);
+  const [parts, setParts] = useState<ShiftPart[]>(DEFAULT_PARTS);
 
   const shift = ONBOARDING[choice];
   const buddy = byId(shift.buddy);
@@ -66,13 +106,24 @@ export default function MobileSim({
       setTab("home");
       setPush(false);
       setChecks([true, false, false, false]);
+      setParts(DEFAULT_PARTS);
       return;
     }
+    setPushText("New schedule published — your first shift is ready.");
     setPush(true);
     const t = setTimeout(() => setPush(false), 4200);
     return () => clearTimeout(t);
   }, [published]);
 
+  useEffect(() => {
+    if (!availabilityRequested) return;
+    setPushText("Holiday week — your manager needs wider availability. Tap to update.");
+    setPush(true);
+    const t = setTimeout(() => setPush(false), 4600);
+    return () => clearTimeout(t);
+  }, [availabilityRequested]);
+
+  const availableDays = parts.filter((p) => p !== "none").length;
   const steps = 2 + (published && acknowledged ? 1 : 0);
 
   return (
@@ -113,7 +164,7 @@ export default function MobileSim({
                 <div>
                   <p className="text-[12.5px] font-semibold">Connecteam</p>
                   <p className="text-[12px] text-muted-foreground">
-                    New schedule published — your first shift is ready.
+                    {pushText}
                   </p>
                 </div>
               </div>
@@ -125,6 +176,34 @@ export default function MobileSim({
             {tab === "home" && (
               <div className="space-y-4">
                 <h1 className="text-[22px] font-semibold">Good morning, Noa 👋</h1>
+
+                {availabilityRequested && !availabilitySubmitted && (
+                  <div className="rounded-[16px] border border-ct-amber/40 bg-ct-amber-soft p-4">
+                    <div className="flex items-center gap-2">
+                      <PartyPopper className="h-4 w-4 text-ct-amber-ink" />
+                      <h2 className="text-[15px] font-semibold">Holiday week — help needed</h2>
+                    </div>
+                    <p className="mt-1.5 text-[12.5px]">
+                      We’ll need your help this week with wider availability because of{" "}
+                      {HOLIDAY_WEEK.name}. Nothing is assigned yet — if we do schedule you for an
+                      extra shift, you’ll get a gift voucher as a thank-you.
+                    </p>
+                    <Button size="sm" className="mt-2.5 w-full" onClick={() => setTab("avail")}>
+                      Update My Availability
+                    </Button>
+                  </div>
+                )}
+
+                {availabilitySubmitted && (
+                  <div className="rounded-[16px] border border-ct-green/30 bg-ct-green-soft p-4">
+                    <p className="flex items-center gap-2 text-[13.5px] font-semibold text-ct-green">
+                      <Check className="h-4 w-4" /> Holiday availability sent — {availableDays} days
+                    </p>
+                    <p className="mt-1 flex items-center gap-1.5 text-[12.5px] text-muted-foreground">
+                      <Gift className="h-3.5 w-3.5" /> Extra holiday shifts come with a gift voucher.
+                    </p>
+                  </div>
+                )}
 
                 {!published ? (
                   <>
@@ -305,6 +384,95 @@ export default function MobileSim({
               </div>
             )}
 
+            {tab === "avail" && (
+              <div className="space-y-3">
+                <h1 className="text-[22px] font-semibold">My availability</h1>
+                <p className="text-[12.5px] text-muted-foreground">Week of Sep 13–Sep 19, 2026</p>
+
+                {availabilityRequested && (
+                  <div className="rounded-[14px] border border-ct-amber/40 bg-ct-amber-soft p-3.5">
+                    <div className="flex items-center gap-2">
+                      <PartyPopper className="h-4 w-4 text-ct-amber-ink" />
+                      <p className="text-[13px] font-semibold">
+                        {HOLIDAY_WEEK.name} week — higher demand Thu–Sat
+                      </p>
+                    </div>
+                    <p className="mt-1 text-[12px]">
+                      Your manager asked the team for wider availability this week. It doesn’t
+                      guarantee a shift, and extra holiday shifts are rewarded with a gift voucher.
+                    </p>
+                    <p className="mt-1 text-[12px] text-muted-foreground">
+                      {HOLIDAY_WEEK.earlyCloseNote}
+                    </p>
+                  </div>
+                )}
+
+                <div className="divide-y divide-border rounded-[14px] border border-border">
+                  {DAYS.map((d, i) => (
+                    <div key={d.label} className="flex items-center gap-2 px-3 py-2">
+                      <div className="w-16">
+                        <p className="text-[13px] font-semibold">{d.label}</p>
+                        <p className="text-[11px] text-muted-foreground">{d.date}</p>
+                      </div>
+                      {HOLIDAY_WEEK.demandDays.includes(i) && (
+                        <Badge tone="amber">Busy</Badge>
+                      )}
+                      <select
+                        aria-label={`Availability for ${d.label}`}
+                        className="ml-auto rounded-[9px] border border-border bg-card px-2 py-1 text-[12px] font-medium outline-none focus:border-ct-blue"
+                        value={parts[i] ?? "none"}
+                        onChange={(e) =>
+                          setParts((prev) =>
+                            prev.map((v, idx) =>
+                              idx === i ? (e.target.value as ShiftPart) : v,
+                            ),
+                          )
+                        }
+                      >
+                        {(Object.keys(SHIFT_PART_LABELS) as ShiftPart[]).map((k) => (
+                          <option key={k} value={k}>
+                            {SHIFT_PART_LABELS[k]}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="text-[12px] text-muted-foreground">
+                  {availableDays} of 7 days available. “Mid → Close” covers the long
+                  afternoon-to-closing shift.
+                </p>
+
+                <Button className="w-full" onClick={() => onSubmitAvailability(availableDays)}>
+                  {availabilitySubmitted ? "Update Availability" : "Submit Availability"}
+                </Button>
+
+                {coverRequested && (
+                  <div className="rounded-[14px] border border-ct-blue/30 bg-ct-blue-soft p-3.5">
+                    <div className="flex items-center gap-2">
+                      <ArrowLeftRight className="h-4 w-4 text-ct-blue" />
+                      <p className="text-[13px] font-semibold">Cover needed</p>
+                    </div>
+                    <p className="mt-1 text-[12.5px]">
+                      {byId(COVER_REQUEST.empId).short} is out sick — {COVER_REQUEST.day},{" "}
+                      {COVER_REQUEST.time} at {COVER_REQUEST.location}.
+                    </p>
+                    {coverOffered ? (
+                      <p className="mt-2 flex items-center gap-1.5 text-[12.5px] font-semibold text-ct-green">
+                        <Check className="h-3.5 w-3.5" /> Offer sent — your manager will confirm
+                        (training shift needs a mentor).
+                      </p>
+                    ) : (
+                      <Button size="sm" variant="secondary" className="mt-2 w-full" onClick={onOfferCover}>
+                        I Can Cover This Shift
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
             {tab === "chat" && (
               <div className="space-y-3">
                 <h1 className="text-[22px] font-semibold">Chat</h1>
@@ -388,7 +556,7 @@ export default function MobileSim({
           )}
 
           {/* bottom nav */}
-          <div className="grid grid-cols-4 border-t border-border bg-card pb-2 pt-1.5">
+          <div className="grid grid-cols-5 border-t border-border bg-card pb-2 pt-1.5">
             {tabs.map((t) => {
               const Icon = t.icon;
               const active = tab === t.id;
