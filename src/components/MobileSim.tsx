@@ -9,17 +9,31 @@ import {
   MessageSquare,
   User,
   Calendar,
+  CalendarClock,
+  Gift,
+  PartyPopper,
+  ArrowLeftRight,
   X,
 } from "lucide-react";
-import { ONBOARDING, byId, type OnboardingChoice } from "@/data/demo";
+import {
+  COVER_REQUEST,
+  DAYS,
+  HOLIDAY_WEEK,
+  ONBOARDING,
+  SHIFT_PART_LABELS,
+  byId,
+  type OnboardingChoice,
+  type ShiftPart,
+} from "@/data/demo";
 import { cn } from "@/lib/utils";
 import { Avatar, Badge, Button } from "./ui-kit";
 
-type Tab = "home" | "schedule" | "chat" | "profile";
+type Tab = "home" | "schedule" | "avail" | "chat" | "profile";
 
 const tabs: { id: Tab; label: string; icon: typeof Home }[] = [
   { id: "home", label: "Home", icon: Home },
   { id: "schedule", label: "Schedule", icon: Calendar },
+  { id: "avail", label: "Availability", icon: CalendarClock },
   { id: "chat", label: "Chat", icon: MessageCircle },
   { id: "profile", label: "Profile", icon: User },
 ];
@@ -42,21 +56,44 @@ function Step({ done, label }: { done: boolean; label: string }) {
   );
 }
 
+const DEFAULT_PARTS: ShiftPart[] = [
+  "morning",
+  "none",
+  "morning",
+  "none",
+  "morning",
+  "none",
+  "morning",
+];
+
 export default function MobileSim({
   published,
   choice,
   acknowledged,
   onAcknowledge,
+  availabilityRequested,
+  availabilitySubmitted,
+  onSubmitAvailability,
+  coverRequested,
+  coverOffered,
+  onOfferCover,
 }: {
   published: boolean;
   choice: OnboardingChoice;
   acknowledged: boolean;
   onAcknowledge: () => void;
+  availabilityRequested: boolean;
+  availabilitySubmitted: boolean;
+  onSubmitAvailability: (days: number) => void;
+  coverRequested: boolean;
+  coverOffered: boolean;
+  onOfferCover: () => void;
 }) {
   const [tab, setTab] = useState<Tab>("home");
   const [push, setPush] = useState(false);
   const [msgOpen, setMsgOpen] = useState(false);
   const [checks, setChecks] = useState<boolean[]>([true, false, false, false]);
+  const [parts, setParts] = useState<ShiftPart[]>(DEFAULT_PARTS);
 
   const shift = ONBOARDING[choice];
   const buddy = byId(shift.buddy);
@@ -66,6 +103,7 @@ export default function MobileSim({
       setTab("home");
       setPush(false);
       setChecks([true, false, false, false]);
+      setParts(DEFAULT_PARTS);
       return;
     }
     setPush(true);
