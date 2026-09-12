@@ -51,7 +51,7 @@ interface MobileSimulatorProps {
   isPublished: boolean;
   onboardingChoice: OnboardingAssignmentOption;
   employees: Employee[];
-  onOpenMessageModal: () => void;
+  onOpenMessageModal: (name?: string) => void;
   customBuddyId?: string;
   holidayStatus?: EmployeeHolidayStatus;
   onHolidayStatusChange?: (status: EmployeeHolidayStatus) => void;

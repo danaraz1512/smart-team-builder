@@ -25,6 +25,7 @@ interface DecisionsDrawerProps {
   onOpenManualEdit: () => void;
   isApproved: boolean;
   onApproveAssignment: () => void;
+  onOpenOnboardingPlan?: () => void;
 }
 
 export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
