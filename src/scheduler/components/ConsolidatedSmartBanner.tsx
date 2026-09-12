@@ -9,10 +9,7 @@ import {
   ChevronUp,
   Sliders,
   ShieldCheck,
-  Gift,
   Calendar,
-  Users,
-  Award,
   GraduationCap,
 } from 'lucide-react';
 import { SchedulerState, ViewMode } from '../types';
@@ -32,7 +29,6 @@ interface ConsolidatedSmartBannerProps {
 
 export const ConsolidatedSmartBanner: React.FC<ConsolidatedSmartBannerProps> = ({
   schedulerState,
-  viewMode,
   isApproved,
   isDecisionsOpen,
   onReviewDecisions,
@@ -49,64 +45,60 @@ export const ConsolidatedSmartBanner: React.FC<ConsolidatedSmartBannerProps> = (
   const isInitial = schedulerState === 'initial';
   const isAnalyzing = schedulerState === 'analyzing';
 
+  const title = isInitial
+    ? 'סידור עבודה לשבוע הבא'
+    : isAnalyzing
+    ? 'מנתח אילוצים וחוקי שיבוץ...'
+    : isDraftOrReview
+    ? 'טיוטת סידור עבודה מוכנה'
+    : 'סידור העבודה פורסם בהצלחה';
+
+  const subtitle = isInitial
+    ? 'ערב חג ביום ראשון (08:00–14:00) · 16 משמרות לשיבוץ'
+    : isAnalyzing
+    ? 'בודק זמינות, חוקי שיבוץ וכשירות עובדים'
+    : isDraftOrReview
+    ? '16/16 משמרות מכוסות · 0 קונפליקטים · החלטה אחת לבדיקה'
+    : '16/16 משמרות פורסמו · הצוות קיבל עדכון';
+
   return (
     <div
       id="consolidated-smart-banner"
-      className="bg-white border border-[#BAE0FD] rounded-2xl shadow-xs p-4 mb-4 transition-all"
+      className="bg-white border border-[#E1E5E9] rounded-2xl shadow-xs px-4 py-3 mb-4"
     >
-      {/* Tier 1: Main Header & Actions (Balanced wrapping with plenty of horizontal space) */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        {/* Left Side: Status Icon + Title + Status Badges */}
-        <div className="flex items-center gap-2.5 flex-wrap min-w-0">
-          {/* Status Icon */}
-          <div
-            className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-2xs ${
-              isPublished
-                ? 'bg-[#E8F8F0] text-[#16A34A]'
-                : isDraftOrReview
-                ? 'bg-[#EAF5FF] text-[#2F95F8]'
-                : 'bg-amber-50 text-amber-600'
-            }`}
-          >
-            {isPublished ? (
-              <CheckCircle2 className="w-5 h-5 text-[#16A34A]" />
-            ) : isDraftOrReview ? (
-              <Sparkles className="w-5 h-5 text-[#2F95F8]" />
-            ) : (
-              <Calendar className="w-5 h-5 text-amber-600" />
-            )}
-          </div>
-
-          {/* Title */}
-          <h2 className="text-[15px] sm:text-[16px] font-bold text-[#202A36] whitespace-nowrap">
-            {isInitial && 'סידור עבודה לשבוע הבא'}
-            {isAnalyzing && 'מנתח אילוצים וחוקי שיבוץ...'}
-            {isDraftOrReview && 'טיוטת סידור עבודה מוכנה'}
-            {isPublished && 'סידור העבודה פורסם בהצלחה'}
-          </h2>
-
-          {/* Shift Coverage Badge */}
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11.5px] font-bold bg-[#E8F8F0] text-[#166534] border border-[#BDEBD3] whitespace-nowrap">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#16A34A]" />
-            <span>16/16 משמרות משובצות</span>
-          </span>
-
-          {/* Holiday Context Badge */}
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11.5px] font-bold bg-[#FEF3C7] text-amber-950 border border-amber-300 shadow-2xs whitespace-nowrap">
-            <Gift className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-            <span>ערב חג השבוע (ראשון 08:00–14:00)</span>
-          </span>
-
-          {isApproved && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold bg-[#EAF5FF] text-[#0284C7] border border-[#BAE0FD] whitespace-nowrap">
-              <span>החלטות אושרו ✓</span>
-            </span>
+      {/* One calm line: status + what matters now + the next action */}
+      <div className="flex flex-wrap items-center gap-3">
+        <div
+          className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+            isPublished
+              ? 'bg-[#E8F8F0] text-[#16A34A]'
+              : isDraftOrReview
+              ? 'bg-[#EAF5FF] text-[#2F95F8]'
+              : 'bg-amber-50 text-amber-600'
+          }`}
+        >
+          {isPublished ? (
+            <CheckCircle2 className="w-4 h-4" />
+          ) : isDraftOrReview ? (
+            <Sparkles className="w-4 h-4" />
+          ) : (
+            <Calendar className="w-4 h-4" />
           )}
         </div>
 
-        {/* Right Side: Key Action Buttons */}
-        <div className="flex items-center gap-2 flex-wrap shrink-0">
-          {/* Initial State: Generate Button */}
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <h2 className="text-[15px] font-bold text-[#202A36] truncate">{title}</h2>
+            {isApproved && (
+              <span className="text-[11px] font-semibold text-[#0284C7] whitespace-nowrap">
+                החלטות אושרו ✓
+              </span>
+            )}
+          </div>
+          <p className="text-[11.5px] text-[#64748B] truncate">{subtitle}</p>
+        </div>
+
+        <div className="flex items-center gap-2 ml-auto shrink-0">
           {isInitial && (
             <button
               onClick={onGenerateSchedule}
@@ -117,7 +109,6 @@ export const ConsolidatedSmartBanner: React.FC<ConsolidatedSmartBannerProps> = (
             </button>
           )}
 
-          {/* Draft/Review State Actions */}
           {isDraftOrReview && (
             <>
               <button
@@ -125,8 +116,8 @@ export const ConsolidatedSmartBanner: React.FC<ConsolidatedSmartBannerProps> = (
                 onClick={onReviewDecisions}
                 className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-[12.5px] transition-all cursor-pointer shadow-xs active:scale-[0.98] whitespace-nowrap ${
                   isDecisionsOpen
-                    ? 'bg-[#202A36] text-white ring-2 ring-[#202A36]/20'
-                    : 'bg-[#2F95F8] hover:bg-[#168FF5] text-white ring-2 ring-[#2F95F8]/30'
+                    ? 'bg-[#202A36] text-white'
+                    : 'bg-[#2F95F8] hover:bg-[#168FF5] text-white'
                 }`}
               >
                 <AlertCircle className="w-4 h-4 text-amber-300" />
@@ -137,11 +128,10 @@ export const ConsolidatedSmartBanner: React.FC<ConsolidatedSmartBannerProps> = (
               <button
                 id="smart-banner-manual-btn"
                 onClick={onOpenManualEdit}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#BAE0FD] bg-[#EAF5FF] text-[#168FF5] hover:bg-[#2F95F8] hover:text-white font-bold text-[12.5px] transition-all cursor-pointer shadow-2xs active:scale-[0.98] whitespace-nowrap"
                 title="שינוי ידני של מועד החפיפה ובחירת חונך"
+                className="p-2 rounded-xl border border-[#E1E5E9] hover:bg-[#F1F5F9] text-[#64748B] transition-colors cursor-pointer"
               >
-                <Sliders className="w-3.5 h-3.5 text-[#2F95F8] group-hover:text-white" />
-                <span>שינוי ידני</span>
+                <Sliders className="w-4 h-4 text-[#2F95F8]" />
               </button>
 
               <button
@@ -149,135 +139,67 @@ export const ConsolidatedSmartBanner: React.FC<ConsolidatedSmartBannerProps> = (
                 onClick={onPublishSchedule}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-[12.5px] transition-all shadow-xs cursor-pointer active:scale-[0.98] whitespace-nowrap"
               >
-                <Send className="w-3.5 h-3.5 text-white" />
+                <Send className="w-3.5 h-3.5" />
                 <span>פרסם לצוות</span>
               </button>
             </>
           )}
 
-          {/* Rules Action Button */}
           <button
             onClick={onOpenRules}
             title="חוקי שיבוץ והגדרות אילוצים"
-            className="p-2 rounded-xl border border-[#E1E5E9] hover:bg-[#F8FAFC] text-[#64748B] hover:text-[#202A36] transition-colors cursor-pointer"
+            className="p-2 rounded-xl border border-[#E1E5E9] hover:bg-[#F1F5F9] text-[#64748B] transition-colors cursor-pointer"
           >
             <ShieldCheck className="w-4 h-4 text-[#2F95F8]" />
           </button>
 
-          {/* Onboarding Plan Action Button */}
           {onOpenOnboardingPlan && (
             <button
               onClick={onOpenOnboardingPlan}
-              title="הגדרת תוכנית חפיפה, משימות וצ'קליסט לעובד חדש"
-              className="px-3 py-2 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100/80 text-emerald-800 font-bold text-[12px] flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              title="תוכנית חפיפה ומשימות לעובד חדש"
+              className="p-2 rounded-xl border border-[#E1E5E9] hover:bg-[#F1F5F9] text-[#64748B] transition-colors cursor-pointer"
             >
               <GraduationCap className="w-4 h-4 text-emerald-600" />
-              <span>תוכנית חפיפה ומשימות</span>
             </button>
           )}
+
+          <button
+            type="button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="text-[11.5px] text-[#64748B] hover:text-[#202A36] font-semibold flex items-center gap-1 px-2 py-1.5 rounded-lg hover:bg-[#F1F5F9] transition-colors cursor-pointer whitespace-nowrap"
+          >
+            <span>{isExpanded ? 'הסתר פרטים' : 'פרטים'}</span>
+            {isExpanded ? (
+              <ChevronUp className="w-3.5 h-3.5" />
+            ) : (
+              <ChevronDown className="w-3.5 h-3.5" />
+            )}
+          </button>
         </div>
       </div>
 
-      {/* Tier 2: Operational Highlights & Metric Details Toggle (Roomy and clean) */}
-      <div className="mt-3 pt-2.5 border-t border-[#F1F5F9] flex flex-wrap items-center justify-between gap-2.5 text-[12px]">
-        {/* Key Highlights Pill Group */}
-        <div className="flex items-center gap-2 flex-wrap text-[#475569]">
-          <span className="inline-flex items-center gap-1 font-semibold text-[#166534] bg-[#F0FDF4] px-2 py-0.5 rounded-lg border border-[#DCFCE7] whitespace-nowrap">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#16A34A]" />
-            0 קונפליקטים קשיחים
-          </span>
-
-          {onOpenOnboardingPlan ? (
-            <button
-              onClick={onOpenOnboardingPlan}
-              className="inline-flex items-center gap-1 font-semibold text-[#0369A1] bg-[#F0F9FF] hover:bg-[#E0F2FE] px-2.5 py-0.5 rounded-lg border border-[#BAE0FD] whitespace-nowrap cursor-pointer transition-all text-[12px]"
-              title="לחץ לעריכת המשימות של נועה"
-            >
-              <Users className="w-3.5 h-3.5 text-[#0284C7]" />
-              <span>חפיפת נועה: ראשון 10:00 (ערוך משימות ✏️)</span>
-            </button>
-          ) : (
-            <span className="inline-flex items-center gap-1 font-semibold text-[#0369A1] bg-[#F0F9FF] px-2 py-0.5 rounded-lg border border-[#E0F2FE] whitespace-nowrap">
-              <Users className="w-3.5 h-3.5 text-[#0284C7]" />
-              חפיפת נועה: ראשון 10:00 (עם יוסי)
-            </span>
-          )}
-
-          <span className="inline-flex items-center gap-1 font-semibold text-amber-900 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 whitespace-nowrap">
-            <Award className="w-3.5 h-3.5 text-amber-600" />
-            עוגני תפוקה בשיא: 100%
-          </span>
-
-          <span className="inline-flex items-center gap-1 text-[#64748B] whitespace-nowrap">
-            <span>· 5 עובדים זמינים שובצו</span>
-          </span>
-
-          <span className="inline-flex items-center gap-1 text-[#64748B] whitespace-nowrap">
-            <span>· מתכונת ערב חג קצרה מוגדרת</span>
-          </span>
-        </div>
-
-        {/* Toggle Detailed Metrics Button */}
-        <button
-          type="button"
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="text-[11.5px] text-[#64748B] hover:text-[#202A36] font-semibold flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-[#F1F5F9] transition-colors cursor-pointer whitespace-nowrap"
-        >
-          <span>{isExpanded ? 'צמצם פירוט מדדים' : 'הצג פירוט מדדים מלא'}</span>
-          {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-        </button>
-      </div>
-
-      {/* Tier 3: Collapsible Detailed Metrics Drawer (When requested by user) */}
+      {/* Details only on demand */}
       {isExpanded && (
         <div className="mt-3 pt-3 border-t border-[#E1E5E9] grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-[11px] animate-in fade-in duration-200">
-          <div className="p-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#16A34A] shrink-0" />
-            <div>
-              <div className="font-bold text-[#202A36]">16/16 משמרות</div>
-              <div className="text-[10px] text-[#64748B]">מכוסות במלואן</div>
+          {[
+            { color: 'bg-[#16A34A]', title: '16/16 משמרות', sub: 'מכוסות במלואן' },
+            { color: 'bg-amber-500', title: 'ערב חג: 08:00–14:00', sub: 'מתכונת מקוצרת' },
+            { color: 'bg-[#2F95F8]', title: '5 אילוצי זמינות', sub: 'נשמרו בהצלחה' },
+            { color: 'bg-purple-500', title: '2 משמרות שיא', sub: 'חמישי ושישי' },
+            { color: 'bg-emerald-500', title: 'חפיפת נועה', sub: 'ראשון 10:00 · יוסי' },
+            { color: 'bg-slate-400', title: '0 קונפליקטים', sub: 'ללא חריגות' },
+          ].map((metric) => (
+            <div
+              key={metric.title}
+              className="p-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-2"
+            >
+              <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${metric.color}`} />
+              <div>
+                <div className="font-bold text-[#202A36]">{metric.title}</div>
+                <div className="text-[10px] text-[#64748B]">{metric.sub}</div>
+              </div>
             </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0" />
-            <div>
-              <div className="font-bold text-[#202A36]">ערב חג: 08:00–14:00</div>
-              <div className="text-[10px] text-amber-800">מתכונת מקוצרת</div>
-            </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#2F95F8] shrink-0" />
-            <div>
-              <div className="font-bold text-[#202A36]">5 אילוצי זמינות</div>
-              <div className="text-[10px] text-[#64748B]">נשמרו בהצלחה</div>
-            </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-purple-500 shrink-0" />
-            <div>
-              <div className="font-bold text-[#202A36]">2 משמרות שיא</div>
-              <div className="text-[10px] text-[#64748B]">חמישי ושישי</div>
-            </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0" />
-            <div>
-              <div className="font-bold text-[#202A36]">חפיפת נועה</div>
-              <div className="text-[10px] text-[#64748B]">ראשון 10:00 יוסי</div>
-            </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-slate-400 shrink-0" />
-            <div>
-              <div className="font-bold text-[#202A36]">0 קונפליקטים</div>
-              <div className="text-[10px] text-[#64748B]">ללא חריגות</div>
-            </div>
-          </div>
+          ))}
         </div>
       )}
     </div>
