@@ -96,6 +96,8 @@ function Index() {
   const [toast, setToast] = useState<string | null>(null);
   const [employees, setEmployees] = useState<Employee[]>(() => cloneEmployees());
   const [profileId, setProfileId] = useState<EmpId | null>(null);
+  /** On phone/tablet widths only one side fits: employees see the app first. */
+  const [narrowView, setNarrowView] = useState<"manager" | "employee">("employee");
   const [listOpen, setListOpen] = useState(false);
   const [needsReview, setNeedsReview] = useState(false);
   const [holiday, setHoliday] = useState<HolidayState>({
