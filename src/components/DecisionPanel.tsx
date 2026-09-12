@@ -1,35 +1,7 @@
 import { Check, Info, Pencil, Sparkles, X } from "lucide-react";
-import { ONBOARDING, byId, type OnboardingChoice } from "@/data/demo";
+import { ONBOARDING, byId, type Employee, type OnboardingChoice } from "@/data/demo";
+import { onboardingDecisionWhy, peakDecision } from "@/lib/scheduling-logic";
 import { Avatar, Badge, Button } from "./ui-kit";
-
-const peakTeam = [
-  { id: "dana" as const, note: "Shift Lead" },
-  { id: "eli" as const, note: "Experienced Barista · Qualified Closer" },
-  { id: "tom" as const, note: "Cashier" },
-];
-
-const peakWhy = [
-  "Dana provides required shift-lead coverage.",
-  "Eli is qualified to close the location.",
-  "All assigned employees are available.",
-  "The team has sufficient peak-shift experience.",
-  "Noa was not assigned because this is a peak shift and no onboarding mentor is available.",
-];
-
-const recWhy = [
-  "Noa and Yossi are both available.",
-  "The shift is off-peak.",
-  "The location has enough coverage for guided learning.",
-  "Yossi is mentor-eligible and familiar with the Main Café.",
-  "Noa’s weekly-hour limit remains protected.",
-];
-
-const altWhy = [
-  "Both employees are available.",
-  "Dana is experienced.",
-  "Saturday demand is higher than Sunday.",
-  "This option is valid, but less suitable for a first shift.",
-];
 
 function Why({ items }: { items: string[] }) {
   return (
@@ -45,6 +17,7 @@ function Why({ items }: { items: string[] }) {
 }
 
 export default function DecisionPanel({
+  employees,
   onClose,
   onViewTeam,
   showAlternative,
@@ -55,6 +28,7 @@ export default function DecisionPanel({
   onApprove,
   onEditManually,
 }: {
+  employees: Employee[];
   onClose: () => void;
   onViewTeam: () => void;
   showAlternative: boolean;
@@ -67,6 +41,12 @@ export default function DecisionPanel({
 }) {
   const rec = ONBOARDING.recommended;
   const alt = ONBOARDING.alternative;
+
+  const peak = peakDecision(employees);
+  const peakTeam = peak.team;
+  const peakWhy = [...peak.why, peak.noaNote];
+  const recWhy = onboardingDecisionWhy(employees, "recommended");
+  const altWhy = onboardingDecisionWhy(employees, "alternative");
 
   return (
     <aside className="flex h-full w-full flex-col overflow-y-auto rounded-[18px] border border-border bg-card">

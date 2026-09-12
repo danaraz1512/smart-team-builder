@@ -11,12 +11,17 @@ import {
   Sparkles,
   UserPlus,
   Users,
+  UsersRound,
 } from "lucide-react";
 import {
   ANALYSIS_STEPS,
   LOCATIONS,
   ONBOARDING,
+  cloneEmployees,
   shiftsFor,
+  weeklyHours,
+  type Employee,
+  type EmpId,
   type LocationId,
   type OnboardingChoice,
 } from "@/data/demo";
@@ -29,7 +34,9 @@ import DecisionPanel from "@/components/DecisionPanel";
 import EditModal from "@/components/EditModal";
 import ShiftEditor from "@/components/ShiftEditor";
 import MobileSim from "@/components/MobileSim";
-import type { EmpId, Shift } from "@/data/demo";
+import EmployeeProfileDrawer from "@/components/EmployeeProfileDrawer";
+import EmployeeListPanel from "@/components/EmployeeListPanel";
+import type { Shift } from "@/data/demo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -86,6 +93,10 @@ function Index() {
   const [overrides, setOverrides] = useState<Record<string, EmpId[]>>({});
   const [editingShift, setEditingShift] = useState<Shift | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [employees, setEmployees] = useState<Employee[]>(() => cloneEmployees());
+  const [profileId, setProfileId] = useState<EmpId | null>(null);
+  const [listOpen, setListOpen] = useState(false);
+  const [needsReview, setNeedsReview] = useState(false);
   const timers = useRef<number[]>([]);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -130,6 +141,10 @@ function Index() {
     setToast(null);
     setOverrides({});
     setEditingShift(null);
+    setEmployees(cloneEmployees());
+    setProfileId(null);
+    setListOpen(false);
+    setNeedsReview(false);
   };
 
   const publish = () => {
@@ -150,6 +165,41 @@ function Index() {
     gridRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     timers.current.push(window.setTimeout(() => setHighlight(null), 4000));
   };
+
+  const onViewProfile = (id: EmpId) => setProfileId(id);
+
+  const onSaveProfile = (updated: Employee) => {
+    setEmployees((prev) => prev.map((e) => (e.id === updated.id ? updated : e)));
+    setProfileId(null);
+    if (scheduled) {
+      setNeedsReview(true);
+      showToast("Work profile saved. Schedule may need a review.");
+    } else {
+      showToast("Work profile saved.");
+    }
+  };
+
+  const regenerate = () => {
+    setNeedsReview(false);
+    setOverrides({});
+    setApproved(false);
+    setPhase("analyzing");
+    setStep(0);
+    ANALYSIS_STEPS.forEach((_, i) => {
+      if (i === 0) return;
+      timers.current.push(window.setTimeout(() => setStep(i), i * 500));
+    });
+    timers.current.push(
+      window.setTimeout(() => {
+        setPhase("draft");
+        showToast("Schedule regenerated using updated work profiles.");
+      }, 2000),
+    );
+  };
+
+  const employeeScheduledHours = profileId
+    ? weeklyHours(shifts, profileId)
+    : 0;
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground antialiased">
@@ -195,6 +245,9 @@ function Index() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
+              <Button variant="secondary" onClick={() => setListOpen(true)}>
+                <UsersRound className="h-4 w-4" /> Employee Profiles
+              </Button>
               <Button variant="secondary" onClick={reset}>
                 <RotateCcw className="h-4 w-4" /> Reset Demo
               </Button>
@@ -349,6 +402,30 @@ function Index() {
                 </Card>
               )}
 
+              {needsReview && scheduled && (
+                <Card className="border-ct-amber/40 bg-ct-amber-soft/50 p-3.5">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <AlertTriangle className="h-5 w-5 shrink-0 text-ct-amber-ink" />
+                    <div className="min-w-0">
+                      <p className="text-[13.5px] font-semibold">
+                        Work profiles changed — schedule may need a refresh
+                      </p>
+                      <p className="text-[12.5px] text-muted-foreground">
+                        The current draft was built with the previous work profiles. Regenerate to
+                        apply the updated readiness, experience, and limits.
+                      </p>
+                    </div>
+                    <Button
+                      className="ml-auto"
+                      onClick={regenerate}
+                      disabled={phase === "published"}
+                    >
+                      <Sparkle className="text-white" /> Regenerate Schedule
+                    </Button>
+                  </div>
+                </Card>
+              )}
+
               <div ref={gridRef}>
                 <ScheduleGrid
                   shifts={shifts}
@@ -360,10 +437,16 @@ function Index() {
                   editedIds={editedIds}
                   onEditShift={scheduled ? (s) => setEditingShift(s) : undefined}
                   locationFilter={locationFilter}
+                  employees={employees}
+                  onViewProfile={onViewProfile}
                 />
               </div>
 
-              <EmployeeRail shifts={shifts} scheduled={scheduled} />
+              <EmployeeRail
+                shifts={shifts}
+                scheduled={scheduled}
+                onViewProfile={onViewProfile}
+              />
             </div>
 
             {/* State 4 decision panel — overlays the dashboard column only */}
@@ -371,6 +454,7 @@ function Index() {
               <div className="pointer-events-none absolute bottom-0 right-0 top-[128px] z-30 flex w-full max-w-[410px] justify-end p-1">
                 <div className="pointer-events-auto sticky top-20 flex max-h-[calc(100vh-6rem)] w-full overflow-hidden rounded-[18px] shadow-[0_12px_40px_rgba(32,42,54,0.16)]">
                   <DecisionPanel
+                    employees={employees}
                     onClose={() => setDecisionsOpen(false)}
                     onViewTeam={viewTeam}
                     showAlternative={showAlternative}
@@ -395,6 +479,25 @@ function Index() {
               </div>
             )}
           </div>
+
+          {profileId && (
+            <EmployeeProfileDrawer
+              employee={employees.find((e) => e.id === profileId)!}
+              scheduledHours={employeeScheduledHours}
+              onClose={() => setProfileId(null)}
+              onSave={onSaveProfile}
+            />
+          )}
+          {listOpen && (
+            <EmployeeListPanel
+              employees={employees}
+              onPick={(id) => {
+                setListOpen(false);
+                setProfileId(id);
+              }}
+              onClose={() => setListOpen(false)}
+            />
+          )}
         </main>
 
         {/* RIGHT: mobile simulator */}

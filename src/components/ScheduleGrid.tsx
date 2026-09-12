@@ -1,5 +1,6 @@
-import { AlertTriangle, Check, Pencil, Sparkles, Users } from "lucide-react";
+import { AlertTriangle, Check, Info, Pencil, Sparkles, Users } from "lucide-react";
 import { DAYS, LOCATIONS, byId, type EmpId, type LocationId, type Shift } from "@/data/demo";
+import { mayaNote } from "@/lib/scheduling-logic";
 import { cn } from "@/lib/utils";
 import { Avatar, Badge, Card } from "./ui-kit";
 
@@ -22,6 +23,8 @@ function ShiftCard({
   approved,
   edited,
   onEdit,
+  onViewProfile,
+  note,
 }: {
   shift: Shift;
   scheduled: boolean;
@@ -30,6 +33,8 @@ function ShiftCard({
   approved: boolean;
   edited: boolean;
   onEdit?: (() => void) | undefined;
+  onViewProfile?: ((id: EmpId) => void) | undefined;
+  note?: string | null;
 }) {
   const isOnboarding = shift.assigned.includes("noa") && shift.id === onboardingShiftId;
   const needsReview = scheduled && isOnboarding && !approved;
@@ -101,12 +106,37 @@ function ShiftCard({
           {shift.assigned.map((id) => {
             const e = byId(id);
             const ring = isHighlighted && highlight!.employees.includes(id);
+            const clickable = !!onViewProfile;
             return (
               <div
                 key={id}
+                role={clickable ? "button" : undefined}
+                tabIndex={clickable ? 0 : undefined}
+                title={clickable ? "View work profile" : undefined}
+                onClick={
+                  clickable
+                    ? (ev) => {
+                        ev.stopPropagation();
+                        onViewProfile!(id);
+                      }
+                    : undefined
+                }
+                onKeyDown={
+                  clickable
+                    ? (ev) => {
+                        if (ev.key === "Enter" || ev.key === " ") {
+                          ev.preventDefault();
+                          ev.stopPropagation();
+                          onViewProfile!(id);
+                        }
+                      }
+                    : undefined
+                }
                 className={cn(
                   "flex items-center gap-1.5 rounded-[8px] bg-card px-1.5 py-1",
                   ring && "ring-2 ring-ct-blue",
+                  clickable &&
+                    "cursor-pointer hover:ring-2 hover:ring-ct-blue hover:bg-ct-blue-soft",
                 )}
               >
                 <Avatar id={id} size={20} />
@@ -134,6 +164,12 @@ function ShiftCard({
               <Check className="h-3 w-3" /> Onboarding approved
             </p>
           ) : null}
+          {note && (
+            <p className="flex items-start gap-1 rounded-[8px] bg-ct-purple-soft/70 px-1.5 py-1 text-[10px] font-medium text-ct-purple">
+              <Info className="mt-[1px] h-3 w-3 shrink-0" />
+              <span>{note}</span>
+            </p>
+          )}
         </div>
       ) : (
         <div className="mt-auto flex items-center gap-1 text-[11px] text-muted-foreground">
@@ -155,6 +191,8 @@ export default function ScheduleGrid({
   editedIds = [],
   onEditShift,
   locationFilter = "all",
+  employees,
+  onViewProfile,
 }: {
   shifts: Shift[];
   scheduled: boolean;
@@ -165,7 +203,11 @@ export default function ScheduleGrid({
   editedIds?: string[];
   onEditShift?: ((shift: Shift) => void) | undefined;
   locationFilter?: LocationId | "all";
+  employees: import("@/data/demo").Employee[];
+  onViewProfile?: ((id: EmpId) => void) | undefined;
 }) {
+  const noteFor = (shiftId: string): string | null =>
+    shiftId === "r-fri" ? mayaNote(employees) : null;
   const locations = LOCATIONS.filter(
     (l) => locationFilter === "all" || l.id === locationFilter,
   );
@@ -252,6 +294,8 @@ export default function ScheduleGrid({
                             approved={approved}
                             edited={editedIds.includes(shift.id)}
                             onEdit={onEditShift ? () => onEditShift(shift) : undefined}
+                            onViewProfile={onViewProfile}
+                            note={noteFor(shift.id)}
                           />
                         ) : (
                           <div className="h-full min-h-[52px] rounded-[10px] bg-ct-surface/60" />
