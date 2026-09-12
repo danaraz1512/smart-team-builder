@@ -34,6 +34,7 @@ import DecisionPanel from "@/components/DecisionPanel";
 import EditModal from "@/components/EditModal";
 import ShiftEditor from "@/components/ShiftEditor";
 import MobileSim from "@/components/MobileSim";
+import { cn } from "@/lib/utils";
 import EmployeeProfileDrawer from "@/components/EmployeeProfileDrawer";
 import EmployeeListPanel from "@/components/EmployeeListPanel";
 import HolidayPanel, { type HolidayState } from "@/components/HolidayPanel";
@@ -96,6 +97,8 @@ function Index() {
   const [toast, setToast] = useState<string | null>(null);
   const [employees, setEmployees] = useState<Employee[]>(() => cloneEmployees());
   const [profileId, setProfileId] = useState<EmpId | null>(null);
+  /** On phone/tablet widths only one side fits: employees see the app first. */
+  const [narrowView, setNarrowView] = useState<"manager" | "employee">("employee");
   const [listOpen, setListOpen] = useState(false);
   const [needsReview, setNeedsReview] = useState(false);
   const [holiday, setHoliday] = useState<HolidayState>({
@@ -253,9 +256,38 @@ function Index() {
     <div className="min-h-screen bg-background font-sans text-foreground antialiased">
       <TopNav />
 
+      {/* Narrow screens can only show one side at a time */}
+      <div className="flex gap-1 border-b border-border bg-card px-4 py-2 xl:hidden">
+        {(
+          [
+            ["employee", "Employee app"],
+            ["manager", "Manager"],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => setNarrowView(id)}
+            className={cn(
+              "flex-1 rounded-[10px] px-3 py-2 text-[13px] font-semibold transition",
+              narrowView === id
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-ct-surface",
+            )}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       <div className="flex flex-col gap-5 p-5 xl:flex-row">
         {/* LEFT: web admin */}
-        <main className="relative min-w-0 flex-1 xl:basis-[68%]">
+        <main
+          className={cn(
+            "relative min-w-0 flex-1 xl:basis-[68%] xl:block",
+            narrowView === "manager" ? "block" : "hidden",
+          )}
+        >
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="text-[12.5px] text-muted-foreground">Operations / Job Scheduler</p>
@@ -556,7 +588,12 @@ function Index() {
         </main>
 
         {/* RIGHT: mobile simulator */}
-        <aside className="shrink-0 xl:basis-[32%]">
+        <aside
+          className={cn(
+            "shrink-0 xl:block xl:basis-[32%]",
+            narrowView === "employee" ? "block" : "hidden",
+          )}
+        >
           <div className="xl:sticky xl:top-20">
             <MobileSim
               published={phase === "published"}
