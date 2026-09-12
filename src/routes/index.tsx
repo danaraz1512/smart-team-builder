@@ -34,6 +34,7 @@ import DecisionPanel from "@/components/DecisionPanel";
 import EditModal from "@/components/EditModal";
 import ShiftEditor from "@/components/ShiftEditor";
 import MobileSim from "@/components/MobileSim";
+import { cn } from "@/lib/utils";
 import EmployeeProfileDrawer from "@/components/EmployeeProfileDrawer";
 import EmployeeListPanel from "@/components/EmployeeListPanel";
 import HolidayPanel, { type HolidayState } from "@/components/HolidayPanel";
