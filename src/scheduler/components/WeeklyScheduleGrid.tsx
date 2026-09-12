@@ -20,7 +20,7 @@ interface WeeklyScheduleGridProps {
   highlightThursdayShift: boolean;
   onboardingChoice: 'recommended' | 'alternative' | 'custom';
   viewMode: ViewMode;
-  onOpenManualEdit?: () => void;
+  onOpenManualEdit?: (() => void) | undefined;
 }
 
 const DAYS: { name: DayOfWeek; short: string; date: string }[] = [
@@ -224,7 +224,7 @@ interface ShiftCardProps {
   highlightThursdayShift: boolean;
   onboardingChoice: 'recommended' | 'alternative' | 'custom';
   viewMode: ViewMode;
-  onOpenManualEdit?: () => void;
+  onOpenManualEdit?: (() => void) | undefined;
 }
 
 const ShiftCard: React.FC<ShiftCardProps> = ({

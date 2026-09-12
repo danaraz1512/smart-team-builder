@@ -107,7 +107,7 @@ export const EmployeeRosterBar: React.FC<EmployeeRosterBarProps> = ({ employees,
                 {emp.ptoDays.length > 0 && (
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-[#FFF7ED] text-[#F3A43B] border border-[#FED7AA] flex items-center gap-0.5">
                     <Palmtree className="w-2.5 h-2.5" />
-                    PTO: {emp.ptoDays[0].slice(0, 3)}
+                    PTO: {emp.ptoDays[0]!.slice(0, 3)}
                   </span>
                 )}
               </div>

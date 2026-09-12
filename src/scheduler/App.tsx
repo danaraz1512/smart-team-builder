@@ -156,17 +156,17 @@ export default function App() {
   const activeBuddy = useMemo(() => {
     if (onboardingChoice === 'alternative') {
       return (
-        INITIAL_EMPLOYEES.find((e) => e.id === 'emp-dana') || INITIAL_EMPLOYEES[0]
+        INITIAL_EMPLOYEES.find((e) => e.id === 'emp-dana') || INITIAL_EMPLOYEES[0]!
       );
     }
     if (customConfig) {
       return (
         INITIAL_EMPLOYEES.find((e) => e.id === customConfig.buddyId) ||
-        INITIAL_EMPLOYEES[1]
+        INITIAL_EMPLOYEES[1]!
       );
     }
     return (
-      INITIAL_EMPLOYEES.find((e) => e.id === 'emp-yossi') || INITIAL_EMPLOYEES[1]
+      INITIAL_EMPLOYEES.find((e) => e.id === 'emp-yossi') || INITIAL_EMPLOYEES[1]!
     );
   }, [onboardingChoice, customConfig]);
 

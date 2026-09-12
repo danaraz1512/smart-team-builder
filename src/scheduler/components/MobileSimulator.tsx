@@ -23,7 +23,7 @@ interface MobileSimulatorProps {
   onboardingChoice: OnboardingAssignmentOption;
   employees: Employee[];
   onOpenMessageModal: () => void;
-  customBuddyId?: string;
+  customBuddyId?: string | undefined;
 }
 
 export const MobileSimulator: React.FC<MobileSimulatorProps> = ({
@@ -67,13 +67,13 @@ export const MobileSimulator: React.FC<MobileSimulatorProps> = ({
   // Determine assigned buddy and shift details
   const buddy = (() => {
     if (onboardingChoice === 'alternative') {
-      return employees.find((e) => e.id === 'emp-dana') || employees[0];
+      return employees.find((e) => e.id === 'emp-dana') || employees[0]!;
     }
     if (customBuddyId) {
-      return employees.find((e) => e.id === customBuddyId) || employees[1];
+      return employees.find((e) => e.id === customBuddyId) || employees[1]!;
     }
     // Default recommended: Yossi Cohen
-    return employees.find((e) => e.id === 'emp-yossi') || employees[1];
+    return employees.find((e) => e.id === 'emp-yossi') || employees[1]!;
   })();
 
   const shiftInfo =
