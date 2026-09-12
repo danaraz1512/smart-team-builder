@@ -61,6 +61,7 @@ export const MobileSimulator: React.FC<MobileSimulatorProps> = ({
         meetCounter: false,
       });
       setActiveTab('home');
+      return undefined;
     }
   }, [isPublished]);
 
