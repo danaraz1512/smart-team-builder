@@ -1,12 +1,17 @@
 import React from 'react';
-import { X, ShieldAlert, Sparkles, CheckCircle2 } from 'lucide-react';
+import { X, ShieldAlert, Sparkles, CheckCircle2, GraduationCap, ArrowLeft } from 'lucide-react';
 
 interface RulesModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenOnboardingPlan?: () => void;
 }
 
-export const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
+export const RulesModal: React.FC<RulesModalProps> = ({
+  isOpen,
+  onClose,
+  onOpenOnboardingPlan,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -122,6 +127,58 @@ export const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
                   <strong>Mentor pairing:</strong> Pair new employees with a designated Onboarding Mentor (Yossi Cohen).
                 </span>
               </div>
+            </div>
+          </div>
+
+          {/* New: Onboarding Plan & Task Templates */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <h4 className="text-[14px] font-semibold uppercase tracking-wider text-[#202A36]">
+                  Onboarding & Task Setup (הגדרת חפיפה ומשימות)
+                </h4>
+              </div>
+              {onOpenOnboardingPlan && (
+                <button
+                  onClick={() => {
+                    onClose();
+                    onOpenOnboardingPlan();
+                  }}
+                  className="text-[12px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer"
+                >
+                  <span>ערוך משימות חפיפה</span>
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+            <div className="bg-gradient-to-br from-emerald-50/80 to-teal-50/50 border border-emerald-200 rounded-xl p-4 space-y-3">
+              <div className="flex items-start gap-2.5">
+                <GraduationCap className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                <div className="text-[13px] text-[#202A36] space-y-1">
+                  <div className="font-bold text-emerald-950">
+                    תבנית משימות מוגדרת לעובד חדש (נועה שחר)
+                  </div>
+                  <p className="text-[12px] text-slate-700 leading-snug">
+                    משמרת 1 מוגבלת לשעות שקטות (שטיפת כלים, הגשת קפה ופתיחה). חונך מלווה חובה (יוסי כהן).
+                  </p>
+                </div>
+              </div>
+
+              {onOpenOnboardingPlan && (
+                <div className="pt-1">
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onOpenOnboardingPlan();
+                    }}
+                    className="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[12px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                  >
+                    <GraduationCap className="w-4 h-4" />
+                    <span>פתח את מסך עריכת המשימות והצ'קליסט למנהל</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

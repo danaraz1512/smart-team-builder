@@ -16,6 +16,13 @@ export interface Employee {
   newBadge?: string;
   avatarBg?: string;
   mentorEligible?: boolean;
+  // Business outcome & performance signals
+  tier?: 'A_STAR' | 'CORE' | 'TRAINEE';
+  cupsPerHour?: number;
+  avgTipsPerShift?: number;
+  salesScore?: number; // e.g. 96/100
+  mentorRating?: number; // e.g. 4.9/5
+  specialtyTag?: string; // e.g. 'מהיר בלחץ', 'חונך סבלני', 'קופאי שירות'
 }
 
 export type ShiftTimeSlot = 'Morning' | 'Evening';
@@ -60,3 +67,44 @@ export interface ManualAssignmentConfig {
   day: DayOfWeek;
   dateStr: string;
 }
+
+export type EmployeeHolidayStatus = 'constraint' | 'open' | 'flexible_voucher';
+
+export type AvailabilityOptionType = 'available' | 'unavailable' | 'prefer_not' | 'vacation';
+
+export type ShiftHoursPreset = 'all_day' | 'morning' | 'evening' | 'custom';
+
+export interface DayAvailabilityRecord {
+  type: AvailabilityOptionType;
+  hoursPreset?: ShiftHoursPreset;
+  startTime?: string;
+  endTime?: string;
+  customHours?: string;
+  note?: string;
+}
+
+export interface OnboardingShiftStep {
+  stepNumber: number;
+  title: string;
+  timingRecommendation: string;
+  isOffPeakRequired: boolean;
+  mentorId: string;
+  tasks: string[];
+  restrictions: string[];
+}
+
+export interface OnboardingChecklistItem {
+  id: string;
+  text: string;
+  subtext: string;
+  required: boolean;
+}
+
+export interface OnboardingPlanConfig {
+  employeeId: string;
+  employeeName: string;
+  role: string;
+  steps: OnboardingShiftStep[];
+  acknowledgementItems: OnboardingChecklistItem[];
+}
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shift, Employee, DayOfWeek, SchedulerState, ViewMode } from '../types';
+import { Shift, Employee, DayOfWeek, SchedulerState, ViewMode, EmployeeHolidayStatus } from '../types';
 import {
   Sparkles,
   Clock,
@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   Lock,
   Sliders,
+  Gift,
 } from 'lucide-react';
 
 interface WeeklyScheduleGridProps {
@@ -20,17 +21,38 @@ interface WeeklyScheduleGridProps {
   highlightThursdayShift: boolean;
   onboardingChoice: 'recommended' | 'alternative' | 'custom';
   viewMode: ViewMode;
-  onOpenManualEdit?: (() => void) | undefined;
+  onOpenManualEdit?: () => void;
+  noaHolidayStatus?: EmployeeHolidayStatus;
 }
 
-const DAYS: { name: DayOfWeek; short: string; date: string }[] = [
-  { name: 'Sunday', short: 'SUN', date: 'Sep 13' },
-  { name: 'Monday', short: 'MON', date: 'Sep 14' },
+const DAYS: {
+  name: DayOfWeek;
+  short: string;
+  date: string;
+  holidayBadge?: string;
+  holidayTime?: string;
+  isHolidayEve?: boolean;
+}[] = [
+  {
+    name: 'Sunday',
+    short: 'SUN',
+    date: 'Sep 13',
+    holidayBadge: 'ערב חג 🍯',
+    holidayTime: '08:00–14:00',
+    isHolidayEve: true,
+  },
+  {
+    name: 'Monday',
+    short: 'MON',
+    date: 'Sep 14',
+    holidayBadge: 'חג 🌿',
+    holidayTime: 'מתכונת חג',
+  },
   { name: 'Tuesday', short: 'TUE', date: 'Sep 15' },
   { name: 'Wednesday', short: 'WED', date: 'Sep 16' },
   { name: 'Thursday', short: 'THU', date: 'Sep 17' },
-  { name: 'Friday', short: 'FRI', date: 'Sep 18' },
-  { name: 'Saturday', short: 'SAT', date: 'Sep 19' },
+  { name: 'Friday', short: 'FRI', date: 'Sep 18', holidayBadge: 'שישי (עד 15:00)' },
+  { name: 'Saturday', short: 'SAT', date: 'Sep 19', holidayBadge: 'שבת (עד 18:00)' },
 ];
 
 export const WeeklyScheduleGrid: React.FC<WeeklyScheduleGridProps> = ({
@@ -42,6 +64,7 @@ export const WeeklyScheduleGrid: React.FC<WeeklyScheduleGridProps> = ({
   onboardingChoice,
   viewMode,
   onOpenManualEdit,
+  noaHolidayStatus = 'flexible_voucher',
 }) => {
   const isDraftOrPublished =
     schedulerState === 'draft_generated' ||
@@ -72,6 +95,8 @@ export const WeeklyScheduleGrid: React.FC<WeeklyScheduleGridProps> = ({
             className={`p-2 text-center border-r last:border-r-0 border-[#E1E5E9] ${
               day.name === 'Thursday' && highlightThursdayShift
                 ? 'bg-[#FAF5FF] border-b-2 border-b-[#C253D9]'
+                : day.isHolidayEve
+                ? 'bg-[#FFFBEB]/70'
                 : ''
             }`}
           >
@@ -81,9 +106,21 @@ export const WeeklyScheduleGrid: React.FC<WeeklyScheduleGridProps> = ({
             <span className="block text-[12px] font-bold text-[#202A36]">
               {day.date}
             </span>
+            {day.holidayBadge && (
+              <span
+                className={`inline-block mt-0.5 px-1.5 py-0.2 rounded text-[9.5px] font-bold ${
+                  day.isHolidayEve
+                    ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs'
+                    : 'bg-slate-200/70 text-[#475569]'
+                }`}
+              >
+                {day.holidayBadge}
+              </span>
+            )}
           </div>
         ))}
       </div>
+
 
       {/* Grid Rows by Location */}
       <div className="divide-y divide-[#E1E5E9]">
@@ -142,6 +179,7 @@ export const WeeklyScheduleGrid: React.FC<WeeklyScheduleGridProps> = ({
                           onboardingChoice={onboardingChoice}
                           viewMode={viewMode}
                           onOpenManualEdit={onOpenManualEdit}
+                          noaHolidayStatus={noaHolidayStatus}
                         />
                       ) : (
                         <div className="h-full flex items-center justify-center text-[10px] text-[#A0AEC0] italic">
@@ -188,6 +226,7 @@ export const WeeklyScheduleGrid: React.FC<WeeklyScheduleGridProps> = ({
                           onboardingChoice={onboardingChoice}
                           viewMode={viewMode}
                           onOpenManualEdit={onOpenManualEdit}
+                          noaHolidayStatus={noaHolidayStatus}
                         />
                       ) : (
                         <div className="h-full flex flex-col items-center justify-center p-2 text-center rounded-lg border border-dashed border-[#E1E5E9]/80 bg-[#FAFAFA]">
@@ -224,7 +263,8 @@ interface ShiftCardProps {
   highlightThursdayShift: boolean;
   onboardingChoice: 'recommended' | 'alternative' | 'custom';
   viewMode: ViewMode;
-  onOpenManualEdit?: (() => void) | undefined;
+  onOpenManualEdit?: () => void;
+  noaHolidayStatus?: EmployeeHolidayStatus;
 }
 
 const ShiftCard: React.FC<ShiftCardProps> = ({
@@ -235,6 +275,7 @@ const ShiftCard: React.FC<ShiftCardProps> = ({
   onboardingChoice,
   viewMode,
   onOpenManualEdit,
+  noaHolidayStatus = 'flexible_voucher',
 }) => {
   const isSundayOnboarding =
     shift.id === 'shift-sun-mc-morn' && onboardingChoice === 'recommended';
@@ -381,6 +422,37 @@ const ShiftCard: React.FC<ShiftCardProps> = ({
                 <Sliders className="w-2.5 h-2.5 text-[#2F95F8]" />
                 <span>שינוי ידני (Manual Edit)</span>
               </button>
+            )}
+
+            {/* Live Noa Availability Status for Holiday Eve */}
+            {shift.day === 'Sunday' && shift.timeSlot === 'Morning' && (
+              <div className="mt-1 pt-1 border-t border-[#E1E5E9]/60">
+                {noaHolidayStatus === 'flexible_voucher' ? (
+                  <div
+                    className="px-1.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-[9px] font-bold text-amber-900 flex items-center gap-1 shadow-2xs"
+                    title="העובדת אישרה זמינות מלאה לחג וממתינה לשובר מתנה"
+                  >
+                    <Gift className="w-2.5 h-2.5 text-amber-600 shrink-0" />
+                    <span className="truncate">ערב חג: נועה פתוחה (זכאית לשובר 🎁)</span>
+                  </div>
+                ) : noaHolidayStatus === 'open' ? (
+                  <div
+                    className="px-1.5 py-0.5 rounded bg-[#EAF5FF] border border-[#BAE0FD] text-[9px] font-bold text-[#168FF5] flex items-center gap-1"
+                    title="העובדת השאירה את יום ערב החג פתוח לשיבוץ ללא אילוצים"
+                  >
+                    <CheckCircle2 className="w-2.5 h-2.5 text-[#168FF5] shrink-0" />
+                    <span className="truncate">ערב חג: נועה פתוחה לשיבוץ ✓</span>
+                  </div>
+                ) : (
+                  <div
+                    className="px-1.5 py-0.5 rounded bg-rose-50 border border-rose-200 text-[9px] font-bold text-rose-700 flex items-center gap-1"
+                    title="העובדת הזינה אילוץ: לא זמינה בשעות 09:00 - 17:00"
+                  >
+                    <AlertTriangle className="w-2.5 h-2.5 text-rose-600 shrink-0" />
+                    <span className="truncate">ערב חג: נועה חסומה באילוץ</span>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         )}
