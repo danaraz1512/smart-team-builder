@@ -440,7 +440,7 @@ export default function MobileSim({
                 </div>
 
                 <p className="text-[12px] text-muted-foreground">
-                  {availableDays} of 7 days available. “Mid \u2192 Close” covers the long
+                  {availableDays} of 7 days available. “Mid → Close” covers the long
                   afternoon-to-closing shift.
                 </p>
 
