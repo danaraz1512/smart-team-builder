@@ -108,3 +108,50 @@ export interface OnboardingPlanConfig {
   acknowledgementItems: OnboardingChecklistItem[];
 }
 
+
+/* ============================================================
+   JOBS (רשומות עבודה)
+   A job record holds a repeating shift-role or a recurring task,
+   its task checklist, required skills and the per-employee
+   qualification level (including "can mentor" yes/no).
+   ============================================================ */
+
+export type JobKind = 'shift_role' | 'recurring_task';
+
+export type JobQualificationLevel =
+  | 'certified_mentor' // מוסמך + יכול לחנוך
+  | 'qualified'        // מוסמך
+  | 'in_training'      // בהכשרה
+  | 'not_qualified';   // לא מוסמך
+
+export interface JobQualification {
+  employeeId: string;
+  level: JobQualificationLevel;
+  canMentor: boolean;
+  lastCertified?: string; // e.g. "Aug 2026"
+  note?: string;
+}
+
+export interface JobRecurrence {
+  days: DayOfWeek[];
+  timeRange: string;      // e.g. "07:00–15:00"
+  frequencyLabel: string; // e.g. "כל שבוע", "פעם בשבוע · ראשון"
+}
+
+export interface JobRecord {
+  id: string;
+  name: string;        // Hebrew display name
+  nameEn: string;      // English label (Connecteam style)
+  kind: JobKind;
+  color: string;       // dot color like Connecteam job records
+  location: string;
+  recurrence: JobRecurrence;
+  requiredHeadcount: number;
+  estimatedMinutes?: number;
+  tasks: string[];
+  requiredSkills: string[];
+  requiresMentorOnShift: boolean;
+  suitableForOnboarding: boolean;
+  notes?: string;
+  qualifications: JobQualification[];
+}

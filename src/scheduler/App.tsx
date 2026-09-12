@@ -31,7 +31,10 @@ import { RulesModal } from './components/RulesModal';
 import { ManualEditModal } from './components/ManualEditModal';
 import { MessageBuddyModal } from './components/MessageBuddyModal';
 import { OnboardingPlanModal } from './components/OnboardingPlanModal';
+import { JobsModal } from './components/JobsModal';
+import { INITIAL_JOBS } from './data/jobsData';
 import { CheckCircle2, X } from 'lucide-react';
+import { JobRecord } from './types';
 
 export default function App() {
   // Primary workflow state
@@ -49,6 +52,10 @@ export default function App() {
   const [highlightThursdayShift, setHighlightThursdayShift] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string>('All Locations');
   const [managerToast, setManagerToast] = useState<string | null>(null);
+
+  // Job records (רשומות עבודה): recurring shift roles & recurring tasks
+  const [isJobsModalOpen, setIsJobsModalOpen] = useState(false);
+  const [jobs, setJobs] = useState<JobRecord[]>(INITIAL_JOBS);
 
   // Custom manual edit config if manager manually edits
   const [customConfig, setCustomConfig] = useState<{
@@ -141,6 +148,8 @@ export default function App() {
     setOnboardingChoice('recommended');
     setIsDecisionsDrawerOpen(false);
     setIsRulesModalOpen(false);
+    setIsJobsModalOpen(false);
+    setJobs(INITIAL_JOBS);
     setIsManualEditModalOpen(false);
     setIsMessageBuddyModalOpen(false);
     setIsAssignmentApproved(false);
@@ -162,6 +171,42 @@ export default function App() {
   const handleSaveOnboardingPlan = (updatedPlan: OnboardingPlanConfig) => {
     setOnboardingPlan(updatedPlan);
     triggerToast('תוכנית החפיפה, המשימות והצ\'קליסט נשמרו בהצלחה ועודכנו באפליקציית העובד!');
+  };
+
+  // Update a job record (recurring shift role / recurring task)
+  const handleUpdateJob = (updated: JobRecord) => {
+    setJobs((prev) => prev.map((j) => (j.id === updated.id ? updated : j)));
+  };
+
+  // Create a blank job record and return its id so the modal can select it
+  const handleCreateJob = () => {
+    const id = `job-custom-${Date.now()}`;
+    const newJob: JobRecord = {
+      id,
+      name: 'רשומת עבודה חדשה',
+      nameEn: 'New Job Record',
+      kind: 'recurring_task',
+      color: '#0EA5A5',
+      location: 'Main Café',
+      recurrence: {
+        days: ['Monday'],
+        timeRange: '09:00–13:00',
+        frequencyLabel: 'כל שבוע',
+      },
+      requiredHeadcount: 1,
+      tasks: [],
+      requiredSkills: [],
+      requiresMentorOnShift: false,
+      suitableForOnboarding: false,
+      qualifications: INITIAL_EMPLOYEES.map((e) => ({
+        employeeId: e.id,
+        level: 'not_qualified' as const,
+        canMentor: false,
+      })),
+    };
+    setJobs((prev) => [...prev, newJob]);
+    triggerToast('נוצרה רשומת עבודה חדשה. הגדירי ימים, משימות ורמות הכשרה.');
+    return id;
   };
 
   // Current buddy for modals
@@ -233,6 +278,8 @@ export default function App() {
             onToggleViewMode={handleToggleViewMode}
             onOpenRules={() => setIsRulesModalOpen(true)}
             onOpenManualEdit={() => setIsManualEditModalOpen(true)}
+            onOpenJobs={() => setIsJobsModalOpen(true)}
+            jobsCount={jobs.length}
           />
 
           {/* Body Area: Content + Inside Right-Side Drawer */}
@@ -346,6 +393,15 @@ export default function App() {
       </div>
 
       {/* Modals */}
+      <JobsModal
+        isOpen={isJobsModalOpen}
+        onClose={() => setIsJobsModalOpen(false)}
+        jobs={jobs}
+        employees={INITIAL_EMPLOYEES}
+        onUpdateJob={handleUpdateJob}
+        onCreateJob={handleCreateJob}
+      />
+
       <RulesModal
         isOpen={isRulesModalOpen}
         onClose={() => setIsRulesModalOpen(false)}
