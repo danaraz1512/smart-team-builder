@@ -14,6 +14,7 @@ import {
   Zap,
   ShieldCheck,
   Sliders,
+  Briefcase,
 } from 'lucide-react';
 import { SchedulerState, ViewMode } from '../types';
 
@@ -27,6 +28,8 @@ interface WebSchedulerHeaderProps {
   onToggleViewMode: (mode: ViewMode) => void;
   onOpenRules?: () => void;
   onOpenManualEdit?: () => void;
+  onOpenJobs?: () => void;
+  jobsCount?: number;
 }
 
 export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
@@ -39,6 +42,8 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
   onToggleViewMode,
   onOpenRules,
   onOpenManualEdit,
+  onOpenJobs,
+  jobsCount,
 }) => {
   const isPublished = schedulerState === 'published';
   const isAnalyzing = schedulerState === 'analyzing';
@@ -202,6 +207,24 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
             <Calendar className="w-3.5 h-3.5 text-[#77818D]" />
             <span>Sep 13–19, 2026</span>
           </div>
+
+          {/* Jobs Registry Button */}
+          {onOpenJobs && (
+            <button
+              id="header-jobs-btn"
+              onClick={onOpenJobs}
+              title="רשומות עבודה: משמרות ומשימות חוזרות, כשירות עובדים והרשאת חניכה"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E1E5E9] bg-white text-[#202A36] hover:bg-[#F6F7F8] hover:border-[#BAE0FD] text-[12px] font-bold transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
+            >
+              <Briefcase className="w-3.5 h-3.5 text-[#2F95F8]" />
+              <span>רשומות עבודה (Jobs)</span>
+              {typeof jobsCount === 'number' && (
+                <span className="ml-0.5 px-1.5 py-0.5 rounded-md bg-[#F1F3F5] text-[10.5px] text-[#77818D] font-bold">
+                  {jobsCount}
+                </span>
+              )}
+            </button>
+          )}
 
           {/* Rules Action Button */}
           {onOpenRules && (
