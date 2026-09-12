@@ -191,7 +191,9 @@ const ShiftCard: React.FC<ShiftCardProps> = ({
 
   const isFocus = viewMode === 'focus';
   const showHolidayNote =
-    shift.day === 'Sunday' && shift.timeSlot === 'Morning' && isDraftOrPublished;
+    shift.day === 'Sunday' &&
+    isDraftOrPublished &&
+    assignedEmployees.some((emp) => emp.isNew);
 
   const holidayNote =
     noaHolidayStatus === 'flexible_voucher'
