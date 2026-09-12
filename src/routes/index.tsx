@@ -587,7 +587,12 @@ function Index() {
         </main>
 
         {/* RIGHT: mobile simulator */}
-        <aside className="shrink-0 xl:basis-[32%]">
+        <aside
+          className={cn(
+            "shrink-0 xl:block xl:basis-[32%]",
+            narrowView === "employee" ? "block" : "hidden",
+          )}
+        >
           <div className="xl:sticky xl:top-20">
             <MobileSim
               published={phase === "published"}
