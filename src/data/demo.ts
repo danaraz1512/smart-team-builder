@@ -581,3 +581,68 @@ export function cloneEmployees(): Employee[] {
     onboarding: { ...e.onboarding },
   }));
 }
+
+/* ------------------------------------------------------------------
+ * Holidays, demand signals and availability requests
+ * ------------------------------------------------------------------ */
+
+export type HolidayInfo = {
+  name: string;
+  eveLabel: string;
+  source: string;
+  demandDays: number[];
+  demandNote: string;
+  earlyCloseNote: string;
+};
+
+/** Pulled from the national holiday calendar for the scheduled week. */
+export const HOLIDAY_WEEK: HolidayInfo = {
+  name: "Yom Kippur",
+  eveLabel: "Eve — Sunday, Sep 20, 2026",
+  source: "National holiday calendar · Bean & Bloom business calendar",
+  demandDays: [4, 5, 6],
+  demandNote:
+    "Pre-holiday demand rises Thu–Sat. Expect ~35% more orders than a standard week.",
+  earlyCloseNote:
+    "Friday, Sep 18 closes early at 15:00 (holiday-eve hours), so evening coverage moves to the afternoon.",
+};
+
+/** Manager message sent to the team when extra availability is needed. */
+export const AVAILABILITY_REQUEST_MESSAGE =
+  "Heads up team — this is a holiday week (Yom Kippur eve, Sunday Sep 20). Demand is higher Thursday to Saturday, so we'll need your help with wider availability this week. Nothing is assigned yet and submitting more availability doesn't guarantee a shift — but if we do schedule you for an extra holiday shift, you'll receive a gift voucher as a thank-you.";
+
+export type ShiftPart = "none" | "morning" | "evening" | "midToClose" | "full";
+
+export const SHIFT_PART_LABELS: Record<ShiftPart, string> = {
+  none: "Not available",
+  morning: "Morning",
+  evening: "Evening",
+  midToClose: "Mid → Close",
+  full: "Full day",
+};
+
+/** Opening gap the agent detected from submitted availability. */
+export const OPEN_GAP = {
+  day: "Wednesday, Sep 16",
+  location: "Main Café",
+  opensAt: "08:00",
+  submittedAt: "09:00",
+  candidates: ["maya", "eli", "tom"] as EmpId[],
+  suggestion: {
+    empId: "maya" as EmpId,
+    from: "09:00–16:00",
+    to: "08:00–15:00",
+    why: "Maya keeps the same 7 hours and finishes an hour earlier, so the location can open on time without extra cost.",
+  },
+};
+
+/** Sick-leave cover request raised the same week. */
+export const COVER_REQUEST = {
+  empId: "tom" as EmpId,
+  day: "Thursday, Sep 17",
+  time: "17:00–22:00",
+  location: "Main Café",
+  reason: "Reported sick",
+  candidates: ["dana", "eli"] as EmpId[],
+  candidateNote: "Both marked themselves available for Wed evening and Thu evening.",
+};
