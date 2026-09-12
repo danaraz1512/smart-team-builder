@@ -10,3 +10,12 @@
 - [ ] Needs-review banner + Regenerate
 - [ ] Reset restores originals
 - [ ] Typecheck + Playwright verify
+
+## Holiday & availability (done)
+- [x] Holiday week detection + availability request + gift voucher
+- [x] Opening gap (08:00) suggestion, sick-cover request
+- [x] Mobile Availability tab (morning/evening/mid→close/full day)
+
+## New
+- [~] Mobile viewport: show employee app first (narrow view switch)
+- [ ] Align manager UI with the real Connecteam Schedule design (toolbar, day header counters, weekly summary row)
