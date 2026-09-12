@@ -36,6 +36,7 @@ import ShiftEditor from "@/components/ShiftEditor";
 import MobileSim from "@/components/MobileSim";
 import EmployeeProfileDrawer from "@/components/EmployeeProfileDrawer";
 import EmployeeListPanel from "@/components/EmployeeListPanel";
+import HolidayPanel, { type HolidayState } from "@/components/HolidayPanel";
 import type { Shift } from "@/data/demo";
 
 export const Route = createFileRoute("/")({
@@ -97,6 +98,16 @@ function Index() {
   const [profileId, setProfileId] = useState<EmpId | null>(null);
   const [listOpen, setListOpen] = useState(false);
   const [needsReview, setNeedsReview] = useState(false);
+  const [holiday, setHoliday] = useState<HolidayState>({
+    requestSent: false,
+    responses: [],
+    mayaAsked: false,
+    mayaAccepted: false,
+    coverRequested: false,
+    coverTakenBy: null,
+  });
+  const [availabilitySubmitted, setAvailabilitySubmitted] = useState(false);
+  const [coverOffered, setCoverOffered] = useState(false);
   const timers = useRef<number[]>([]);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -145,6 +156,43 @@ function Index() {
     setProfileId(null);
     setListOpen(false);
     setNeedsReview(false);
+    setHoliday({
+      requestSent: false,
+      responses: [],
+      mayaAsked: false,
+      mayaAccepted: false,
+      coverRequested: false,
+      coverTakenBy: null,
+    });
+    setAvailabilitySubmitted(false);
+    setCoverOffered(false);
+  };
+
+  const sendAvailabilityRequest = () => {
+    setHoliday((h) => ({ ...h, requestSent: true }));
+    showToast("Holiday availability request sent to 6 employees.");
+  };
+
+  const askMaya = () => {
+    setHoliday((h) => ({ ...h, mayaAsked: true }));
+    showToast("Maya was asked to start an hour earlier.");
+    timers.current.push(
+      window.setTimeout(() => {
+        setHoliday((h) => ({ ...h, mayaAccepted: true }));
+        showToast("Maya accepted 08:00–15:00 — Main Café opens on time.");
+      }, 2200),
+    );
+  };
+
+  const requestCover = () => {
+    setHoliday((h) => ({ ...h, coverRequested: true }));
+    showToast("Cover request sent to Dana and Eli.");
+    timers.current.push(
+      window.setTimeout(() => {
+        setHoliday((h) => ({ ...h, coverTakenBy: "Eli Bar" }));
+        showToast("Eli Bar took Thursday 17:00–22:00.");
+      }, 2600),
+    );
   };
 
   const publish = () => {
@@ -402,6 +450,13 @@ function Index() {
                 </Card>
               )}
 
+              <HolidayPanel
+                state={holiday}
+                onSendRequest={sendAvailabilityRequest}
+                onAskMaya={askMaya}
+                onRequestCover={requestCover}
+              />
+
               {needsReview && scheduled && (
                 <Card className="border-ct-amber/40 bg-ct-amber-soft/50 p-3.5">
                   <div className="flex flex-wrap items-center gap-3">
@@ -508,6 +563,32 @@ function Index() {
               choice={choice}
               acknowledged={acknowledged}
               onAcknowledge={() => setAcknowledged(true)}
+              availabilityRequested={holiday.requestSent}
+              availabilitySubmitted={availabilitySubmitted}
+              onSubmitAvailability={(days) => {
+                setAvailabilitySubmitted(true);
+                setHoliday((h) => ({
+                  ...h,
+                  responses: [
+                    ...h.responses.filter((r) => !r.startsWith("Noa Shalev")),
+                    `Noa Shalev added holiday availability — ${days} of 7 days`,
+                  ],
+                }));
+                showToast("Noa submitted wider availability for the holiday week.");
+              }}
+              coverRequested={holiday.coverRequested}
+              coverOffered={coverOffered}
+              onOfferCover={() => {
+                setCoverOffered(true);
+                setHoliday((h) => ({
+                  ...h,
+                  responses: [
+                    ...h.responses,
+                    "Noa Shalev offered to cover Thu 17:00–22:00 (needs a mentor)",
+                  ],
+                }));
+                showToast("Noa offered to cover Thursday — approval needed.");
+              }}
             />
           </div>
         </aside>
