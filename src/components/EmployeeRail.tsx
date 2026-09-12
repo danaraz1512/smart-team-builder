@@ -1,12 +1,14 @@
-import { EMPLOYEES, weeklyHours, type Shift } from "@/data/demo";
+import { EMPLOYEES, weeklyHours, type EmpId, type Shift } from "@/data/demo";
 import { Avatar, Badge, Card } from "./ui-kit";
 
 export default function EmployeeRail({
   shifts,
   scheduled,
+  onViewProfile,
 }: {
   shifts: Shift[];
   scheduled: boolean;
+  onViewProfile?: (id: EmpId) => void;
 }) {
   return (
     <Card className="p-4">
@@ -17,8 +19,29 @@ export default function EmployeeRail({
       <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
         {EMPLOYEES.map((e) => {
           const hours = scheduled ? weeklyHours(shifts, e.id) : 0;
+          const clickable = !!onViewProfile;
           return (
-            <div key={e.id} className="rounded-[12px] border border-border p-3">
+            <div
+              key={e.id}
+              role={clickable ? "button" : undefined}
+              tabIndex={clickable ? 0 : undefined}
+              title={clickable ? "View work profile" : undefined}
+              onClick={clickable ? () => onViewProfile!(e.id) : undefined}
+              onKeyDown={
+                clickable
+                  ? (ev) => {
+                      if (ev.key === "Enter" || ev.key === " ") {
+                        ev.preventDefault();
+                        onViewProfile!(e.id);
+                      }
+                    }
+                  : undefined
+              }
+              className={
+                "rounded-[12px] border border-border p-3" +
+                (clickable ? " cursor-pointer hover:border-ct-blue hover:ring-1 hover:ring-ct-blue" : "")
+              }
+            >
               <div className="flex items-start gap-2.5">
                 <Avatar id={e.id} size={32} />
                 <div className="min-w-0">

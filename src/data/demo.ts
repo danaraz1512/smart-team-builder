@@ -1,5 +1,32 @@
 export type EmpId = "dana" | "yossi" | "eli" | "maya" | "tom" | "noa";
 
+export type Readiness = {
+  independentWork: "Requires support" | "Ready";
+  peakShifts: "Requires support" | "Ready";
+  opening: "Not qualified" | "Qualified";
+  closing: "Not qualified" | "Qualified";
+  shiftLead: "Not qualified" | "Qualified";
+  mentoring: "Not eligible" | "Eligible";
+};
+
+export type ExperienceProfile =
+  | "New to the role"
+  | "Experienced, new to this business"
+  | "Fully qualified for this role";
+
+export type Level = "In training" | "Independent" | "Advanced";
+
+export type Familiarity = "New" | "Familiar" | "Experienced" | "Not assigned";
+
+export type Onboarding = {
+  status: string;
+  pack?: string;
+  progressPct?: number;
+  supportedShiftsDone?: number;
+  supportedShiftsTarget?: number;
+  nextReview?: string;
+};
+
 export type Employee = {
   id: EmpId;
   name: string;
@@ -11,9 +38,21 @@ export type Employee = {
   skills: string[];
   weeklyLimit: number;
   availability: number[]; // 0 = Sunday
-  pto?: number[];
+  pto?: number[] | undefined;
   isNew?: boolean;
   mentor?: boolean;
+  // --- Work Profile fields ---
+  startDate: string;
+  directManager: string;
+  employmentType: "Hourly";
+  wageType: "Hourly";
+  overtimeEligible: boolean;
+  experienceProfile: ExperienceProfile;
+  level: Level;
+  readiness: Readiness;
+  locationFamiliarity: Record<"main" | "river", Familiarity>;
+  onboarding: Onboarding;
+  primaryLocation: "main" | "river" | "both";
 };
 
 export const DAYS = [
@@ -38,6 +77,24 @@ export const EMPLOYEES: Employee[] = [
     skills: ["Peak Shift", "Closing"],
     weeklyLimit: 40,
     availability: [0, 2, 4, 5, 6],
+    startDate: "March 12, 2023",
+    directManager: "Alex Morgan",
+    employmentType: "Hourly",
+    wageType: "Hourly",
+    overtimeEligible: true,
+    experienceProfile: "Fully qualified for this role",
+    level: "Advanced",
+    readiness: {
+      independentWork: "Ready",
+      peakShifts: "Ready",
+      opening: "Qualified",
+      closing: "Qualified",
+      shiftLead: "Qualified",
+      mentoring: "Eligible",
+    },
+    locationFamiliarity: { main: "Experienced", river: "Experienced" },
+    onboarding: { status: "Completed" },
+    primaryLocation: "both",
   },
   {
     id: "yossi",
@@ -51,6 +108,24 @@ export const EMPLOYEES: Employee[] = [
     weeklyLimit: 36,
     availability: [0, 1, 3, 5],
     mentor: true,
+    startDate: "July 8, 2022",
+    directManager: "Alex Morgan",
+    employmentType: "Hourly",
+    wageType: "Hourly",
+    overtimeEligible: true,
+    experienceProfile: "Fully qualified for this role",
+    level: "Advanced",
+    readiness: {
+      independentWork: "Ready",
+      peakShifts: "Ready",
+      opening: "Qualified",
+      closing: "Not qualified",
+      shiftLead: "Not qualified",
+      mentoring: "Eligible",
+    },
+    locationFamiliarity: { main: "Experienced", river: "Not assigned" },
+    onboarding: { status: "Completed" },
+    primaryLocation: "main",
   },
   {
     id: "eli",
@@ -63,6 +138,24 @@ export const EMPLOYEES: Employee[] = [
     skills: ["Closing"],
     weeklyLimit: 32,
     availability: [1, 2, 4, 5],
+    startDate: "January 15, 2025",
+    directManager: "Alex Morgan",
+    employmentType: "Hourly",
+    wageType: "Hourly",
+    overtimeEligible: true,
+    experienceProfile: "Fully qualified for this role",
+    level: "Independent",
+    readiness: {
+      independentWork: "Ready",
+      peakShifts: "Ready",
+      opening: "Not qualified",
+      closing: "Qualified",
+      shiftLead: "Not qualified",
+      mentoring: "Not eligible",
+    },
+    locationFamiliarity: { main: "Experienced", river: "Experienced" },
+    onboarding: { status: "Completed" },
+    primaryLocation: "both",
   },
   {
     id: "maya",
@@ -76,6 +169,24 @@ export const EMPLOYEES: Employee[] = [
     weeklyLimit: 30,
     availability: [0, 3, 4, 5],
     pto: [2],
+    startDate: "February 3, 2026",
+    directManager: "Alex Morgan",
+    employmentType: "Hourly",
+    wageType: "Hourly",
+    overtimeEligible: true,
+    experienceProfile: "Experienced, new to this business",
+    level: "Independent",
+    readiness: {
+      independentWork: "Ready",
+      peakShifts: "Ready",
+      opening: "Qualified",
+      closing: "Not qualified",
+      shiftLead: "Not qualified",
+      mentoring: "Not eligible",
+    },
+    locationFamiliarity: { main: "Not assigned", river: "Experienced" },
+    onboarding: { status: "Location onboarding completed" },
+    primaryLocation: "river",
   },
   {
     id: "tom",
@@ -89,6 +200,24 @@ export const EMPLOYEES: Employee[] = [
     weeklyLimit: 28,
     availability: [1, 3, 4, 6],
     pto: [0],
+    startDate: "November 18, 2025",
+    directManager: "Alex Morgan",
+    employmentType: "Hourly",
+    wageType: "Hourly",
+    overtimeEligible: true,
+    experienceProfile: "Fully qualified for this role",
+    level: "Independent",
+    readiness: {
+      independentWork: "Ready",
+      peakShifts: "Ready",
+      opening: "Not qualified",
+      closing: "Not qualified",
+      shiftLead: "Not qualified",
+      mentoring: "Not eligible",
+    },
+    locationFamiliarity: { main: "Experienced", river: "Experienced" },
+    onboarding: { status: "Completed" },
+    primaryLocation: "both",
   },
   {
     id: "noa",
@@ -102,10 +231,47 @@ export const EMPLOYEES: Employee[] = [
     weeklyLimit: 20,
     availability: [0, 2, 4, 6],
     isNew: true,
+    startDate: "September 7, 2026",
+    directManager: "Alex Morgan",
+    employmentType: "Hourly",
+    wageType: "Hourly",
+    overtimeEligible: false,
+    experienceProfile: "New to the role",
+    level: "In training",
+    readiness: {
+      independentWork: "Requires support",
+      peakShifts: "Requires support",
+      opening: "Not qualified",
+      closing: "Not qualified",
+      shiftLead: "Not qualified",
+      mentoring: "Not eligible",
+    },
+    locationFamiliarity: { main: "New", river: "Not assigned" },
+    onboarding: {
+      status: "Week 1 — In progress",
+      pack: "Barista Onboarding Pack",
+      progressPct: 40,
+      supportedShiftsDone: 1,
+      supportedShiftsTarget: 5,
+      nextReview: "After 5 supported shifts",
+    },
+    primaryLocation: "main",
   },
 ];
 
 export const byId = (id: EmpId) => EMPLOYEES.find((e) => e.id === id)!;
+
+export function byIdFrom(list: Employee[], id: EmpId): Employee {
+  return list.find((e) => e.id === id) ?? byId(id);
+}
+
+export const POSITIONS = [
+  "Shift Lead",
+  "Senior Barista",
+  "Barista",
+  "Junior Barista",
+  "Cashier",
+];
 
 export type LocationId = "main" | "river";
 
@@ -360,4 +526,58 @@ export function shiftsFor(choice: OnboardingChoice): Shift[] {
 
 export function weeklyHours(shifts: Shift[], id: EmpId) {
   return shifts.reduce((sum, s) => (s.assigned.includes(id) ? sum + s.hours : sum), 0);
+}
+
+/** Default readiness for each experience profile preset (per spec). */
+export function presetReadiness(
+  profile: ExperienceProfile,
+): Pick<Readiness, "independentWork" | "peakShifts" | "opening" | "closing" | "shiftLead" | "mentoring"> {
+  if (profile === "New to the role") {
+    return {
+      independentWork: "Requires support",
+      peakShifts: "Requires support",
+      opening: "Not qualified",
+      closing: "Not qualified",
+      shiftLead: "Not qualified",
+      mentoring: "Not eligible",
+    };
+  }
+  if (profile === "Experienced, new to this business") {
+    return {
+      independentWork: "Ready",
+      peakShifts: "Ready",
+      opening: "Not qualified",
+      closing: "Not qualified",
+      shiftLead: "Not qualified",
+      mentoring: "Not eligible",
+    };
+  }
+  // Fully qualified for this role — mentoring is left to the manager ("Not assigned")
+  return {
+    independentWork: "Ready",
+    peakShifts: "Ready",
+    opening: "Qualified",
+    closing: "Qualified",
+    shiftLead: "Qualified",
+    mentoring: "Eligible",
+  };
+}
+
+export function presetLevel(profile: ExperienceProfile): Level {
+  if (profile === "New to the role") return "In training";
+  if (profile === "Experienced, new to this business") return "Independent";
+  return "Advanced";
+}
+
+/** Deep clone of the default employees, so Reset can restore originals. */
+export function cloneEmployees(): Employee[] {
+  return EMPLOYEES.map((e) => ({
+    ...e,
+    skills: [...e.skills],
+    availability: [...e.availability],
+    pto: e.pto ? [...e.pto] : undefined,
+    readiness: { ...e.readiness },
+    locationFamiliarity: { ...e.locationFamiliarity },
+    onboarding: { ...e.onboarding },
+  }));
 }
