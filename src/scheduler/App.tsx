@@ -148,6 +148,8 @@ export default function App() {
     setOnboardingChoice('recommended');
     setIsDecisionsDrawerOpen(false);
     setIsRulesModalOpen(false);
+    setIsJobsModalOpen(false);
+    setJobs(INITIAL_JOBS);
     setIsManualEditModalOpen(false);
     setIsMessageBuddyModalOpen(false);
     setIsAssignmentApproved(false);
