@@ -220,7 +220,7 @@ const ShiftCard: React.FC<ShiftCardProps> = ({
         {isOnboardingShift && isDraftOrPublished ? (
           <span className="text-[8.5px] font-bold text-[#1F9D62]">★ Noa</span>
         ) : shift.isPeak ? (
-          <Sparkles className="w-2.5 h-2.5 text-[#C253D9] shrink-0" title="Peak shift" />
+          <span title="Peak shift"><Sparkles className="w-2.5 h-2.5 text-[#C253D9] shrink-0" /></span>
         ) : null}
       </div>
 
