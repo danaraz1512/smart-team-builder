@@ -252,18 +252,48 @@ export default function ScheduleGrid({
         <div className="min-w-[820px]">
           <div className="grid grid-cols-[132px_repeat(7,minmax(0,1fr))] border-b border-border bg-ct-surface">
             <div className="px-3 py-2 text-[12px] font-semibold text-muted-foreground">Location</div>
-            {DAYS.map((d, i) => (
-              <div
-                key={d.label}
-                className={cn(
-                  "border-l border-border px-2 py-2 text-[12px]",
-                  (i === 4 || i === 5) && "bg-ct-purple-soft/40",
-                )}
-              >
-                <div className="font-semibold">{d.label}</div>
-                <div className="text-muted-foreground">{d.date}</div>
-              </div>
-            ))}
+            {DAYS.map((d, i) => {
+              const dayShifts = visible.filter((s) => s.day === i);
+              const hours = scheduled
+                ? dayShifts.reduce((sum, s) => sum + s.hours * s.assigned.length, 0)
+                : 0;
+              const people = scheduled
+                ? new Set(dayShifts.flatMap((s) => s.assigned)).size
+                : 0;
+              return (
+                <div
+                  key={d.label}
+                  className={cn(
+                    "border-l border-border px-2 py-2 text-[12px]",
+                    (i === 4 || i === 5) && "bg-ct-purple-soft/40",
+                  )}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-semibold">{d.label}</span>
+                    {i === 0 && (
+                      <span className="rounded-full bg-primary px-1.5 py-[1px] text-[9.5px] font-bold text-primary-foreground">
+                        Today
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-muted-foreground">{d.date}</div>
+                  <div className="mt-1 flex items-center gap-2 text-[10.5px] text-muted-foreground">
+                    <span className="flex items-center gap-0.5" title="Scheduled hours">
+                      <Clock className="h-3 w-3" />
+                      {scheduled ? hours : "–"}
+                    </span>
+                    <span className="flex items-center gap-0.5" title="Shifts">
+                      <Layers className="h-3 w-3" />
+                      {dayShifts.length}
+                    </span>
+                    <span className="flex items-center gap-0.5" title="Employees">
+                      <Users className="h-3 w-3" />
+                      {scheduled ? people : "–"}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {locations.map((loc) => (
