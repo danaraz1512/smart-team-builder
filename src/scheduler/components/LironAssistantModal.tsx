@@ -45,33 +45,33 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
 
   const handleSendHolidayIncentive = () => {
     setHolidayIncentiveSent(true);
-    onTriggerToast('התראת זמינות חג ושוברי מתנה נשלחה לכל 6 העובדים באפליקציה!');
+    onTriggerToast('Holiday availability alert and gift vouchers sent to all 6 employees in the app!');
   };
 
   const handleApplyNegotiation = () => {
     setNegotiationApplied(true);
     if (onApplyNegotiatedShift) onApplyNegotiatedShift();
-    onTriggerToast('הסכם הפשרה אושר: דנה תפתח ב-08:00 ותצא מוקדם ב-15:00 לסידוריה!');
+    onTriggerToast('Compromise approved: Dana will open at 08:00 and leave early at 15:00 for her errands!');
   };
 
   const handleFindReplacement = () => {
     setReplacementFound(true);
-    onTriggerToast('נמצא מחליף: שרון ותום עודכנו וההחלפה אושרה אוטומטית!');
+    onTriggerToast('Replacement found: Noa and Tom have been updated and the swap was approved automatically!');
   };
 
   const handleAdjustShabbat = () => {
     setShabbatAdjusted(true);
-    onTriggerToast('שעות יום שישי עודכנו לסגירה ב-14:30 לפי הנחיות הרבנות וכניסת שבת.');
+    onTriggerToast('Friday hours updated to close at 14:30 per rabbinate guidelines and Shabbat start time.');
   };
 
   const handleSendReward = (empId: string, empName: string) => {
     setRewardSentEmployeeId(empId);
-    onTriggerToast(`שובר ארוחת בוקר זוגית נשלח ל-${empName} כהוקרה על גמישות ודירוג גבוה! 🎁`);
+    onTriggerToast(`A breakfast-for-two voucher was sent to ${empName} in recognition of flexibility and a high rating! 🎁`);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl border border-[#E1E5E9] w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden text-right" dir="rtl">
+      <div className="bg-white rounded-2xl shadow-2xl border border-[#E1E5E9] w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden text-left" dir="ltr">
         {/* Header */}
         <div className="px-6 py-4 border-b border-[#E1E5E9] flex items-center justify-between bg-gradient-to-l from-[#FAFBFD] to-[#F1F6FD]">
           <div className="flex items-center gap-3">
@@ -81,14 +81,14 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-[17px] font-bold text-[#202A36]">
-                  הסוכן החכם של לירון — ניהול שטח, חגים ובלת"מים
+                  Liron's Smart Assistant — Floor Management, Holidays & Surprises
                 </h2>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EAF5FF] text-[#168FF5] border border-[#BAE0FD]">
-                  מנהל משמרת AI
+                  AI Shift Manager
                 </span>
               </div>
               <p className="text-[12px] text-[#77818D]">
-                השראה מהשטח: פתרון פערי פתיחה, תמריצי חגים, שעות רבנות וחילופי מחלה מיידיים
+                Inspired by the floor: closing opening-shift gaps, holiday incentives, rabbinate hours, and instant sick-day swaps
               </p>
             </div>
           </div>
@@ -111,7 +111,7 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
             }`}
           >
             <Gift className="w-4 h-4 text-amber-500" />
-            <span>שבוע חג ותמריצים</span>
+            <span>Holiday Week & Incentives</span>
           </button>
 
           <button
@@ -123,7 +123,7 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
             }`}
           >
             <Clock className="w-4 h-4 text-[#2F95F8]" />
-            <span>משא ומתן פתיחה (08:00)</span>
+            <span>Opening Shift Negotiation (08:00)</span>
           </button>
 
           <button
@@ -135,7 +135,7 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
             }`}
           >
             <Users className="w-4 h-4 text-rose-500" />
-            <span>בלת"ם מחלה והחלפות</span>
+            <span>Sick-Day Surprises & Swaps</span>
           </button>
 
           <button
@@ -147,7 +147,7 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
             }`}
           >
             <Sun className="w-4 h-4 text-amber-600" />
-            <span>שישי / רבנות ושעון חורף</span>
+            <span>Friday / Rabbinate Hours & Daylight Saving</span>
           </button>
 
           <button
@@ -159,7 +159,7 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
             }`}
           >
             <Award className="w-4 h-4 text-emerald-600" />
-            <span>דירוג ושוברי מתנה</span>
+            <span>Ratings & Gift Vouchers</span>
           </button>
         </div>
 
@@ -171,24 +171,24 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
               <div className="p-4 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
                 <div className="flex items-center gap-2 text-amber-900 font-bold text-[14px]">
                   <Gift className="w-4 h-4 text-amber-600" />
-                  <span>זיהוי שבוע חג אוטומטי (ראש השנה / סוכות)</span>
+                  <span>Automatic Holiday Week Detection (Rosh Hashanah / Sukkot)</span>
                 </div>
                 <p className="text-amber-800 text-[12.5px] mt-1.5">
-                  הסוכן מושך נתוני חופשות וחגים ומזהה מראש שבוע מאתגר עם ביקוש שיא בקפה.
+                  The assistant pulls vacation and holiday data and flags a challenging week ahead of time, with peak demand expected at the café.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-white border border-[#E1E5E9] shadow-xs space-y-3">
                 <div className="text-[13px] font-bold text-[#202A36]">
-                  הודעת התראה וגיוס זמינות שנשלחת לעובדים:
+                  Alert message and availability request sent to employees:
                 </div>
                 <div className="p-3.5 rounded-lg bg-[#FAFBFD] border border-[#BAE0FD] text-[#202A36] font-medium leading-relaxed">
-                  "שימו לב 🌸 נצטרך את עזרתכם השבוע עם זמינות גבוהה יותר שלכם בשל החג. לא בטוח שנשבץ אתכם, אבל במידה וכן – <strong className="text-[#168FF5]">תקבלו שובר מתנה שווה (ארוחת בוקר זוגית / בונוס חג)!</strong>"
+                  "Heads up 🌸 We'll need extra availability from you this week because of the holiday. We can't guarantee you'll be scheduled, but if you are — <strong className="text-[#168FF5]">you'll get a gift voucher (breakfast for two / holiday bonus)!</strong>"
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-[#E1E5E9]">
                   <span className="text-[12px] text-[#77818D]">
-                    ההודעה מוצגת ישירות במסך הזמינות באפליקציית העובד.
+                    The message appears directly on the employee's availability screen in the app.
                   </span>
                   <button
                     id="liron-send-holiday-btn"
@@ -203,12 +203,12 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
                     {holidayIncentiveSent ? (
                       <>
                         <CheckCircle2 className="w-4 h-4" />
-                        <span>התראה נשלחה בהצלחה!</span>
+                        <span>Alert sent successfully!</span>
                       </>
                     ) : (
                       <>
                         <Send className="w-4 h-4" />
-                        <span>שגר התראת חג לצוות</span>
+                        <span>Send Holiday Alert to Team</span>
                       </>
                     )}
                   </button>
@@ -223,25 +223,25 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
               <div className="p-4 rounded-xl bg-[#FFF8E6] border border-[#FFE08A]">
                 <div className="flex items-center gap-2 text-amber-900 font-bold text-[14px]">
                   <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  <span>אתגר שטח: אף אחד לא הגיש פתיחה ב-08:00 (כולם ב-09:00)</span>
+                  <span>Floor Challenge: nobody submitted availability for the 08:00 opening (everyone's at 09:00)</span>
                 </div>
                 <p className="text-amber-800 text-[12.5px] mt-1">
-                  העובדים נמנעים משעת הפתיחה כדי להספיק סידורים אישיים. איך לירון פותר את זה?
+                  Employees avoid the opening shift so they can take care of personal errands. How does Liron solve this?
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-white border border-[#E1E5E9] shadow-xs space-y-3">
                 <div className="text-[13px] font-bold text-[#202A36]">
-                  שיטת לירון: "בואי מוקדם – תלכי מוקדם"
+                  Liron's approach: "Come early — leave early"
                 </div>
                 <div className="p-3 rounded-lg bg-[#F6F7F8] border border-[#E1E5E9] text-[12.5px] text-[#475569] space-y-1.5">
-                  <p>• <strong>הצעה לעובדת (דנה / שרון):</strong> "אין לי מי שיפתח ב-08:00. מה יש לך סידורים? החנויות לא פעילות בשעות מאוחרות. לכי אחרי המשמרת!"</p>
-                  <p>• <strong>התאמת שעות:</strong> הזזה מ-09:00–16:00 ל-<strong>08:00–15:00</strong>. העובדת מספיקה לסידוריה והסניף פתוח בזמן ללא חוסר!</p>
+                  <p>• <strong>Offer to the employee (Dana / Noa):</strong> "I don't have anyone to open at 08:00. What errands do you have? Most places aren't open late anyway. Head out right after your shift!"</p>
+                  <p>• <strong>Adjusted hours:</strong> Shifted from 09:00–16:00 to <strong>08:00–15:00</strong>. The employee has time for her errands and the branch opens on time with no coverage gap!</p>
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-[#E1E5E9]">
                   <span className="text-[12px] text-[#77818D]">
-                    סגירת סידור עבודה מלא ב-100% כיסוי.
+                    Closes out a full schedule with 100% coverage.
                   </span>
                   <button
                     id="apply-negotiation-btn"
@@ -256,12 +256,12 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
                     {negotiationApplied ? (
                       <>
                         <CheckCircle2 className="w-4 h-4" />
-                        <span>הפשרה הוחלה על סידור העבודה</span>
+                        <span>Compromise applied to the schedule</span>
                       </>
                     ) : (
                       <>
                         <Sparkles className="w-4 h-4" />
-                        <span>החל פשרת 08:00–15:00</span>
+                        <span>Apply 08:00–15:00 Compromise</span>
                       </>
                     )}
                   </button>
@@ -276,46 +276,46 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
               <div className="p-4 rounded-xl bg-rose-50 border border-rose-200">
                 <div className="flex items-center gap-2 text-rose-900 font-bold text-[14px]">
                   <Flame className="w-4 h-4 text-rose-600" />
-                  <span>בלת"ם: "אני חולה וחייב חילוף להיום בערב!"</span>
+                  <span>Surprise: "I'm sick and need a swap for tonight!"</span>
                 </div>
                 <p className="text-rose-800 text-[12.5px] mt-1">
-                  העובד חולה ברגע האחרון. מי פנוי ויכול להחליף?
+                  The employee is sick at the last minute. Who's available to cover?
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-white border border-[#E1E5E9] shadow-xs space-y-3">
                 <div className="text-[13px] font-bold text-[#202A36]">
-                  ניתוח זמינות מיידי של הסוכן:
+                  The assistant's instant availability check:
                 </div>
                 <div className="space-y-2">
                   <div className="p-3 rounded-lg border border-[#BAE0FD] bg-[#EAF5FF] flex items-center justify-between">
                     <div>
-                      <div className="font-bold text-[#168FF5]">שרון / מיה</div>
+                      <div className="font-bold text-[#168FF5]">Noa / Maya</div>
                       <div className="text-[11.5px] text-[#77818D]">
-                        סימנו זמינות פנויה למשמרת ערב. שרון ביקשה בעבר החלפה ברביעי ערב וחמישי ערב.
+                        Marked as available for the evening shift. Noa has previously requested swaps for Wednesday and Thursday evenings.
                       </div>
                     </div>
                     <span className="px-2 py-1 rounded bg-white text-[#168FF5] text-[11px] font-bold border border-[#BAE0FD]">
-                      זמינה להחלפה הדדית
+                      Available for a mutual swap
                     </span>
                   </div>
 
                   <div className="p-3 rounded-lg border border-[#E1E5E9] bg-white flex items-center justify-between">
                     <div>
-                      <div className="font-bold text-[#202A36]">תום ריד</div>
+                      <div className="font-bold text-[#202A36]">Tom Reed</div>
                       <div className="text-[11.5px] text-[#77818D]">
-                        מתחת לתקרת השעות (25 מתוך 28 שעות).
+                        Below the hours cap (25 out of 28 hours).
                       </div>
                     </div>
                     <span className="px-2 py-1 rounded bg-[#F6F7F8] text-[#77818D] text-[11px] font-bold">
-                      אפשרות שנייה
+                      Second option
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-[#E1E5E9]">
                   <span className="text-[12px] text-[#77818D]">
-                    "תתקשרו ותראו מי יכול להחליף – הנה הצעת שידוך מוכנה"
+                    "Give them a call and see who can cover — here's a ready-made match"
                   </span>
                   <button
                     id="find-replacement-btn"
@@ -330,12 +330,12 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
                     {replacementFound ? (
                       <>
                         <CheckCircle2 className="w-4 h-4" />
-                        <span>נשלחה בקשת החלפה לשרון</span>
+                        <span>Swap request sent to Noa</span>
                       </>
                     ) : (
                       <>
                         <PhoneCall className="w-4 h-4" />
-                        <span>הצע החלפה אוטומטית</span>
+                        <span>Suggest Automatic Swap</span>
                       </>
                     )}
                   </button>
@@ -350,28 +350,28 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
               <div className="p-4 rounded-xl bg-amber-50 border border-amber-200">
                 <div className="flex items-center gap-2 text-amber-900 font-bold text-[14px]">
                   <Sun className="w-4 h-4 text-amber-700" />
-                  <span>קביעת שעות שישי: הרבנות ושעון חורף/קיץ</span>
+                  <span>Setting Friday Hours: Rabbinate Guidelines & Daylight Saving</span>
                 </div>
                 <p className="text-amber-800 text-[12.5px] mt-1">
-                  בימי שישי הרבנות וזמני כניסת שבת קובעים מתי לסגור כדי שכל העובדים והלקוחות יספיקו להגיע הביתה בזמן.
+                  On Fridays, rabbinate guidelines and Shabbat start times determine closing time so employees and customers can get home safely on schedule.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-white border border-[#E1E5E9] shadow-xs space-y-3">
                 <div className="text-[13px] font-bold text-[#202A36]">
-                  התאמת שעות הפעילות לשעון חורף/קיץ:
+                  Adjusting operating hours for daylight saving:
                 </div>
                 <div className="p-3 rounded-lg bg-[#FAFBFD] border border-[#BAE0FD] text-[12.5px] text-[#202A36] space-y-1">
-                  <p>• <strong>סניף ראשי (Main Café):</strong> סגירה ב-14:30 (ניקיון וסגירה עד 15:00).</p>
-                  <p>• <strong>עגלת קפה (Riverside Cart):</strong> סגירה ב-15:00 בדיוק.</p>
+                  <p>• <strong>Main Café:</strong> Closes at 14:30 (cleanup and close-out by 15:00).</p>
+                  <p>• <strong>Riverside Coffee Cart:</strong> Closes at exactly 15:00.</p>
                   <p className="text-[11.5px] text-[#77818D]">
-                    הסוכן מעדכן אוטומטית את השעות בסידור העבודה כדי למנוע חריגה לקראת שבת.
+                    The assistant automatically updates the schedule hours to prevent running late ahead of Shabbat.
                   </p>
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-[#E1E5E9]">
                   <span className="text-[12px] text-[#77818D]">
-                    מכבד את שומרי השבת והנחיות הכשרות.
+                    Respects Shabbat observance and kosher guidelines.
                   </span>
                   <button
                     id="adjust-shabbat-btn"
@@ -386,12 +386,12 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
                     {shabbatAdjusted ? (
                       <>
                         <CheckCircle2 className="w-4 h-4" />
-                        <span>שעות שישי מותאמות</span>
+                        <span>Friday hours adjusted</span>
                       </>
                     ) : (
                       <>
                         <ShieldCheck className="w-4 h-4" />
-                        <span>התאם שעות לפי הרבנות (14:30)</span>
+                        <span>Adjust Hours per Rabbinate Guidelines (14:30)</span>
                       </>
                     )}
                   </button>
@@ -406,10 +406,10 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
               <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200">
                 <div className="flex items-center gap-2 text-emerald-900 font-bold text-[14px]">
                   <Award className="w-4 h-4 text-emerald-700" />
-                  <span>"קח פתוח - תן בראש": דירוג גמישות ושוברי מתנה</span>
+                  <span>"Cover a shift, get recognized": flexibility ratings and gift vouchers</span>
                 </div>
                 <p className="text-emerald-800 text-[12.5px] mt-1">
-                  עובד שמתגמש עבור המקום ומדייק בשעון נוכחות מקבל דירוג גבוה ושוברי ארוחת בוקר זוגית בסוף חודש!
+                  An employee who stays flexible for the business and clocks in accurately earns a high rating and a breakfast-for-two voucher at the end of the month!
                 </p>
               </div>
 
@@ -431,9 +431,9 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
                           {emp.name}
                         </div>
                         <div className="text-[11px] text-[#77818D] flex items-center gap-2">
-                          <span>דירוג שעון נוכחות: 98% ⭐</span>
+                          <span>Clock-in accuracy: 98% ⭐</span>
                           <span>·</span>
-                          <span className="text-[#37B77D] font-medium">מתגמש/ת בשביל המקום</span>
+                          <span className="text-[#37B77D] font-medium">Flexible for the team</span>
                         </div>
                       </div>
                     </div>
@@ -447,7 +447,7 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
                       }`}
                     >
                       <Gift className="w-3.5 h-3.5" />
-                      <span>{rewardSentEmployeeId === emp.id ? 'שובר נשלח! 🎁' : 'שלח שובר א. בוקר'}</span>
+                      <span>{rewardSentEmployeeId === emp.id ? 'Voucher sent! 🎁' : 'Send Breakfast Voucher'}</span>
                     </button>
                   </div>
                 ))}
@@ -459,13 +459,13 @@ export const LironAssistantModal: React.FC<LironAssistantModalProps> = ({
         {/* Footer */}
         <div className="px-6 py-3.5 border-t border-[#E1E5E9] bg-[#FAFBFD] flex items-center justify-between">
           <span className="text-[11.5px] text-[#77818D]">
-            מערכת שיבוץ חכמה המשלבת למידה משטח העבודה האמיתי.
+            A smart scheduling system that learns from what actually happens on the floor.
           </span>
           <button
             onClick={onClose}
             className="px-4 py-2 rounded-xl bg-[#202A36] hover:bg-[#334155] text-white font-bold text-[13px] transition-all cursor-pointer"
           >
-            סגור חלון
+            Close
           </button>
         </div>
       </div>

@@ -34,7 +34,7 @@ const DAYS: {
     name: 'Sunday',
     short: 'SUN',
     date: 'Sep 13',
-    holidayBadge: 'ערב חג 🍯',
+    holidayBadge: 'Holiday Eve 🍯',
     holidayTime: '08:00–14:00',
     isHolidayEve: true,
   },
@@ -42,14 +42,14 @@ const DAYS: {
     name: 'Monday',
     short: 'MON',
     date: 'Sep 14',
-    holidayBadge: 'חג 🌿',
-    holidayTime: 'מתכונת חג',
+    holidayBadge: 'Holiday 🌿',
+    holidayTime: 'Holiday Hours',
   },
   { name: 'Tuesday', short: 'TUE', date: 'Sep 15' },
   { name: 'Wednesday', short: 'WED', date: 'Sep 16' },
   { name: 'Thursday', short: 'THU', date: 'Sep 17' },
-  { name: 'Friday', short: 'FRI', date: 'Sep 18', holidayBadge: 'שישי (עד 15:00)' },
-  { name: 'Saturday', short: 'SAT', date: 'Sep 19', holidayBadge: 'שבת (עד 18:00)' },
+  { name: 'Friday', short: 'FRI', date: 'Sep 18', holidayBadge: 'Friday (until 15:00)' },
+  { name: 'Saturday', short: 'SAT', date: 'Sep 19', holidayBadge: 'Saturday (until 18:00)' },
 ];
 
 export const WeeklyScheduleGrid: React.FC<WeeklyScheduleGridProps> = ({
@@ -406,7 +406,7 @@ const ShiftCard: React.FC<ShiftCardProps> = ({
               </div>
             ))}
 
-            {/* If Onboarding Shift: Explicit button to trigger Manual Edit / שינוי ידני */}
+            {/* If Onboarding Shift: Explicit button to trigger Manual Edit */}
             {isOnboardingShift && isDraftOrPublished && (
               <button
                 onClick={(e) => {
@@ -414,10 +414,10 @@ const ShiftCard: React.FC<ShiftCardProps> = ({
                   onOpenManualEdit?.();
                 }}
                 className="mt-1 w-full py-1 px-1.5 rounded-lg bg-white hover:bg-[#EAF5FF] border border-[#37B77D] text-[#168FF5] hover:text-[#2F95F8] text-[9.5px] font-bold flex items-center justify-center gap-1 shadow-2xs cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
-                title="לחץ כאן לביצוע שינוי ידני של מועד החפיפה והחונך"
+                title="Click here to manually adjust the onboarding shift time and mentor"
               >
                 <Sliders className="w-2.5 h-2.5 text-[#2F95F8]" />
-                <span>שינוי ידני (Manual Edit)</span>
+                <span>Manual Edit</span>
               </button>
             )}
 
@@ -427,26 +427,26 @@ const ShiftCard: React.FC<ShiftCardProps> = ({
                 {noaHolidayStatus === 'flexible_voucher' ? (
                   <div
                     className="px-1.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-[9px] font-bold text-amber-900 flex items-center gap-1 shadow-2xs"
-                    title="העובדת אישרה זמינות מלאה לחג וממתינה לשובר מתנה"
+                    title="Employee confirmed full availability for the holiday and is awaiting a gift voucher"
                   >
                     <Gift className="w-2.5 h-2.5 text-amber-600 shrink-0" />
-                    <span className="truncate">ערב חג: נועה פתוחה (זכאית לשובר 🎁)</span>
+                    <span className="truncate">Holiday Eve: Noa available (voucher pending 🎁)</span>
                   </div>
                 ) : noaHolidayStatus === 'open' ? (
                   <div
                     className="px-1.5 py-0.5 rounded bg-[#EAF5FF] border border-[#BAE0FD] text-[9px] font-bold text-[#168FF5] flex items-center gap-1"
-                    title="העובדת השאירה את יום ערב החג פתוח לשיבוץ ללא אילוצים"
+                    title="Employee left the holiday eve open for scheduling with no constraints"
                   >
                     <CheckCircle2 className="w-2.5 h-2.5 text-[#168FF5] shrink-0" />
-                    <span className="truncate">ערב חג: נועה פתוחה לשיבוץ ✓</span>
+                    <span className="truncate">Holiday Eve: Noa available ✓</span>
                   </div>
                 ) : (
                   <div
                     className="px-1.5 py-0.5 rounded bg-rose-50 border border-rose-200 text-[9px] font-bold text-rose-700 flex items-center gap-1"
-                    title="העובדת הזינה אילוץ: לא זמינה בשעות 09:00 - 17:00"
+                    title="Employee entered a constraint: unavailable 09:00-17:00"
                   >
                     <AlertTriangle className="w-2.5 h-2.5 text-rose-600 shrink-0" />
-                    <span className="truncate">ערב חג: נועה חסומה באילוץ</span>
+                    <span className="truncate">Holiday Eve: Noa unavailable</span>
                   </div>
                 )}
               </div>

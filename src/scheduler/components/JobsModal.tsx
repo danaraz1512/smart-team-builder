@@ -31,13 +31,13 @@ interface JobsModalProps {
 }
 
 const DAY_LABELS: { day: DayOfWeek; short: string }[] = [
-  { day: 'Sunday', short: 'א׳' },
-  { day: 'Monday', short: 'ב׳' },
-  { day: 'Tuesday', short: 'ג׳' },
-  { day: 'Wednesday', short: 'ד׳' },
-  { day: 'Thursday', short: 'ה׳' },
-  { day: 'Friday', short: 'ו׳' },
-  { day: 'Saturday', short: 'ש׳' },
+  { day: 'Sunday', short: 'Sun' },
+  { day: 'Monday', short: 'Mon' },
+  { day: 'Tuesday', short: 'Tue' },
+  { day: 'Wednesday', short: 'Wed' },
+  { day: 'Thursday', short: 'Thu' },
+  { day: 'Friday', short: 'Fri' },
+  { day: 'Saturday', short: 'Sat' },
 ];
 
 const LEVELS: {
@@ -47,22 +47,22 @@ const LEVELS: {
 }[] = [
   {
     value: 'certified_mentor',
-    label: 'מוסמך + חונך',
+    label: 'Certified + Mentor',
     chip: 'bg-[#E8F8F0] text-[#1F8A5B] border-[#BDEBD3]',
   },
   {
     value: 'qualified',
-    label: 'מוסמך',
+    label: 'Qualified',
     chip: 'bg-[#EAF5FF] text-[#168FF5] border-[#BAE0FD]',
   },
   {
     value: 'in_training',
-    label: 'בהכשרה',
+    label: 'In Training',
     chip: 'bg-[#FFF6E5] text-[#B4741A] border-[#FBE0B0]',
   },
   {
     value: 'not_qualified',
-    label: 'לא מוסמך',
+    label: 'Not Qualified',
     chip: 'bg-[#F1F3F5] text-[#77818D] border-[#E1E5E9]',
   },
 ];
@@ -159,10 +159,10 @@ export const JobsModal: React.FC<JobsModalProps> = ({
             </div>
             <div>
               <h3 className="text-[16px] font-bold text-[#202A36]">
-                רשומות עבודה (Jobs)
+                Jobs Registry
               </h3>
               <p className="text-[11.5px] text-[#77818D]">
-                משמרות ומשימות חוזרות · כשירות עובדים והרשאת חניכה
+                Shifts and recurring tasks · employee qualifications and mentoring authorization
               </p>
             </div>
           </div>
@@ -185,7 +185,7 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                 className="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#2F95F8] hover:bg-[#168FF5] text-white text-[12.5px] font-bold transition-colors cursor-pointer shadow-2xs"
               >
                 <Plus className="w-4 h-4" />
-                <span>יצירת רשומת עבודה</span>
+                <span>Create Job Record</span>
               </button>
             </div>
 
@@ -214,11 +214,11 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                     <div className="flex items-center gap-2 mt-1 pr-4.5 text-[11px] text-[#77818D]">
                       <span className="inline-flex items-center gap-1">
                         <Repeat className="w-3 h-3" />
-                        {job.recurrence.days.length} ימים
+                        {job.recurrence.days.length} days
                       </span>
                       <span className="inline-flex items-center gap-1">
                         <GraduationCap className="w-3 h-3" />
-                        {qualifiedCount(job)} מוסמכים
+                        {qualifiedCount(job)} qualified
                       </span>
                     </div>
                     <div className="mt-1 pr-4.5">
@@ -230,8 +230,8 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                         }`}
                       >
                         {job.kind === 'recurring_task'
-                          ? 'משימה חוזרת'
-                          : 'תפקיד במשמרת'}
+                          ? 'Recurring Task'
+                          : 'Shift Role'}
                       </span>
                     </div>
                   </button>
@@ -265,11 +265,11 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                 <div className="flex items-center gap-1.5 text-[11.5px]">
                   <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-[#F6F7F8] border border-[#E1E5E9] text-[#202A36] font-semibold">
                     <Users className="w-3.5 h-3.5 text-[#2F95F8]" />
-                    {qualifiedCount(selectedJob)} מוסמכים
+                    {qualifiedCount(selectedJob)} qualified
                   </span>
                   <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-[#E8F8F0] border border-[#BDEBD3] text-[#1F8A5B] font-semibold">
                     <GraduationCap className="w-3.5 h-3.5" />
-                    {mentorCount(selectedJob)} חונכים
+                    {mentorCount(selectedJob)} mentors
                   </span>
                 </div>
               </div>
@@ -279,7 +279,7 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                 <div className="flex items-center gap-2 mb-3">
                   <Repeat className="w-4 h-4 text-[#2F95F8]" />
                   <h4 className="text-[13px] font-bold text-[#202A36]">
-                    חזרתיות (Recurring)
+                    Recurrence
                   </h4>
                   <span className="text-[11.5px] text-[#77818D]">
                     · {selectedJob.recurrence.frequencyLabel}
@@ -324,7 +324,7 @@ export const JobsModal: React.FC<JobsModalProps> = ({
 
                   <label className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white border border-[#E1E5E9]">
                     <Users className="w-3.5 h-3.5 text-[#77818D]" />
-                    <span className="text-[#77818D]">נדרשים</span>
+                    <span className="text-[#77818D]">Required</span>
                     <input
                       type="number"
                       min={1}
@@ -361,8 +361,8 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                       }
                       className="bg-transparent focus:outline-none font-semibold text-[#202A36] cursor-pointer"
                     >
-                      <option value="shift_role">תפקיד במשמרת</option>
-                      <option value="recurring_task">משימה חוזרת</option>
+                      <option value="shift_role">Shift Role</option>
+                      <option value="recurring_task">Recurring Task</option>
                     </select>
                   </label>
                 </div>
@@ -379,7 +379,7 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                     }`}
                   >
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    נדרש חונך במשמרת: {selectedJob.requiresMentorOnShift ? 'כן' : 'לא'}
+                    Mentor required on shift: {selectedJob.requiresMentorOnShift ? 'Yes' : 'No'}
                   </button>
                   <button
                     onClick={() =>
@@ -392,7 +392,7 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                     }`}
                   >
                     <Sparkles className="w-3.5 h-3.5" />
-                    מתאים לחפיפה: {selectedJob.suitableForOnboarding ? 'כן' : 'לא'}
+                    Suitable for onboarding: {selectedJob.suitableForOnboarding ? 'Yes' : 'No'}
                   </button>
                 </div>
               </section>
@@ -402,11 +402,11 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                 <div className="flex items-center gap-2 mb-3">
                   <ListChecks className="w-4 h-4 text-[#2F95F8]" />
                   <h4 className="text-[13px] font-bold text-[#202A36]">
-                    משימות הרשומה ({selectedJob.tasks.length})
+                    Job Tasks ({selectedJob.tasks.length})
                   </h4>
                   {selectedJob.estimatedMinutes && (
                     <span className="text-[11.5px] text-[#77818D]">
-                      · זמן משוער {selectedJob.estimatedMinutes} דק׳
+                      · Est. {selectedJob.estimatedMinutes} min
                     </span>
                   )}
                 </div>
@@ -420,7 +420,7 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                       <span>{task}</span>
                       <button
                         onClick={() => removeTask(i)}
-                        title="מחיקת משימה"
+                        title="Delete task"
                         className="p-1 rounded-lg text-[#A0AEC0] hover:text-[#F34949] hover:bg-white transition-colors cursor-pointer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -429,7 +429,7 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                   ))}
                   {selectedJob.tasks.length === 0 && (
                     <li className="text-[12px] text-[#77818D] px-1">
-                      אין עדיין משימות ברשומה זו.
+                      No tasks added to this job yet.
                     </li>
                   )}
                 </ul>
@@ -439,21 +439,21 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                     value={newTask}
                     onChange={(e) => setNewTask(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && addTask()}
-                    placeholder="הוספת משימה חוזרת..."
+                    placeholder="Add a recurring task..."
                     className="flex-1 px-3 py-2 rounded-xl bg-[#F6F7F8] border border-transparent text-[12.5px] focus:bg-white focus:border-[#2F95F8] focus:outline-none"
                   />
                   <button
                     onClick={addTask}
                     className="px-3 py-2 rounded-xl bg-[#202A36] text-white text-[12.5px] font-bold hover:bg-[#334155] transition-colors cursor-pointer"
                   >
-                    הוספה
+                    Add
                   </button>
                 </div>
 
                 {selectedJob.requiredSkills.length > 0 && (
                   <div className="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-[#E1E5E9]">
                     <span className="text-[11.5px] text-[#77818D]">
-                      כשירויות נדרשות:
+                      Required skills:
                     </span>
                     {selectedJob.requiredSkills.map((s) => (
                       <span
@@ -472,10 +472,10 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                 <div className="flex items-center gap-2 px-4 py-3 bg-[#F6F7F8] border-b border-[#E1E5E9]">
                   <GraduationCap className="w-4 h-4 text-[#2F95F8]" />
                   <h4 className="text-[13px] font-bold text-[#202A36]">
-                    רמת הכשרה של העובדים ברשומה
+                    Employee Qualification Level
                   </h4>
                   <span className="text-[11.5px] text-[#77818D]">
-                    · הסוכן משבץ רק עובדים מוסמכים
+                    · The agent only schedules qualified employees
                   </span>
                 </div>
 
@@ -532,7 +532,7 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                         <button
                           onClick={() => toggleMentor(q.employeeId)}
                           disabled={q.level === 'in_training' || q.level === 'not_qualified'}
-                          title="האם העובד יכול לחנוך ברשומה זו"
+                          title="Whether this employee can mentor on this job"
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-[11.5px] font-bold transition-all ${
                             q.level === 'in_training' || q.level === 'not_qualified'
                               ? 'bg-[#F6F7F8] text-[#A0AEC0] border-[#E1E5E9] cursor-not-allowed'
@@ -542,11 +542,11 @@ export const JobsModal: React.FC<JobsModalProps> = ({
                           }`}
                         >
                           <GraduationCap className="w-3.5 h-3.5" />
-                          יכול לחנוך: {q.canMentor ? 'כן' : 'לא'}
+                          Can mentor: {q.canMentor ? 'Yes' : 'No'}
                         </button>
 
                         <div className="flex-1 text-[11px] text-[#77818D] text-left min-w-[120px]">
-                          {q.note ? q.note : q.lastCertified ? `הוסמך: ${q.lastCertified}` : ''}
+                          {q.note ? q.note : q.lastCertified ? `Certified: ${q.lastCertified}` : ''}
                         </div>
                       </div>
                     );
@@ -566,13 +566,13 @@ export const JobsModal: React.FC<JobsModalProps> = ({
         {/* Footer */}
         <div className="px-5 py-3 border-t border-[#E1E5E9] bg-[#F6F7F8] flex items-center justify-between shrink-0">
           <span className="text-[11.5px] text-[#77818D]">
-            {jobs.length} רשומות עבודה · שינויים נשמרים מיד ומשמשים את הסוכן בשיבוץ הבא
+            {jobs.length} job records · Changes save instantly and are used by the agent in the next scheduling run
           </span>
           <button
             onClick={onClose}
             className="px-4 py-1.5 rounded-xl bg-[#2F95F8] hover:bg-[#168FF5] text-white text-[12.5px] font-bold transition-colors cursor-pointer"
           >
-            סיום
+            Done
           </button>
         </div>
       </div>

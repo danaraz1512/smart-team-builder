@@ -136,7 +136,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                 <h4 className="text-[14px] font-semibold uppercase tracking-wider text-[#202A36]">
-                  Onboarding & Task Setup (הגדרת חפיפה ומשימות)
+                  Onboarding & Task Setup
                 </h4>
               </div>
               {onOpenOnboardingPlan && (
@@ -147,7 +147,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                   }}
                   className="text-[12px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer"
                 >
-                  <span>ערוך משימות חפיפה</span>
+                  <span>Edit Onboarding Tasks</span>
                   <ArrowLeft className="w-3.5 h-3.5" />
                 </button>
               )}
@@ -157,10 +157,10 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                 <GraduationCap className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div className="text-[13px] text-[#202A36] space-y-1">
                   <div className="font-bold text-emerald-950">
-                    תבנית משימות מוגדרת לעובד חדש (נועה שחר)
+                    Defined task template for new employee (Noa Shalev)
                   </div>
                   <p className="text-[12px] text-slate-700 leading-snug">
-                    משמרת 1 מוגבלת לשעות שקטות (שטיפת כלים, הגשת קפה ופתיחה). חונך מלווה חובה (יוסי כהן).
+                    Shift 1 is limited to quiet hours (dishwashing, serving coffee, and opening). A mentor must be present (Yossi Cohen).
                   </p>
                 </div>
               </div>
@@ -175,7 +175,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({
                     className="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[12px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs"
                   >
                     <GraduationCap className="w-4 h-4" />
-                    <span>פתח את מסך עריכת המשימות והצ'קליסט למנהל</span>
+                    <span>Open the task editor and manager checklist</span>
                   </button>
                 </div>
               )}

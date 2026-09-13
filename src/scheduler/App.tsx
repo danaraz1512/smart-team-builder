@@ -53,7 +53,7 @@ export default function App() {
   const [selectedLocation, setSelectedLocation] = useState<string>('All Locations');
   const [managerToast, setManagerToast] = useState<string | null>(null);
 
-  // Job records (רשומות עבודה): recurring shift roles & recurring tasks
+  // Job records: recurring shift roles & recurring tasks
   const [isJobsModalOpen, setIsJobsModalOpen] = useState(false);
   const [jobs, setJobs] = useState<JobRecord[]>(INITIAL_JOBS);
 
@@ -93,8 +93,8 @@ export default function App() {
     setViewMode(mode);
     triggerToast(
       mode === 'focus'
-        ? 'עברת לתצוגה ממוקדת — עומס קוגניטיבי מופחת'
-        : 'עברת לתצוגה מפורטת — כל המדדים והתגיות מוצגים'
+        ? 'Switched to Focus View — reduced cognitive load'
+        : 'Switched to Detailed View — all metrics and badges shown'
     );
   };
 
@@ -103,6 +103,20 @@ export default function App() {
     if (schedulerState === 'analyzing') return;
     setSchedulerState('analyzing');
     setIsDecisionsDrawerOpen(false);
+    // analytics hook (Phase 2): track_scheduling_entry_point('smart_agent')
+  };
+
+  // Manual entry points that exist on the platform today, kept alongside the
+  // agent so we can compare engagement between the two paths (Phase 2: wire
+  // real analytics events here instead of a toast).
+  const handleSelectTemplate = () => {
+    // analytics hook (Phase 2): track_scheduling_entry_point('load_template')
+    triggerToast('Loaded a fixed weekly template — note: this does not check real availability and will not update automatically.');
+  };
+
+  const handleSelectCopyPrevious = () => {
+    // analytics hook (Phase 2): track_scheduling_entry_point('copy_previous_week')
+    triggerToast('Copied last week\'s schedule — it may not reflect recent availability changes.');
   };
 
   // State Transition 2 -> 3: Finish AI analysis, populate draft
@@ -170,7 +184,7 @@ export default function App() {
   // Handle onboarding plan save
   const handleSaveOnboardingPlan = (updatedPlan: OnboardingPlanConfig) => {
     setOnboardingPlan(updatedPlan);
-    triggerToast('תוכנית החפיפה, המשימות והצ\'קליסט נשמרו בהצלחה ועודכנו באפליקציית העובד!');
+    triggerToast('Onboarding plan, tasks, and checklist saved successfully and updated in the employee app!');
   };
 
   // Update a job record (recurring shift role / recurring task)
@@ -183,7 +197,7 @@ export default function App() {
     const id = `job-custom-${Date.now()}`;
     const newJob: JobRecord = {
       id,
-      name: 'רשומת עבודה חדשה',
+      name: 'New Job Record',
       nameEn: 'New Job Record',
       kind: 'recurring_task',
       color: '#0EA5A5',
@@ -191,7 +205,7 @@ export default function App() {
       recurrence: {
         days: ['Monday'],
         timeRange: '09:00–13:00',
-        frequencyLabel: 'כל שבוע',
+        frequencyLabel: 'Every week',
       },
       requiredHeadcount: 1,
       tasks: [],
@@ -205,7 +219,7 @@ export default function App() {
       })),
     };
     setJobs((prev) => [...prev, newJob]);
-    triggerToast('נוצרה רשומת עבודה חדשה. הגדירי ימים, משימות ורמות הכשרה.');
+    triggerToast('New job record created. Set the days, tasks, and qualification levels.');
     return id;
   };
 
@@ -270,7 +284,6 @@ export default function App() {
           {/* Top Navigation & Header */}
           <WebSchedulerHeader
             schedulerState={schedulerState}
-            onGenerateSmartSchedule={handleGenerateSmartSchedule}
             onResetDemo={handleResetDemo}
             selectedLocation={selectedLocation}
             onSelectLocation={setSelectedLocation}
@@ -304,6 +317,8 @@ export default function App() {
                   onOpenRules={() => setIsRulesModalOpen(true)}
                   onGenerateSchedule={handleGenerateSmartSchedule}
                   onOpenOnboardingPlan={() => setIsOnboardingPlanModalOpen(true)}
+                  onSelectTemplate={handleSelectTemplate}
+                  onSelectCopyPrevious={handleSelectCopyPrevious}
                 />
               )}
 

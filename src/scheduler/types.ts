@@ -22,7 +22,7 @@ export interface Employee {
   avgTipsPerShift?: number;
   salesScore?: number; // e.g. 96/100
   mentorRating?: number; // e.g. 4.9/5
-  specialtyTag?: string; // e.g. 'מהיר בלחץ', 'חונך סבלני', 'קופאי שירות'
+  specialtyTag?: string; // e.g. 'Fast under pressure', 'Patient mentor', 'Service-focused cashier'
 }
 
 export type ShiftTimeSlot = 'Morning' | 'Evening';
@@ -110,7 +110,7 @@ export interface OnboardingPlanConfig {
 
 
 /* ============================================================
-   JOBS (רשומות עבודה)
+   JOBS (work records)
    A job record holds a repeating shift-role or a recurring task,
    its task checklist, required skills and the per-employee
    qualification level (including "can mentor" yes/no).
@@ -119,10 +119,10 @@ export interface OnboardingPlanConfig {
 export type JobKind = 'shift_role' | 'recurring_task';
 
 export type JobQualificationLevel =
-  | 'certified_mentor' // מוסמך + יכול לחנוך
-  | 'qualified'        // מוסמך
-  | 'in_training'      // בהכשרה
-  | 'not_qualified';   // לא מוסמך
+  | 'certified_mentor' // Certified + can mentor
+  | 'qualified'        // Certified
+  | 'in_training'      // In training
+  | 'not_qualified';   // Not certified
 
 export interface JobQualification {
   employeeId: string;
@@ -135,12 +135,12 @@ export interface JobQualification {
 export interface JobRecurrence {
   days: DayOfWeek[];
   timeRange: string;      // e.g. "07:00–15:00"
-  frequencyLabel: string; // e.g. "כל שבוע", "פעם בשבוע · ראשון"
+  frequencyLabel: string; // e.g. "Every week", "Once a week · Sunday"
 }
 
 export interface JobRecord {
   id: string;
-  name: string;        // Hebrew display name
+  name: string;        // Primary display name
   nameEn: string;      // English label (Connecteam style)
   kind: JobKind;
   color: string;       // dot color like Connecteam job records

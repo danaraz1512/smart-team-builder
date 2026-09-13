@@ -86,7 +86,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
     const newItem: OnboardingChecklistItem = {
       id: `ack-${Date.now()}`,
       text: newChecklistText.trim(),
-      subtext: newChecklistSubtext.trim() || 'אישור נהלי העבודה בעגלה',
+      subtext: newChecklistSubtext.trim() || 'Confirms understanding of cart operating procedures',
       required: true,
     };
     setFormData({
@@ -111,39 +111,39 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
         steps: [
           {
             stepNumber: 1,
-            title: 'משמרת ראשונה: יום ראשון (10:00–14:00)',
-            timingRecommendation: 'עגלת קפה בגינה · שעות שקטות (ליווי צמוד עם יוסי)',
+            title: 'Shift 1: Sunday (10:00 AM–2:00 PM)',
+            timingRecommendation: 'Riverside Coffee Cart · Quiet hours (close support from Yossi)',
             isOffPeakRequired: true,
             mentorId: 'emp-yossi',
             tasks: [
-              'שטיפת כלים: שטיפה וסטריליזציה של ידיות החליטה וקנקני חלב',
-              'הגשת קפה: מסירת משקאות חמים ומאפים ללקוחות בחיוך',
-              'פתיחת עמדה: היכרות עם סידור המקררים והמצרכים',
+              'Dishwashing: cleaning and sanitizing brew handles and milk pitchers',
+              'Serving coffee: handing hot drinks and pastries to customers with a smile',
+              'Opening the station: getting familiar with fridge and supply layout',
             ],
-            restrictions: ['ללא עבודה על קופה במשמרת ראשונה', 'ללא שיבוץ בשעות עומס שיא'],
+            restrictions: ['No register work during the first shift', 'No scheduling during peak hours'],
           },
           {
             stepNumber: 2,
-            title: 'משמרת שנייה: יום רביעי (14:00–18:00)',
-            timingRecommendation: 'עגלת קפה בגינה · שעות צהריים רגועות',
+            title: 'Shift 2: Wednesday (2:00 PM–6:00 PM)',
+            timingRecommendation: 'Riverside Coffee Cart · Calm afternoon hours',
             isOffPeakRequired: true,
             mentorId: 'emp-yossi',
             tasks: [
-              'הקצפת חלב: תרגול מזיגה ולאטה ארט בסיסי בליווי החונך',
-              'היכרות עם קופה: הקלדת הזמנות בסיסיות במערכת ה-POS',
-              'חידוש מלאי כוסות ומכסים במהלך המשמרת',
+              'Milk frothing: practicing pouring and basic latte art with the mentor',
+              'Getting familiar with the register: entering basic orders in the POS system',
+              'Restocking cups and lids during the shift',
             ],
-            restrictions: ['ליווי צמוד של חונך בעת הקלדה בקופה'],
+            restrictions: ['Close mentor supervision when using the register'],
           },
           {
             stepNumber: 3,
-            title: 'משמרת שלישית: שבוע הבא (השתלבות עצמאית מלאה)',
-            timingRecommendation: 'עבודה רציפה ועצמאית לפי צרכי הסידור',
+            title: 'Shift 3: Next week (full independent integration)',
+            timingRecommendation: 'Continuous, independent work based on schedule needs',
             isOffPeakRequired: false,
             mentorId: 'emp-yossi',
             tasks: [
-              'ניהול קו חליטה והוצאת מנות עצמאית',
-              'תפעול מלא של עמדת הקפה והקופה',
+              'Running the brew line and preparing orders independently',
+              'Full operation of the coffee station and register',
             ],
             restrictions: [],
           },
@@ -155,33 +155,33 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
         steps: [
           {
             stepNumber: 1,
-            title: 'משמרת ראשונה · היכרות תפריט והגשה',
-            timingRecommendation: 'אמצע שבוע שעות בוקר שקטות',
+            title: 'Shift 1 · Menu familiarization and service',
+            timingRecommendation: 'Quiet midweek morning hours',
             isOffPeakRequired: true,
             mentorId: 'emp-yossi',
             tasks: [
-              'למידת תפריט המשקאות והמאפים בעל פה',
-              'הגשת משקאות ופינוי שולחנות',
-              'בדיקת ניקיון סביבת הלקוחות',
+              'Learning the drinks and pastries menu by heart',
+              'Serving drinks and clearing tables',
+              'Checking cleanliness of the customer area',
             ],
-            restrictions: ['ללא הכנת אספרסו עצמאית'],
+            restrictions: ['No preparing espresso independently'],
           },
           {
             stepNumber: 2,
-            title: 'משמרת שנייה · קופה וקבלת הזמנות',
-            timingRecommendation: 'אמצע שבוע שעות צהריים',
+            title: 'Shift 2 · Register and taking orders',
+            timingRecommendation: 'Midweek afternoon hours',
             isOffPeakRequired: true,
             mentorId: 'emp-yossi',
-            tasks: ['פתיחת חשבונות ב-POS', 'סליקת אשראי ומזומן', 'מענה לשאלות לקוחות'],
-            restrictions: ['חונך מלווה בקרבת הקופה'],
+            tasks: ['Opening tabs in the POS', 'Processing credit and cash payments', 'Answering customer questions'],
+            restrictions: ['Mentor stationed near the register'],
           },
           {
             stepNumber: 3,
-            title: 'משמרת שלישית · עצמאות בשירות',
-            timingRecommendation: 'סוף שבוע בהרכב מלא',
+            title: 'Shift 3 · Independence in service',
+            timingRecommendation: 'Weekend, full team',
             isOffPeakRequired: false,
             mentorId: 'emp-yossi',
-            tasks: ['ניהול הזמנות מהיר בעומס', 'אפסייל מאפים ומארזים'],
+            tasks: ['Managing orders quickly under load', 'Upselling pastries and bundles'],
             restrictions: [],
           },
         ],
@@ -204,7 +204,6 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
       <div
         id="onboarding-plan-modal"
         className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#CBD5E1] overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200"
-        dir="rtl"
       >
         {/* Modal Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#E2E8F0] bg-gradient-to-l from-slate-50 to-blue-50/60">
@@ -215,14 +214,14 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-[17px] font-bold text-[#0F172A]">
-                  הגדרת תוכנית חפיפה ומשימות משמרת
+                  Onboarding Plan &amp; Shift Tasks
                 </h3>
                 <span className="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-blue-100 text-blue-700 border border-blue-200">
-                  עבור: {formData.employeeName}
+                  For: {formData.employeeName}
                 </span>
               </div>
               <p className="text-[11.5px] text-[#64748B]">
-                כאן בעל העסק מגדיר בדיוק מה העובד החדש יעשה בכל משמרת, ואילו סעיפים עליו לאשר במובייל
+                This is where the manager sets exactly what the new hire will do on each shift, and which items they need to acknowledge on mobile
               </p>
             </div>
           </div>
@@ -245,7 +244,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
             }`}
           >
             <Coffee className="w-4 h-4" />
-            <span>משימות משמרת לפי שלב ({formData.steps.length})</span>
+            <span>Shift Tasks by Stage ({formData.steps.length})</span>
           </button>
 
           <button
@@ -257,7 +256,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
             }`}
           >
             <CheckSquare className="w-4 h-4" />
-            <span>צ'קליסט "סמן שקראת" לעובד ({formData.acknowledgementItems.length})</span>
+            <span>"Mark as Read" Checklist for Employee ({formData.acknowledgementItems.length})</span>
           </button>
 
           <button
@@ -269,7 +268,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
             }`}
           >
             <Sparkles className="w-4 h-4 text-amber-500" />
-            <span>תבניות מוכנות מראש</span>
+            <span>Ready-Made Templates</span>
           </button>
         </div>
 
@@ -293,7 +292,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                     <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 text-[10px] flex items-center justify-center font-bold">
                       {step.stepNumber}
                     </span>
-                    <span>{idx === 0 ? 'משמרת 1 (כלים והגשה)' : idx === 1 ? 'משמרת 2 (הקצפה וקופה)' : 'משמרת 3 (עצמאות)'}</span>
+                    <span>{idx === 0 ? 'Shift 1 (dishes & serving)' : idx === 1 ? 'Shift 2 (frothing & register)' : 'Shift 3 (independence)'}</span>
                   </button>
                 ))}
               </div>
@@ -303,7 +302,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
                     <label className="text-[11.5px] font-bold text-slate-700 block mb-1">
-                      כותרת השלב והשעות
+                      Stage Title & Hours
                     </label>
                     <input
                       type="text"
@@ -320,7 +319,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                   {/* Mentor selector */}
                   <div>
                     <label className="text-[11.5px] font-bold text-slate-700 block mb-1">
-                      חונך מלווה למשמרת
+                      Mentor for This Shift
                     </label>
                     <select
                       value={currentStep.mentorId}
@@ -329,7 +328,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                     >
                       {mentors.map((m) => (
                         <option key={m.id} value={m.id}>
-                          {m.name} ({m.mentorEligible ? 'חונך מוסמך ⭐' : m.role})
+                          {m.name} ({m.mentorEligible ? 'Certified Mentor ⭐' : m.role})
                         </option>
                       ))}
                     </select>
@@ -348,19 +347,19 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                       readOnly
                       className="rounded text-blue-600 focus:ring-0 cursor-pointer"
                     />
-                    <span>שיבוץ בשעות שקטות בלבד (הגנה מפני עומס שיא)</span>
+                    <span>Schedule during quiet hours only (protection from peak load)</span>
                   </label>
                 </div>
               </div>
 
-              {/* Tasks Editor (The core user question: "מי ממלא את המידע הזה ואיפה") */}
+              {/* Tasks Editor */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <label className="text-[13px] font-bold text-slate-900 flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    <span>משימות ספציפיות שהעובד יבצע במשמרת זו (מוצג במובייל):</span>
+                    <span>Specific tasks the employee will perform on this shift (shown on mobile):</span>
                   </label>
-                  <span className="text-[11px] text-slate-500">ניתן להוסיף, לערוך ולמחוק</span>
+                  <span className="text-[11px] text-slate-500">Can be added, edited, and deleted</span>
                 </div>
 
                 {/* Existing Tasks List */}
@@ -388,7 +387,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                       <button
                         onClick={() => handleDeleteTask(tIdx)}
                         className="p-1 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
-                        title="מחק משימה"
+                        title="Delete task"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -400,7 +399,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                 <div className="flex items-center gap-2 pt-1">
                   <input
                     type="text"
-                    placeholder="הקלד משימה חדשה למשמרת (למשל: שטיפת ידיות אספרסו, מילוי חלב...)"
+                    placeholder="Type a new task for this shift (e.g. cleaning espresso handles, refilling milk...)"
                     value={newTaskInput}
                     onChange={(e) => setNewTaskInput(e.target.value)}
                     onKeyDown={(e) => {
@@ -417,23 +416,23 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                     className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white font-bold text-[12px] flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
                   >
                     <Plus className="w-4 h-4" />
-                    <span>הוסף משימה</span>
+                    <span>Add Task</span>
                   </button>
                 </div>
               </div>
             </div>
           )}
 
-          {/* TAB 2: CHECKLIST "סמן שקראת" */}
+          {/* TAB 2: CHECKLIST "MARK AS READ" */}
           {activeTab === 'checklist' && (
             <div className="space-y-4">
               <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 text-amber-950 text-[12px] space-y-1">
                 <div className="font-bold flex items-center gap-1.5 text-amber-900">
                   <ShieldCheck className="w-4 h-4 text-amber-600" />
-                  <span>סעיפי אישור דיגיטלי במובייל ("סמן שקראת")</span>
+                  <span>Digital acknowledgment items on mobile ("Mark as Read")</span>
                 </div>
                 <p className="text-[11px] text-amber-900/90 leading-relaxed">
-                  העובד רואה את הסעיפים הללו במובייל וחייב לסמן עליהם וי לפני שהוא מתחיל את המשמרת הראשונה. באפשרותך להתאים את הסעיפים לנהלים שלך:
+                  The employee sees these items on mobile and must check them off before starting their first shift. You can tailor these items to your own procedures:
                 </p>
               </div>
 
@@ -463,7 +462,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                       <button
                         onClick={() => handleDeleteChecklistItem(item.id)}
                         className="p-1 text-slate-400 hover:text-red-600 rounded-lg cursor-pointer"
-                        title="מחק סעיף"
+                        title="Delete item"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -473,7 +472,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                       <input
                         type="text"
                         value={item.subtext}
-                        placeholder="תיאור משנה או הסבר קצר..."
+                        placeholder="Subtext or short explanation..."
                         onChange={(e) => {
                           const updated = [...formData.acknowledgementItems];
                           updated[idx] = { ...item, subtext: e.target.value };
@@ -488,17 +487,17 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
 
               {/* Add checklist item */}
               <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <div className="text-[12px] font-bold text-slate-800">הוספת סעיף אישור חדש</div>
+                <div className="text-[12px] font-bold text-slate-800">Add a New Acknowledgment Item</div>
                 <input
                   type="text"
-                  placeholder="כותרת הסעיף (למשל: הבנתי את נוהל סגירת קופה ונעילה...)"
+                  placeholder="Item title (e.g. I understand the register closing and lockup procedure...)"
                   value={newChecklistText}
                   onChange={(e) => setNewChecklistText(e.target.value)}
                   className="w-full px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
-                  placeholder="הסבר קצר נוסף (אופציונלי)..."
+                  placeholder="Additional short explanation (optional)..."
                   value={newChecklistSubtext}
                   onChange={(e) => setNewChecklistSubtext(e.target.value)}
                   className="w-full px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-[11px] focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -510,7 +509,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                     className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white font-bold text-[11.5px] flex items-center gap-1 transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
-                    <span>הוסף סעיף לאישור העובד</span>
+                    <span>Add Item for Employee to Acknowledge</span>
                   </button>
                 </div>
               </div>
@@ -521,7 +520,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
           {activeTab === 'presets' && (
             <div className="space-y-3">
               <div className="text-[12px] text-slate-600">
-                טען תבנית מוגדרת מראש בלחיצה אחת:
+                Load a predefined template with one click:
               </div>
 
               <div
@@ -531,14 +530,14 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                 <div className="flex items-center justify-between">
                   <div className="font-bold text-[13px] text-slate-900 flex items-center gap-1.5">
                     <Coffee className="w-4 h-4 text-amber-600" />
-                    <span>בריסטה בעגלת קפה (מומלץ)</span>
+                    <span>Barista at the Coffee Cart (Recommended)</span>
                   </div>
                   <span className="text-[10.5px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">
-                    פעיל כעת
+                    Currently Active
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600">
-                  משמרת 1: שטיפת כלים, הגשת קפה ופתיחה · משמרת 2: הקצפת חלב ותרגול קופה · משמרת 3: עצמאות
+                  Shift 1: dishwashing, serving coffee, and opening · Shift 2: milk frothing and register practice · Shift 3: independence
                 </p>
               </div>
 
@@ -549,14 +548,14 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
                 <div className="flex items-center justify-between">
                   <div className="font-bold text-[13px] text-slate-900 flex items-center gap-1.5">
                     <Users className="w-4 h-4 text-blue-600" />
-                    <span>איש שירות ומלצרות</span>
+                    <span>Service & Waitstaff</span>
                   </div>
                   <span className="text-[10.5px] bg-slate-100 text-slate-600 font-bold px-2 py-0.5 rounded">
-                    לחץ להחלפה
+                    Click to Switch
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600">
-                  משמרת 1: היכרות תפריט והגשה · משמרת 2: קופה וקבלת הזמנות · משמרת 3: עצמאות ואפסייל
+                  Shift 1: menu familiarization and service · Shift 2: register and taking orders · Shift 3: independence and upselling
                 </p>
               </div>
             </div>
@@ -570,7 +569,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
             className="text-[11.5px] font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1 cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>אפס לברירת מחדל</span>
+            <span>Reset to Default</span>
           </button>
 
           <div className="flex items-center gap-2">
@@ -578,7 +577,7 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
               onClick={onClose}
               className="px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 font-semibold text-[12.5px] transition-colors cursor-pointer"
             >
-              ביטול
+              Cancel
             </button>
 
             <button
@@ -588,12 +587,12 @@ export const OnboardingPlanModal: React.FC<OnboardingPlanModalProps> = ({
               {saveSuccess ? (
                 <>
                   <CheckCircle2 className="w-4 h-4 text-white" />
-                  <span>נשמר וסונכרן למובייל!</span>
+                  <span>Saved and synced to mobile!</span>
                 </>
               ) : (
                 <>
                   <Save className="w-4 h-4" />
-                  <span>שמור וסנכרן למובייל ✓</span>
+                  <span>Save & Sync to Mobile ✓</span>
                 </>
               )}
             </button>

@@ -83,7 +83,7 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
           className="px-2.5 py-1 rounded-md bg-white border border-[#BAE0FD] text-[#168FF5] hover:bg-[#2F95F8] hover:text-white font-bold text-[11.5px] flex items-center gap-1 cursor-pointer transition-all shadow-2xs"
         >
           <Sliders className="w-3 h-3 text-[#2F95F8] group-hover:text-white" />
-          <span>שינוי ידני (Manual Edit)</span>
+          <span>Manual Edit</span>
         </button>
       </div>
 
@@ -113,28 +113,28 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
           <div className="bg-[#F6F7F8] rounded-lg p-2.5 space-y-1.5 border border-[#E1E5E9]">
             <div className="text-[11px] font-semibold text-[#77818D] uppercase tracking-wider flex items-center justify-between">
               <span>Assigned Team (3 of 3 needed)</span>
-              <span className="text-emerald-700 font-bold normal-case">צפי מחזור: ~₪5,200</span>
+              <span className="text-emerald-700 font-bold normal-case">Projected revenue: ~$1,450</span>
             </div>
             <div className="flex items-center gap-2 text-[12px] text-[#202A36]">
               <span className="w-5 h-5 rounded-full bg-[#6879EA] text-white text-[10px] flex items-center justify-center font-bold">
                 DL
               </span>
               <span className="font-semibold">Dana Levi</span>
-              <span className="text-[#77818D]">— עוגן שיא (72 כוסות/שעה · ₪165 טיפ)</span>
+              <span className="text-[#77818D]">— Peak Anchor (72 cups/hr · $46 tips)</span>
             </div>
             <div className="flex items-center gap-2 text-[12px] text-[#202A36]">
               <span className="w-5 h-5 rounded-full bg-[#37B77D] text-white text-[10px] flex items-center justify-center font-bold">
                 EB
               </span>
               <span className="font-semibold">Eli Bar</span>
-              <span className="text-[#77818D]">— בריסטה מנוסה וסגירה (55 כוסות/שעה)</span>
+              <span className="text-[#77818D]">— Experienced barista & closer (55 cups/hr)</span>
             </div>
             <div className="flex items-center gap-2 text-[12px] text-[#202A36]">
               <span className="w-5 h-5 rounded-full bg-[#9333EA] text-white text-[10px] flex items-center justify-center font-bold">
                 TR
               </span>
               <span className="font-semibold">Tom Reed</span>
-              <span className="text-[#77818D]">— קופאי מומחה (קצב סליקה גבוה)</span>
+              <span className="text-[#77818D]">— Expert cashier (high throughput)</span>
             </div>
           </div>
 
@@ -142,10 +142,10 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
           <div className="p-2.5 rounded-lg bg-amber-50/70 border border-amber-200/80 space-y-1 text-[11.5px] text-amber-950">
             <div className="font-bold flex items-center gap-1.5 text-amber-900">
               <Award className="w-3.5 h-3.5 text-amber-600" />
-              <span>התאמה לתוצאות עסקיות ומניעת אנדר-פרפורמינג:</span>
+              <span>Matched to business outcomes and underperformance prevention:</span>
             </div>
             <div className="text-[11px] text-amber-900/90 leading-relaxed">
-              שיבוץ צוות A-Tier בעומס שיא שומר על קצב הוצאת כוסות מהיר (מעל 65/שעה), מונע נטישת לקוחות בתור ומבטיח ממוצע טיפים מקסימלי.
+              Staffing an A-tier team at peak load keeps cup output fast (65+/hr), prevents line abandonment, and maximizes average tips.
             </div>
           </div>
 
@@ -153,20 +153,20 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
           <div className="space-y-1.5 text-[12px] text-[#202A36]">
             <div className="flex items-start gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-              <span>דנה מספקת ניהול משמרת ותפוקת קפה שיא תחת לחץ.</span>
+              <span>Dana provides shift-lead coverage and peak-level coffee throughput under pressure.</span>
             </div>
             <div className="flex items-start gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-              <span>אלי מוסמך לסגירת קופה ונעילת העגלה בסיום המשמרת.</span>
+              <span>Eli is qualified to close the register and lock up the cart at the end of the shift.</span>
             </div>
             <div className="flex items-start gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-              <span>כל חברי הצוות פנויים ואישרו זמינות ללא אילוצים.</span>
+              <span>All team members are available and confirmed with no conflicts.</span>
             </div>
             <div className="flex items-start gap-1.5 text-slate-600">
               <ShieldCheck className="w-3.5 h-3.5 text-[#2F95F8] shrink-0 mt-0.5" />
               <span>
-                <strong>מניעת עומס שגוי:</strong> נועה (מתלמדת) לא שובצה לשיא חמישי כדי למנוע קריסת שירות ולשמור על הכשרה בטוחה.
+                <strong>Avoiding a bad fit:</strong> Noa (in training) was not assigned to Thursday's peak shift, to prevent a service breakdown and keep her training safe.
               </span>
             </div>
           </div>
@@ -233,20 +233,20 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
                 <div className="font-bold flex items-center justify-between text-emerald-900">
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>תוכנית חפיפה מדורגת (Upskilling):</span>
+                    <span>Phased Onboarding Plan (Upskilling):</span>
                   </span>
                   <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded border border-emerald-300">
-                    שעות שקטות
+                    Off-peak hours
                   </span>
                 </div>
                 <div className="space-y-1 text-[11px] text-slate-700">
                   <div className="flex items-start gap-1.5">
-                    <span className="font-bold text-emerald-700 shrink-0">משמרת 1 (ראשון):</span>
-                    <span>שטיפת כלים, פתיחה, הגשת קפה (ללא לחץ קופה).</span>
+                    <span className="font-bold text-emerald-700 shrink-0">Shift 1 (Sunday):</span>
+                    <span>Dishwashing, opening, serving coffee (no register pressure).</span>
                   </div>
                   <div className="flex items-start gap-1.5">
-                    <span className="font-bold text-blue-700 shrink-0">משמרת 2 (רביעי):</span>
-                    <span>תרגול מזיגת חלב לאטה והקלדת הזמנות בקופה.</span>
+                    <span className="font-bold text-blue-700 shrink-0">Shift 2 (Wednesday):</span>
+                    <span>Practicing milk steaming and latte art, and taking orders at the register.</span>
                   </div>
                 </div>
               </div>
@@ -255,19 +255,19 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
               <div className="space-y-1.5 text-[12px] text-[#202A36]">
                 <div className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span><strong>שעות שקטות בעגלה:</strong> ראשון צהריים (~90 כוסות) מאפשר הדרכה סבלנית בלי לעכב לקוחות.</span>
+                  <span><strong>Quiet hours on the cart:</strong> Sunday midday (~90 cups) allows patient coaching without holding up customers.</span>
                 </div>
                 <div className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span><strong>התאמת חונך:</strong> יוסי כהן בעל ציון חניכה 4.9 ומומחיות אספרסו מלווה אותה צמוד.</span>
+                  <span><strong>Mentor match:</strong> Yossi Cohen has a 4.9 mentoring score and espresso expertise, and stays closely by her side.</span>
                 </div>
                 <div className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span>נועה ויוסי זמינים שניהם ללא חפיפה לאילוצים אחרים.</span>
+                  <span>Noa and Yossi are both available with no conflicting constraints.</span>
                 </div>
                 <div className="flex items-start gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#37B77D] shrink-0 mt-0.5" />
-                  <span>הגנת מגבלת שעות: נועה משובצת ל-4 מתוך 20 שעות שבועיות בלבד לשבוע ראשון.</span>
+                  <span>Hours-limit protection: Noa is scheduled for only 4 of her 20 weekly hours in her first week.</span>
                 </div>
               </div>
 
@@ -300,7 +300,7 @@ export const DecisionsDrawer: React.FC<DecisionsDrawerProps> = ({
                   className="w-full py-1.5 rounded-lg border border-[#BAE0FD] bg-[#EAF5FF] text-[#168FF5] hover:bg-[#2F95F8] hover:text-white font-semibold text-[12px] flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs"
                 >
                   <Sliders className="w-3.5 h-3.5" />
-                  <span>שינוי ידני מותאם אישית (Custom Manual Edit)</span>
+                  <span>Custom Manual Edit</span>
                 </button>
               </div>
             </div>

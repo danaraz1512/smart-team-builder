@@ -3,7 +3,6 @@ import {
   Search,
   HelpCircle,
   Bell,
-  Sparkles,
   RotateCcw,
   Calendar,
   MapPin,
@@ -20,7 +19,6 @@ import { SchedulerState, ViewMode } from '../types';
 
 interface WebSchedulerHeaderProps {
   schedulerState: SchedulerState;
-  onGenerateSmartSchedule: () => void;
   onResetDemo: () => void;
   selectedLocation: string;
   onSelectLocation: (loc: string) => void;
@@ -34,7 +32,6 @@ interface WebSchedulerHeaderProps {
 
 export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
   schedulerState,
-  onGenerateSmartSchedule,
   onResetDemo,
   selectedLocation,
   onSelectLocation,
@@ -46,7 +43,6 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
   jobsCount,
 }) => {
   const isPublished = schedulerState === 'published';
-  const isAnalyzing = schedulerState === 'analyzing';
 
   return (
     <header className="bg-white border-b border-[#E1E5E9] shrink-0">
@@ -167,7 +163,7 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
               }`}
             >
               <Zap className="w-3.5 h-3.5" />
-              <span>תצוגה ממוקדת (Focus)</span>
+              <span>Focus View</span>
             </button>
             <button
               id="toggle-detailed-view-btn"
@@ -179,7 +175,7 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
-              <span>תצוגה מפורטת (Detailed)</span>
+              <span>Detailed View</span>
             </button>
           </div>
 
@@ -213,11 +209,11 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
             <button
               id="header-jobs-btn"
               onClick={onOpenJobs}
-              title="רשומות עבודה: משמרות ומשימות חוזרות, כשירות עובדים והרשאת חניכה"
+              title="Job records: recurring shifts and tasks, employee qualifications, and mentor eligibility"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E1E5E9] bg-white text-[#202A36] hover:bg-[#F6F7F8] hover:border-[#BAE0FD] text-[12px] font-bold transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
             >
               <Briefcase className="w-3.5 h-3.5 text-[#2F95F8]" />
-              <span>רשומות עבודה (Jobs)</span>
+              <span>Jobs</span>
               {typeof jobsCount === 'number' && (
                 <span className="ml-0.5 px-1.5 py-0.5 rounded-md bg-[#F1F3F5] text-[10.5px] text-[#77818D] font-bold">
                   {jobsCount}
@@ -231,11 +227,11 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
             <button
               id="header-rules-btn"
               onClick={onOpenRules}
-              title="בדיקת חוקי שיבוץ ואילוצים עסקיים"
+              title="Review scheduling rules and business constraints"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#BAE0FD] bg-[#EAF5FF] text-[#168FF5] hover:bg-[#2F95F8] hover:text-white text-[12px] font-bold transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
             >
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>חוקי שיבוץ (Rules)</span>
+              <span>Rules</span>
             </button>
           )}
 
@@ -244,11 +240,11 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
             <button
               id="header-manual-edit-btn"
               onClick={onOpenManualEdit}
-              title="ביצוע שינוי ידני של שיבוץ החפיפה ובחירת חונך"
+              title="Manually change the onboarding shift assignment and mentor selection"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E1E5E9] bg-white text-[#202A36] hover:bg-[#F6F7F8] hover:border-[#BAE0FD] text-[12px] font-bold transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
             >
               <Sliders className="w-3.5 h-3.5 text-[#2F95F8]" />
-              <span>שינוי ידני (Manual Edit)</span>
+              <span>Manual Edit</span>
             </button>
           )}
 
@@ -262,25 +258,6 @@ export const WebSchedulerHeader: React.FC<WebSchedulerHeaderProps> = ({
             <RotateCcw className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Reset</span>
           </button>
-
-          {/* Primary Action: Generate Smart Schedule */}
-          {!isPublished && (
-            <button
-              id="generate-smart-schedule-btn"
-              onClick={onGenerateSmartSchedule}
-              disabled={isAnalyzing}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg font-semibold text-[13px] text-white shadow-sm transition-all ${
-                isAnalyzing
-                  ? 'bg-[#94CBFC] cursor-not-allowed'
-                  : 'bg-[#2F95F8] hover:bg-[#168FF5] active:scale-[0.99]'
-              }`}
-            >
-              <Sparkles className="w-4 h-4 text-[#C253D9] animate-pulse" />
-              <span>
-                {isAnalyzing ? 'Analyzing Constraints...' : 'Generate Smart Schedule'}
-              </span>
-            </button>
-          )}
         </div>
       </div>
     </header>

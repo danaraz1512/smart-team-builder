@@ -76,7 +76,7 @@ export const GeneratedDraftSummaryBanner: React.FC<GeneratedDraftSummaryBannerPr
             }`}
           >
             <AlertCircle className="w-4 h-4 text-amber-300" />
-            <span>{isDecisionsOpen ? 'סגירת החלטות (Viewing Decisions)' : 'בדיקת החלטות מפתח (Review Decisions)'}</span>
+            <span>{isDecisionsOpen ? 'Close Decisions (Viewing Decisions)' : 'Review Key Decisions'}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
 
@@ -84,10 +84,10 @@ export const GeneratedDraftSummaryBanner: React.FC<GeneratedDraftSummaryBannerPr
             id="banner-manual-edit-btn"
             onClick={onOpenManualEdit}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border-2 border-[#BAE0FD] bg-[#EAF5FF] text-[#168FF5] hover:bg-[#2F95F8] hover:text-white font-bold text-[13px] transition-all shadow-xs cursor-pointer active:scale-[0.98]"
-            title="בצע שינוי ידני של שיבוץ החפיפה של נועה ושותף המשמרת"
+            title="Manually change Noa's onboarding shift assignment and shift partner"
           >
             <Sliders className="w-4 h-4 text-[#2F95F8] group-hover:text-white" />
-            <span>שינוי ידני (Manual Edit)</span>
+            <span>Manual Edit</span>
           </button>
 
           <button

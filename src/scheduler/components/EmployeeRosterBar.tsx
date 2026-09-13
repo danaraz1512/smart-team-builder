@@ -95,17 +95,17 @@ export const EmployeeRosterBar: React.FC<EmployeeRosterBarProps> = ({
               <div className="mt-2 flex flex-wrap gap-1 items-center">
                 {emp.tier === 'A_STAR' && (
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-900 border border-amber-300 flex items-center gap-0.5">
-                    <span>⭐️ עוגן שיא</span>
+                    <span>⭐️ Peak Anchor</span>
                   </span>
                 )}
                 {emp.isNew && (
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#37B77D] text-white">
-                    {emp.newBadge || 'חדש/ה'}
+                    {emp.newBadge || 'New'}
                   </span>
                 )}
                 {emp.mentorEligible && (
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#EAF5FF] text-[#2F95F8] border border-[#BAE0FD]">
-                    חונך/ת
+                    Mentor
                   </span>
                 )}
                 {emp.specialtyTag && (
@@ -116,7 +116,7 @@ export const EmployeeRosterBar: React.FC<EmployeeRosterBarProps> = ({
                 {emp.ptoDays.length > 0 && (
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-[#FFF7ED] text-[#F3A43B] border border-[#FED7AA] flex items-center gap-0.5">
                     <Palmtree className="w-2.5 h-2.5" />
-                    חופש: {emp.ptoDays[0].slice(0, 3)}
+                    PTO: {emp.ptoDays[0].slice(0, 3)}
                   </span>
                 )}
               </div>
@@ -128,31 +128,19 @@ export const EmployeeRosterBar: React.FC<EmployeeRosterBarProps> = ({
                   className="mt-2 w-full py-1.5 px-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <GraduationCap className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>ערוך תוכנית חפיפה ומשימות ✏️</span>
+                  <span>Edit Onboarding Plan & Tasks ✏️</span>
                 </button>
               )}
 
-              {/* Business Outcome Signals: Output rate & avg tips */}
-              {emp.cupsPerHour && (
-                <div className="mt-1.5 px-2 py-1 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[10.5px] flex items-center justify-between text-[#475569]">
-                  <span title="הספק כוסות ממוצע לשעה בעומס">
-                    ☕ <strong>{emp.cupsPerHour}</strong> כוסות/שעה
-                  </span>
-                  {emp.avgTipsPerShift && (
-                    <span className="text-[#15803D] font-bold" title="ממוצע טיפים למשמרת">
-                      ₪{emp.avgTipsPerShift} טיפ
-                    </span>
-                  )}
-                </div>
-              )}
+              {/* Business Outcome Signals (cups/hour, avg tips): out of scope for now — Phase 2 */}
 
               {/* Availability & Hours */}
               <div className="mt-2 pt-1.5 border-t border-[#E1E5E9]/60 text-[11px] text-[#77818D] flex items-center justify-between">
                 <span title={emp.availability.join(', ')}>
-                  זמין: {emp.availability.map((d) => d.slice(0, 2)).join(', ')}
+                  Available: {emp.availability.map((d) => d.slice(0, 2)).join(', ')}
                 </span>
                 <span className="font-semibold text-[#202A36]">
-                  {emp.currentHours}/{emp.weeklyLimit} שעות
+                  {emp.currentHours}/{emp.weeklyLimit} hrs
                 </span>
               </div>
             </div>

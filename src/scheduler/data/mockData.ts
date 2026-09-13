@@ -18,7 +18,7 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     cupsPerHour: 72,
     avgTipsPerShift: 165,
     salesScore: 98,
-    specialtyTag: 'מהירה בעומס שיא',
+    specialtyTag: 'Fast under peak load',
   },
   {
     id: 'emp-yossi',
@@ -39,7 +39,7 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     avgTipsPerShift: 145,
     salesScore: 94,
     mentorRating: 4.9,
-    specialtyTag: 'חונך מומלץ ואספרסו',
+    specialtyTag: 'Recommended mentor & espresso expert',
   },
   {
     id: 'emp-eli',
@@ -58,7 +58,7 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     cupsPerHour: 55,
     avgTipsPerShift: 120,
     salesScore: 88,
-    specialtyTag: 'סגירות ולאטה ארט',
+    specialtyTag: 'Closing shifts & latte art',
   },
   {
     id: 'emp-maya',
@@ -77,7 +77,7 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     cupsPerHour: 58,
     avgTipsPerShift: 130,
     salesScore: 90,
-    specialtyTag: 'שירות מהיר ומשפחות',
+    specialtyTag: 'Quick service & family-friendly',
   },
   {
     id: 'emp-tom',
@@ -96,7 +96,7 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     cupsPerHour: 45,
     avgTipsPerShift: 110,
     salesScore: 86,
-    specialtyTag: 'קופה ומכירות אפסייל',
+    specialtyTag: 'Register & upsell sales',
   },
   {
     id: 'emp-noa',
@@ -117,7 +117,7 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     cupsPerHour: 22,
     avgTipsPerShift: 65,
     salesScore: 72,
-    specialtyTag: 'מתלמדת שבוע 1 · חפיפה',
+    specialtyTag: 'Week 1 trainee · shadowing',
   },
 ];
 
@@ -460,49 +460,49 @@ export function getGeneratedAssignments(
 
 export const DEFAULT_ONBOARDING_PLAN: import('../types').OnboardingPlanConfig = {
   employeeId: 'emp-noa',
-  employeeName: 'נועה שחר',
-  role: 'בריסטה מתלמדת · שבוע 1',
+  employeeName: 'Noa Shalev',
+  role: 'Trainee Barista · Week 1',
   steps: [
     {
       stepNumber: 1,
-      title: 'משמרת ראשונה: יום ראשון (10:00–14:00)',
-      timingRecommendation: 'עגלת קפה בגינה · שעות שקטות (ליווי צמוד עם יוסי)',
+      title: 'First shift: Sunday (10:00–14:00)',
+      timingRecommendation: 'Riverside Coffee Cart · quiet hours (close mentorship with Yossi)',
       isOffPeakRequired: true,
       mentorId: 'emp-yossi',
       tasks: [
-        'שטיפת כלים: שטיפה וסטריליזציה של ידיות החליטה וקנקני חלב',
-        'הגשת קפה: מסירת משקאות חמים ומאפים ללקוחות בחיוך',
-        'פתיחת עמדה: היכרות עם סידור המקררים והמצרכים',
+        'Dishwashing: cleaning and sanitizing brew handles and milk pitchers',
+        'Coffee service: handing hot drinks and pastries to customers with a smile',
+        'Station setup: getting familiar with the fridge layout and supplies',
       ],
       restrictions: [
-        'ללא עבודה על קופה במשמרת ראשונה',
-        'ללא שיבוץ בשעות עומס שיא',
+        'No register duty during the first shift',
+        'No scheduling during peak hours',
       ],
     },
     {
       stepNumber: 2,
-      title: 'משמרת שנייה: יום רביעי (14:00–18:00)',
-      timingRecommendation: 'עגלת קפה בגינה · שעות צהריים רגועות',
+      title: 'Second shift: Wednesday (14:00–18:00)',
+      timingRecommendation: 'Riverside Coffee Cart · calm afternoon hours',
       isOffPeakRequired: true,
       mentorId: 'emp-yossi',
       tasks: [
-        'הקצפת חלב: תרגול מזיגה ולאטה ארט בסיסי בליווי החונך',
-        'היכרות עם קופה: הקלדת הזמנות בסיסיות במערכת ה-POS',
-        'חידוש מלאי כוסות ומכסים במהלך המשמרת',
+        'Milk steaming: practicing pouring and basic latte art with the mentor',
+        'Register familiarization: entering basic orders on the POS system',
+        'Restocking cups and lids during the shift',
       ],
       restrictions: [
-        'ליווי צמוד של חונך בעת הקלדה בקופה',
+        'Close mentor supervision when using the register',
       ],
     },
     {
       stepNumber: 3,
-      title: 'משמרת שלישית: שבוע הבא (השתלבות עצמאית מלאה)',
-      timingRecommendation: 'עבודה רציפה ועצמאית לפי צרכי הסידור',
+      title: 'Third shift: next week (full independent integration)',
+      timingRecommendation: 'Continuous, independent work based on scheduling needs',
       isOffPeakRequired: false,
       mentorId: 'emp-yossi',
       tasks: [
-        'ניהול קו חליטה והוצאת מנות עצמאית',
-        'תפעול מלא של עמדת הקפה והקופה',
+        'Managing the brew line and preparing orders independently',
+        'Full operation of the coffee station and register',
       ],
       restrictions: [],
     },
@@ -510,20 +510,20 @@ export const DEFAULT_ONBOARDING_PLAN: import('../types').OnboardingPlanConfig = 
   acknowledgementItems: [
     {
       id: 'ack-1',
-      text: 'קראתי והבנתי את נהלי ההיגיינה והבטיחות של העגלה',
-      subtext: 'שטיפת ידיים, כפפות ומניעת זיהום צולב',
+      text: "I have read and understood the cart's hygiene and safety procedures",
+      subtext: 'Handwashing, gloves, and cross-contamination prevention',
       required: true,
     },
     {
       id: 'ack-2',
-      text: 'הבנתי את תפקידיי במשמרת הראשונה: שטיפת כלים והגשת קפה',
-      subtext: 'ללא לחץ קופה וללא התעסקות בעומס שיא',
+      text: 'I understand my responsibilities during the first shift: dishwashing and coffee service',
+      subtext: 'No register pressure and no handling peak-hour load',
       required: true,
     },
     {
       id: 'ack-3',
-      text: 'תיאמתי הגעה 10 דקות מוקדם למשמרת מול החונך יוסי',
-      subtext: 'התייצבות ב-09:50 בעגלת הקפה בגינה',
+      text: 'I have coordinated arriving 10 minutes early for the shift with mentor Yossi',
+      subtext: 'Check in at 09:50 at the Riverside Coffee Cart',
       required: true,
     },
   ],
